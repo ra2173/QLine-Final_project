@@ -52,7 +52,7 @@ const AppointmentDetails = ({ id }) => {
             setBooking(true)
             setBookingMessage("")
             const { data } = await axios.post(
-                `http://localhost:2173/appointments/${id}/book`, {},
+                `http://localhost:2173/api/appointments/${id}/book`, {},
                 {
                     headers: { Authorization: `Bearer ${token}` }
                 }
