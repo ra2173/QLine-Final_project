@@ -1,5 +1,7 @@
+/* =================================
+   צבעי המערכת
+================================= */
 
-/* צבעי המערכת */
 :root {
     --calendar-peach: #f5ded1;
     --calendar-blue: #7088e8;
@@ -10,30 +12,55 @@
     --calendar-border: #ece9e6;
 }
 
-/* רקע העמוד */
+
+/* =================================
+   רקע העמוד
+================================= */
+
 .calendar-page {
     min-height: 100vh;
     padding: 45px 25px;
+
     background:
-        radial-gradient(circle at top right, #f5ded1 0%, transparent 35%),
-        radial-gradient(circle at bottom left, #dce5ff 0%, transparent 40%),
+        radial-gradient(
+            circle at top right,
+            #f5ded1 0%,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom left,
+            #dce5ff 0%,
+            transparent 40%
+        ),
         var(--calendar-background);
+
     font-family: Arial, sans-serif;
     direction: rtl;
 }
 
-/* הכרטיס המרכזי */
+
+/* =================================
+   הכרטיס המרכזי
+================================= */
+
 .calendar-container {
     max-width: 1250px;
     margin: 0 auto;
     padding: 35px;
-    background: rgba(255, 255, 255, 0.94);
+
+    background: rgba(255, 255, 255, 0.95);
+
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 28px;
+
     box-shadow: 0 15px 45px rgba(70, 75, 100, 0.09);
 }
 
-/* כותרת */
+
+/* =================================
+   כותרת
+================================= */
+
 .calendar-header {
     margin-bottom: 25px;
 }
@@ -50,39 +77,100 @@
     font-size: 15px;
 }
 
-/* סרגל ניווט */
+
+/* =================================
+   סרגל עליון
+================================= */
+
 .calendar-toolbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 15px;
+
     padding: 18px 0;
+
     border-bottom: 1px solid var(--calendar-border);
 }
+
+
+/* בחירת תצוגה */
+
+.view-switch {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 5px;
+
+    background: #f3f4f8;
+    border-radius: 12px;
+}
+
+.view-switch button {
+    border: none;
+    background: transparent;
+
+    color: #858b99;
+
+    padding: 10px 22px;
+    border-radius: 9px;
+
+    font-size: 14px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.view-switch button.active {
+    background: white;
+    color: var(--calendar-blue);
+
+    font-weight: bold;
+
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.07);
+}
+
+.view-switch button:hover {
+    color: var(--calendar-blue);
+}
+
+
+/* ניווט בין ימים ושבועות */
 
 .week-navigation {
     display: flex;
     align-items: center;
-    gap: 25px;
+    justify-content: center;
+    gap: 20px;
+
+    direction: ltr;
     color: var(--calendar-text);
 }
 
 .week-navigation strong {
-    font-size: 18px;
+    font-size: 17px;
     direction: ltr;
+    white-space: nowrap;
 }
 
 .week-navigation button {
     display: flex;
     align-items: center;
     justify-content: center;
+
     width: 36px;
     height: 36px;
+
     border: none;
     border-radius: 10px;
+
     background: var(--calendar-light-blue);
     color: var(--calendar-blue);
-    font-size: 20px;
+
+    font-size: 25px;
     cursor: pointer;
+
     transition: 0.2s;
 }
 
@@ -91,14 +179,20 @@
     color: white;
 }
 
+
+/* כפתור היום */
+
 .today-button {
     background: var(--calendar-blue);
     color: white;
+
     border: none;
     padding: 11px 25px;
     border-radius: 10px;
+
     font-size: 14px;
     cursor: pointer;
+
     transition: 0.2s;
 }
 
@@ -106,33 +200,48 @@
     background: #5d75d4;
 }
 
-/* ימי השבוע */
+
+/* =================================
+   סרגל שבעת הימים
+================================= */
+
 .calendar-days {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
+
+    margin: 20px 0 25px;
+
     border-bottom: 1px solid var(--calendar-border);
-    margin-bottom: 25px;
 }
 
 .calendar-day {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 9px;
-    padding: 20px 5px;
-    background: transparent;
+
+    min-width: 0;
+    padding: 22px 5px 16px;
+
     border: none;
     border-bottom: 4px solid transparent;
+
+    background: transparent;
+
     cursor: pointer;
     transition: 0.2s;
 }
 
 .calendar-day:hover {
-    background: #faf8f7;
+    background: #faf7f5;
 }
 
 .calendar-day.active {
     border-bottom-color: var(--calendar-blue);
+    background: #f5f7ff;
+
+    border-radius: 12px 12px 0 0;
 }
 
 .day-name {
@@ -155,33 +264,55 @@
     color: #a0a5ad;
 }
 
-/* רשימת שיעורים */
+
+/* =================================
+   אזור השיעורים
+================================= */
+
+.daily-appointments {
+    margin-top: 25px;
+}
+
 .daily-appointments h3 {
     font-size: 20px;
     color: var(--calendar-text);
+
     margin: 25px 0 18px;
 }
 
-/* כרטיס שיעור */
+
+/* =================================
+   כרטיס שיעור אופקי
+================================= */
+
 .appointment-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
+
     padding: 20px 25px;
     margin-bottom: 15px;
+
     background: white;
+
     border: 1px solid var(--calendar-border);
     border-right: 5px solid var(--calendar-blue);
     border-radius: 18px;
+
     box-shadow: 0 4px 14px rgba(70, 75, 100, 0.045);
+
     transition: 0.2s;
 }
 
 .appointment-card:hover {
     transform: translateY(-2px);
+
     box-shadow: 0 8px 22px rgba(70, 75, 100, 0.09);
 }
+
+
+/* צבעים מתחלפים לכרטיסים */
 
 .appointment-card.color-0 {
     border-right-color: var(--calendar-blue);
@@ -195,7 +326,11 @@
     border-right-color: #aab9f3;
 }
 
-/* פרטי השיעור */
+
+/* =================================
+   פרטי השיעור
+================================= */
+
 .appointment-info {
     flex: 1;
 }
@@ -203,26 +338,35 @@
 .appointment-time {
     font-size: 19px;
     color: var(--calendar-text);
+    direction: ltr;
+    display: inline-block;
 }
 
 .appointment-info h4 {
     margin: 8px 0;
+
     font-size: 17px;
     color: var(--calendar-text);
 }
 
 .appointment-info p {
     margin: 0;
+
     font-size: 14px;
     color: var(--calendar-muted);
 }
 
-/* מקומות פנויים */
+
+/* =================================
+   מקומות פנויים
+================================= */
+
 .appointment-capacity {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
+
     min-width: 100px;
 }
 
@@ -236,15 +380,23 @@
     font-size: 20px;
 }
 
-/* כפתור פרטים */
+
+/* =================================
+   כפתור פרטים נוספים
+================================= */
+
 .appointment-button {
     background: var(--calendar-blue);
     color: white;
+
     border: none;
     border-radius: 10px;
+
     padding: 12px 22px;
+
     font-size: 14px;
     cursor: pointer;
+
     transition: 0.2s;
 }
 
@@ -252,18 +404,41 @@
     background: #5d75d4;
 }
 
-/* אין שיעורים */
+
+/* =================================
+   אין שיעורים
+================================= */
+
 .empty-appointments {
     padding: 45px 20px;
+
     text-align: center;
+
     background: #faf7f5;
+
     border: 1px solid var(--calendar-border);
     border-radius: 16px;
+
     color: var(--calendar-muted);
 }
 
-/* התאמה לנייד */
+
+/* הודעות טעינה ושגיאה */
+
+.calendar-message {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--calendar-muted);
+    font-size: 17px;
+}
+
+
+/* =================================
+   התאמה לטאבלטים ולניידים
+================================= */
+
 @media (max-width: 750px) {
+
     .calendar-page {
         padding: 20px 10px;
     }
@@ -275,6 +450,23 @@
 
     .calendar-header h2 {
         font-size: 22px;
+    }
+
+    .calendar-toolbar {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .week-navigation {
+        gap: 8px;
+    }
+
+    .week-navigation strong {
+        font-size: 14px;
+    }
+
+    .today-button {
+        padding: 10px 15px;
     }
 
     .calendar-days {
@@ -315,99 +507,268 @@
     .appointment-button {
         margin-right: auto;
     }
+}
+
+
+@media (max-width: 450px) {
+
+    .calendar-toolbar {
+        justify-content: center;
+    }
 
     .week-navigation {
-        gap: 8px;
-    }
-
-    .week-navigation strong {
-        font-size: 14px;
-    }
-
-    .today-button {
-        padding: 10px 15px;
-    }
-}
-/* בחירת תצוגה שבועית / יומית */
-.view-switch {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 5px;
-    background: #f3f4f8;
-    border-radius: 12px;
-}
-
-.view-switch button {
-    border: none;
-    background: transparent;
-    color: #858b99;
-    padding: 10px 22px;
-    border-radius: 9px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.view-switch button.active {
-    background: white;
-    color: var(--calendar-blue);
-    font-weight: bold;
-    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.07);
-}
-
-.view-switch button:hover {
-    color: var(--calendar-blue);
-}
-
-/* התאמה לנייד */
-@media (max-width: 600px) {
-    .calendar-toolbar {
-        flex-wrap: wrap;
-        gap: 15px;
+        order: 2;
+        width: 100%;
+        justify-content: space-between;
     }
 
     .view-switch {
         order: 1;
     }
 
-    .week-navigation {
-        order: 2;
-    }
-
     .today-button {
         order: 3;
     }
+
+    .appointment-card {
+        padding: 14px;
+    }
+
+    .appointment-button {
+        width: 100%;
+        margin: 5px 0 0;
+    }
 }
-.calendar-days {
+/* =================================
+   תצוגה שבועית - טבלת ימים
+================================= */
+
+.weekly-calendar {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    margin: 20px 0 25px;
-    border-bottom: 1px solid var(--calendar-border);
+    gap: 12px;
+
+    margin-top: 25px;
+
+    direction: rtl;
+    align-items: stretch;
 }
 
-.calendar-day {
+
+/* טור של יום */
+.weekly-day-column {
     min-width: 0;
-    padding: 22px 5px 16px;
+
+    background: #faf9f8;
+
+    border: 1px solid var(--calendar-border);
+    border-radius: 16px;
+
+    overflow: hidden;
+}
+
+
+/* כותרת היום */
+.weekly-day-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+
+    padding: 17px 5px;
+
+    background: #f5f7ff;
+    border-bottom: 2px solid #dce4ff;
+}
+
+.weekly-day-header strong {
+    color: var(--calendar-blue);
+    font-size: 16px;
+}
+
+.weekly-day-header span {
+    color: var(--calendar-muted);
+    font-size: 12px;
+}
+
+
+/* אזור השיעורים בכל טור */
+.weekly-day-appointments {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    padding: 10px;
+}
+
+
+/* כרטיס שיעור שבועי */
+.weekly-appointment-card {
+    padding: 12px 9px;
+
+    background: white;
+
+    border: 1px solid var(--calendar-border);
+    border-right: 3px solid var(--calendar-blue);
+    border-radius: 11px;
+
+    box-shadow: 0 2px 8px rgba(70, 75, 100, 0.04);
+
+    overflow-wrap: anywhere;
+}
+
+.weekly-appointment-card.color-0 {
+    border-right-color: var(--calendar-blue);
+}
+
+.weekly-appointment-card.color-1 {
+    border-right-color: #e9a987;
+}
+
+.weekly-appointment-card.color-2 {
+    border-right-color: #aab9f3;
+}
+
+
+/* שעות */
+.weekly-time {
+    display: block;
+
+    color: var(--calendar-blue);
+    font-size: 12px;
+
+    direction: ltr;
+    text-align: right;
+}
+
+
+/* שם השיעור */
+.weekly-appointment-card h4 {
+    margin: 9px 0;
+
+    color: var(--calendar-text);
+    font-size: 13px;
+}
+
+
+/* שם המדריכה */
+.weekly-appointment-card p {
+    margin: 0 0 9px;
+
+    color: var(--calendar-muted);
+    font-size: 12px;
+}
+
+
+/* מקומות פנויים */
+.weekly-places {
+    display: block;
+
+    color: #7088e8;
+    font-size: 11px;
+
+    margin-bottom: 10px;
+}
+
+
+/* כפתור פרטים */
+.weekly-appointment-card button {
+    width: 100%;
+
+    padding: 7px 4px;
+
     border: none;
-    border-bottom: 4px solid transparent;
-    background: transparent;
+    border-radius: 7px;
+
+    background: var(--calendar-light-blue);
+    color: var(--calendar-blue);
+
+    font-size: 12px;
     cursor: pointer;
+
     transition: 0.2s;
 }
 
-.calendar-day:hover {
-    background: #faf7f5;
+.weekly-appointment-card button:hover {
+    background: var(--calendar-blue);
+    color: white;
 }
 
-.calendar-day.active {
-    border-bottom-color: var(--calendar-blue);
-    background: #f5f7ff;
-    border-radius: 12px 12px 0 0;
+
+/* יום ללא שיעורים */
+.weekly-no-appointments {
+    text-align: center;
+
+    color: #a0a5ad;
+    font-size: 12px;
+
+    padding: 20px 3px;
 }
 
-.appointment-card {
-    border-radius: 16px;
-    padding: 20px 25px;
-    margin-bottom: 15px;
+
+/* =================================
+   התאמה למסכים קטנים
+================================= */
+
+@media (max-width: 1000px) {
+
+    .weekly-calendar {
+        grid-template-columns: repeat(7, minmax(145px, 1fr));
+        overflow-x: auto;
+        padding-bottom: 12px;
+    }
+
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(35, 39, 55, 0.45);
+    backdrop-filter: blur(4px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    position: relative;
+    background: #F7F8FA;
+
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+    max-height: none;
+
+    overflow: visible;
+    border-radius: 24px;
+    padding: 20px;
+
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+
+    width: 35px;
+    height: 35px;
+
+    border: none;
+    border-radius: 50%;
+    background: #eaf0ff;
+    color: #7088e8;
+
+    font-size: 25px;
+    cursor: pointer;
+    z-index: 10;
 }

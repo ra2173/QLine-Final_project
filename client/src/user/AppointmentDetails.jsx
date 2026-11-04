@@ -1,10 +1,10 @@
 
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import "../css/user/AppointmentDetails.css"
 
-const AppointmentDetails = () => {
-    const { id } = useParams()
+const AppointmentDetails = ({ id }) => {    
     const navigate = useNavigate()
 
     const [appointment, setAppointment] = useState(null)
@@ -22,7 +22,7 @@ const AppointmentDetails = () => {
                 return
             }
             const { data } = await axios.get(
-                `http://localhost:2173/appointments/${id}`,
+                `http://localhost:2173/api/appointments/${id}`,
                 {
                     headers: { Authorization: `Bearer ${token}` }
                 }
@@ -94,41 +94,111 @@ const AppointmentDetails = () => {
     const isRegistered = participants.some(participant =>
         (participant._id || participant).toString() === currentUserId
     )
-    return (
-        <div>
-            <h1>פרטי השיעור</h1>
-            <h2> {appointment.serviceId?.name || "שיעור"} </h2>
-            <p>
-                מורה: {appointment.providerId?.name}
-                {" "}
-                {appointment.providerId?.lastName}
-            </p>
-            <p> תאריך: {new Date(appointment.startTime).toLocaleDateString("he-IL")}</p>
-            <p>
-                שעה: {new Date(appointment.startTime).toLocaleTimeString("he-IL", {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                })}
-            </p>
-            <p>משך השיעור: {appointment.lengthTime} דקות</p>
-            <p>
-                משתתפות: {appointment.participants.length}
-                {" / "}
-                {appointment.maxParticipants}
-            </p>
+return (
+    <div className="appointment-details-page" dir="rtl">
 
-            <p>מקומות פנויים: {freePlaces}</p>
-            {isRegistered ? (<p>את כבר רשומה לשיעור הזה!</p>) : isFull ? (<p>השיעור מלא כרגע</p>)
-                : (
-                    <button onClick={bookAppointment} disabled={booking}>
+        <div className="appointment-details-container">
+
+            <div className="details-header">
+                <span className="details-label">Qline</span>
+                <h1>פרטי השיעור</h1>
+                <p>כל הפרטים על השיעור שבחרת</p>
+            </div>
+
+            <div className="details-card">
+
+                <div className="details-card-header">
+                    <div className="details-icon">✦</div>
+
+                    <div>
+                        <h2>{appointment.serviceId?.name || "שיעור"}</h2>
+                        <span>פרטי השיעור</span>
+                    </div>
+                </div>
+
+                <div className="details-info-grid">
+
+                    <div className="details-info-item">
+                        <span>מדריכה</span>
+                        <strong>
+                            {appointment.providerId?.name}{" "}
+                            {appointment.providerId?.lastName}
+                        </strong>
+                    </div>
+
+                    <div className="details-info-item">
+                        <span>תאריך</span>
+                        <strong>
+                            {new Date(appointment.startTime).toLocaleDateString("he-IL")}
+                        </strong>
+                    </div>
+
+                    <div className="details-info-item">
+                        <span>שעה</span>
+                        <strong>
+                            {new Date(appointment.startTime).toLocaleTimeString(
+                                "he-IL",
+                                {
+                                    hour: "2-digit",
+                                    minute: "2-digit"
+                                }
+                            )}
+                        </strong>
+                    </div>
+
+                    <div className="details-info-item">
+                        <span>משך השיעור</span>
+                        <strong>{appointment.lengthTime} דקות</strong>
+                    </div>
+
+                </div>
+
+                <div className="details-capacity">
+
+                    <div className="capacity-item">
+                        <span>משתתפות</span>
+                        <strong>
+                            {participants.length} / {maxParticipants}
+                        </strong>
+                    </div>
+
+                    <div className="capacity-item">
+                        <span>מקומות פנויים</span>
+                        <strong>{freePlaces}</strong>
+                    </div>
+
+                </div>
+
+                {isRegistered ? (
+                    <div className="booking-status success">
+                        את כבר רשומה לשיעור הזה!
+                    </div>
+                ) : isFull ? (
+                    <div className="booking-status full">
+                        השיעור מלא כרגע
+                    </div>
+                ) : (
+                    <button
+                        className="booking-button"
+                        onClick={bookAppointment}
+                        disabled={booking}
+                    >
                         {booking ? "נרשמת..." : "הרשמה לשיעור"}
                     </button>
                 )}
 
-            {bookingMessage && <p>{bookingMessage}</p>}
-            <button onClick={() => navigate("/calendar")}> חזרה ללוח השיעורים </button>
+                {bookingMessage && (
+                    <div className="booking-message">
+                        {bookingMessage}
+                    </div>
+                )}
+
+            </div>
+
         </div>
-    )
+
+    </div>
+)
 }
 
 
