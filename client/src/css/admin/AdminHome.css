@@ -1,0 +1,141 @@
+.admin-home {
+    min-height: 100vh;
+    padding: 60px 30px;
+    direction: rtl;
+    text-align: center;
+    background-color: var(--background-color);
+}
+
+.admin-home h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.admin-home h2 {
+    font-size: 20px;
+    font-weight: normal;
+    color: var(--secondary-text);
+    margin-bottom: 45px;
+}
+
+.admin-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(200px, 280px));
+    justify-content: center;
+    gap: 20px;
+}
+
+.admin-buttons button {
+    min-height: 130px;
+    border: none;
+    border-radius: 20px;
+    background-color: var(--card-color);
+    color: var(--text-color);
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: 0.2s;
+}
+
+.admin-buttons button:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.logout-button {
+    margin-top: 50px;
+    padding: 12px 30px;
+    border: 1px solid var(--border-color);
+    border-radius: 30px;
+    background-color: transparent;
+    color: var(--secondary-text);
+    font-size: 16px;
+}
+
+.logout-button:hover {
+    background-color: var(--primary-color);
+}
+
+.admin-buttons button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.admin-buttons button svg {
+    font-size: 38px;
+    color: #7088e8;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 35px;
+    background-color: var(--card-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    border-radius: 16px;
+}
+
+.admin-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.admin-header .logout-button {
+    margin: 0;
+}
+
+.admin-welcome {
+    text-align: right;
+    max-width: 600px;
+    margin: 55px auto 35px;
+}
+
+.admin-welcome h1 {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.admin-welcome p {
+    font-size: 18px;
+    color: var(--secondary-text);
+    margin: 0;
+}
+
+/* התאמה למסכים קטנים */
+@media (max-width: 600px) {
+
+    .admin-home {
+        padding: 25px 15px;
+    }
+
+    .admin-header {
+        padding: 12px 18px;
+    }
+
+    .admin-welcome {
+        margin: 35px 5px 25px;
+    }
+
+    .admin-welcome h1 {
+        font-size: 26px;
+    }
+
+    .admin-welcome p {
+        font-size: 16px;
+    }
+
+    .admin-buttons {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .admin-buttons button {
+        min-height: 100px;
+    }
+}

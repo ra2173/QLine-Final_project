@@ -1,0 +1,36 @@
+/* צבעי המערכת */
+
+:root {
+    --primary-color: #f5ded1;
+    --background-color: #F7F8FA;
+    --card-color: #FFFFFF;
+    --text-color: #202124;
+    --secondary-text: #777777;
+    --border-color: #ECEEF0;
+}
+
+/* הגדרות כלליות */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+    direction: rtl;
+}
+
+/* כותרות */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color);
+}
+
+/* כפתורים */
+
+button {
+    cursor: pointer;
+}

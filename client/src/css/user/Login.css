@@ -1,0 +1,302 @@
+/* המסך כולו */
+.user-login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 35px 20px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    direction: rtl;
+    background: #F7F8FA;
+    font-family: Arial, sans-serif;
+}
+
+/* צורות דקורטיביות */
+.user-login-decoration {
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.user-login-decoration-top {
+    width: 380px;
+    height: 380px;
+    background: #f5ded1;
+    top: -170px;
+    right: -100px;
+    opacity: 0.8;
+}
+
+.user-login-decoration-bottom {
+    width: 320px;
+    height: 320px;
+    background: #ffd3ba;
+    bottom: -170px;
+    left: -100px;
+    opacity: 0.65;
+}
+
+/* כרטיס התחברות */
+.user-login-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 42px 38px 28px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 28px;
+    box-shadow: 0 20px 60px rgba(35, 40, 25, 0.09);
+    animation: user-login-appear 0.5s ease;
+}
+
+/* אזור המותג */
+.user-login-brand {
+    text-align: center;
+    margin-bottom: 38px;
+}
+
+.user-login-logo {
+    display: block;
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    margin: 0 auto 18px;
+    padding: 10px;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+}
+
+.user-login-brand h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #242424;
+}
+
+.user-login-brand > p {
+    margin: 7px 0 0;
+    color: #f5ded1;
+    font-size: 13px;
+}
+
+/* כותרת הטופס */
+.user-login-heading {
+    margin-bottom: 28px;
+}
+
+.user-login-heading h2 {
+    margin: 0 0 9px;
+    color: #242424;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.user-login-heading p {
+    margin: 0;
+    color: #85857E;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* שדות הטופס */
+.user-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.user-login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.user-login-field label {
+    color: #34342F;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.user-login-field input {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    border: 1px solid #E8E9E3;
+    border-radius: 13px;
+    background: #FAFAF8;
+    color: #242424;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.user-login-field input::placeholder {
+    color: #B0B0A9;
+}
+
+.user-login-field input:focus {
+    border-color: #7088e8;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(112, 136, 232, 0.2);
+}
+
+/* שגיאה */
+.user-login-error {
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: 11px;
+    background: #FFF0F0;
+    color: #B83232;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* כפתור התחברות */
+.user-login-submit {
+    width: 100%;
+    min-height: 54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 5px;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 14px;
+    background: #7088e8;
+    color: #242820;
+    font-size: 16px;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.user-login-submit span {
+    font-size: 21px;
+    transition: transform 0.2s;
+}
+
+.user-login-submit:hover {
+    background: #7088e8;
+    box-shadow: 0 8px 20px rgba(112, 136, 232, 0.22);
+    transform: translateY(-2px);
+}
+
+.user-login-submit:hover span {
+    transform: translateX(-4px);
+}
+
+.user-login-submit:active {
+    transform: translateY(0);
+}
+
+/* קישור הרשמה */
+.user-login-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 22px;
+    font-size: 14px;
+    color: #85857E;
+}
+
+.user-login-register a {
+    color: #7088e8;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.user-login-register a:hover {
+    text-decoration: underline;
+}
+
+/* תחתית הכרטיס */
+.user-login-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #F0F0EB;
+    color: #92928A;
+    font-size: 12px;
+}
+
+.user-login-footer-dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #7088e8;
+}
+
+/* אנימציה */
+@keyframes user-login-appear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* התאמה לטלפון */
+@media (max-width: 480px) {
+    .user-login-page {
+        padding: 20px 15px;
+    }
+
+    .user-login-card {
+        padding: 32px 23px 24px;
+        border-radius: 23px;
+    }
+
+    .user-login-brand {
+        margin-bottom: 30px;
+    }
+
+    .user-login-heading h2 {
+        font-size: 24px;
+    }
+
+    .user-login-decoration-top {
+        width: 260px;
+        height: 260px;
+    }
+
+    .user-login-decoration-bottom {
+        width: 220px;
+        height: 220px;
+    }
+
+    .user-login-logo {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+/* הפחתת אנימציות */
+@media (prefers-reduced-motion: reduce) {
+    .user-login-card {
+        animation: none;
+    }
+
+    .user-login-field input,
+    .user-login-submit,
+    .user-login-submit span {
+        transition: none;
+    }
+}

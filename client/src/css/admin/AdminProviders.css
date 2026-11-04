@@ -1,0 +1,116 @@
+.admin-providers {
+    min-height: 100vh;
+    padding: 35px;
+    direction: rtl;
+    background: var(--background-color);
+}
+
+.providers-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.providers-header h1 {
+    font-size: 30px;
+}
+
+.providers-header-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.providers-header-buttons button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 25px;
+    background: var(--primary-color);
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.providers-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 22px;
+}
+
+.provider-card {
+    padding: 25px;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.04);
+    transition: 0.2s;
+}
+
+.provider-card:hover {
+    transform: translateY(-4px);
+}
+
+.provider-card h3 {
+    font-size: 21px;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.provider-card p {
+    color: var(--secondary-text);
+    font-size: 15px;
+    margin: 12px 0;
+}
+
+.provider-card-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.provider-card-buttons button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.provider-card-buttons button:first-child {
+    background: var(--primary-color);
+}
+
+.provider-card-buttons button:last-child {
+    background: #FCE8E8;
+    color: #B83232;
+}
+
+.providers-error {
+    color: #C62828;
+    background: #FCE8E8;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.providers-empty {
+    text-align: center;
+    padding: 50px;
+    color: var(--secondary-text);
+}
+
+@media (max-width: 600px) {
+    .admin-providers {
+        padding: 20px 15px;
+    }
+
+    .providers-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .providers-header-buttons {
+        flex-wrap: wrap;
+    }
+}

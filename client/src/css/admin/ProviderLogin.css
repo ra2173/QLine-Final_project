@@ -1,0 +1,291 @@
+/* המסך כולו */
+.provider-login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 35px 20px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    direction: rtl;
+    background: #F7F8FA;
+    font-family: Arial, sans-serif;
+}
+
+/* צורות דקורטיביות ברקע */
+.login-decoration {
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.login-decoration-top {
+    width: 380px;
+    height: 380px;
+    background: #f5ded1;
+    top: -170px;
+    right: -100px;
+    opacity: 0.8;
+}
+
+.login-decoration-bottom {
+    width: 320px;
+    height: 320px;
+    background: #E8E2D9;
+    bottom: -170px;
+    left: -100px;
+    opacity: 0.65;
+}
+
+/* כרטיס ההתחברות */
+.provider-login-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 42px 38px 28px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 28px;
+    box-shadow: 0 20px 60px rgba(35, 40, 25, 0.09);
+    animation: login-appear 0.5s ease;
+}
+
+/* אזור המותג */
+.login-brand {
+    text-align: center;
+    margin-bottom: 38px;
+}
+
+.login-brand-icon {
+    width: 62px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    background: #7088e8;
+    border-radius: 21px;
+    color: #242424;
+    font-size: 34px;
+    font-weight: 900;
+    box-shadow: 0 8px 20px rgba(112, 136, 232, 0.2);
+}
+
+.login-brand h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #242424;
+}
+
+.login-brand > p {
+    margin: 7px 0 0;
+    color: #f5ded1;
+    font-size: 13px;
+}
+
+/* כותרת הטופס */
+.login-heading {
+    margin-bottom: 28px;
+}
+
+.login-heading h2 {
+    margin: 0 0 9px;
+    color: #242424;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.login-heading p {
+    margin: 0;
+    color: #85857E;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* שדות הטופס */
+.provider-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.login-field label {
+    color: #34342F;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.login-field input {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    border: 1px solid #E8E9E3;
+    border-radius: 13px;
+    background: #FAFAF8;
+    color: #242424;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.login-field input::placeholder {
+    color: #B0B0A9;
+}
+
+.login-field input:focus {
+    border-color: #7088e8;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(112, 136, 232, 0.2);
+}
+
+/* הודעת שגיאה */
+.login-error {
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: 11px;
+    background: #FFF0F0;
+    color: #B83232;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* כפתור התחברות */
+.login-submit {
+    width: 100%;
+    min-height: 54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 5px;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 14px;
+    background: #7088e8;
+    color: #242820;
+    font-size: 16px;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.login-submit span {
+    font-size: 21px;
+    transition: transform 0.2s;
+}
+
+.login-submit:hover {
+    background: #7088e8;
+    box-shadow: 0 8px 20px rgba(155, 190, 65, 0.22);
+    transform: translateY(-2px);
+}
+
+.login-submit:hover span {
+    transform: translateX(-4px);
+}
+
+.login-submit:active {
+    transform: translateY(0);
+}
+
+/* תחתית הכרטיס */
+.login-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #F0F0EB;
+    color: #92928A;
+    font-size: 12px;
+}
+
+.login-footer-dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #7088e8;
+}
+
+/* הופעת הכרטיס */
+@keyframes login-appear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* התאמה לטלפון */
+@media (max-width: 480px) {
+    .provider-login-page {
+        padding: 20px 15px;
+    }
+
+    .provider-login-card {
+        padding: 32px 23px 24px;
+        border-radius: 23px;
+    }
+
+    .login-brand {
+        margin-bottom: 30px;
+    }
+
+    .login-heading h2 {
+        font-size: 24px;
+    }
+
+    .login-decoration-top {
+        width: 260px;
+        height: 260px;
+    }
+
+    .login-decoration-bottom {
+        width: 220px;
+        height: 220px;
+    }
+}
+
+/* כיבוד העדפת המשתמש להפחתת אנימציות */
+@media (prefers-reduced-motion: reduce) {
+    .provider-login-card {
+        animation: none;
+    }
+
+    .login-field input,
+    .login-submit,
+    .login-submit span {
+        transition: none;
+    }
+}
+
+.login-logo {
+    display: block;
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    margin: 0 auto 18px;
+    padding: 10px;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+}
