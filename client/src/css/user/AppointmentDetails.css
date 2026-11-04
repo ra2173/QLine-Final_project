@@ -1,0 +1,284 @@
+/* עמוד פרטי שיעור */
+
+.appointment-details-page {
+    min-height: 100vh;
+    padding: 50px 20px;
+
+    background:
+        radial-gradient(circle at top right, #f5ded1 0%, transparent 35%),
+        radial-gradient(circle at bottom left, #dce5ff 0%, transparent 40%),
+        #f8f7f6;
+
+    font-family: Arial, sans-serif;
+    color: #30343b;
+}
+
+.appointment-details-container {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+/* כותרת */
+
+.details-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.details-label {
+    display: inline-block;
+    color: #7088e8;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.details-header h1 {
+    margin: 0 0 10px;
+    font-size: 30px;
+}
+
+.details-header p {
+    color: #9299a3;
+    margin: 0;
+}
+
+/* כרטיס פרטי השיעור */
+
+.details-card {
+    background: white;
+    padding: 35px;
+    border-radius: 25px;
+    border: 1px solid #f0ece9;
+    box-shadow: 0 15px 40px rgba(70, 75, 100, 0.08);
+}
+
+/* כותרת הכרטיס */
+
+.details-card-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #ece9e6;
+}
+
+.details-icon {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f5ded1;
+    color: #bd8064;
+
+    border-radius: 17px;
+    font-size: 25px;
+}
+
+.details-card-header h2 {
+    margin: 0 0 7px;
+    font-size: 23px;
+}
+
+.details-card-header span {
+    color: #9299a3;
+    font-size: 14px;
+}
+
+/* פרטי השיעור */
+
+.details-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 25px 0;
+}
+
+.details-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    padding: 17px;
+    background: #f8f9fd;
+    border-radius: 13px;
+}
+
+.details-info-item span {
+    color: #9299a3;
+    font-size: 13px;
+}
+
+.details-info-item strong {
+    color: #30343b;
+    font-size: 16px;
+}
+
+/* מקומות */
+
+.details-capacity {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+
+    padding: 20px;
+    margin-bottom: 25px;
+
+    background: #f5f7ff;
+    border: 1px solid #e5eaff;
+    border-radius: 15px;
+}
+
+.capacity-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.capacity-item span {
+    color: #858b99;
+    font-size: 13px;
+}
+
+.capacity-item strong {
+    color: #7088e8;
+    font-size: 23px;
+}
+
+/* כפתור הרשמה */
+
+.booking-button {
+    width: 100%;
+    padding: 16px;
+
+    background: #7088e8;
+    color: white;
+
+    border: none;
+    border-radius: 13px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.booking-button:hover {
+    background: #5d75d4;
+    transform: translateY(-2px);
+}
+
+.booking-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* הודעות הרשמה */
+
+.booking-status,
+.booking-message {
+    text-align: center;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.booking-status.success {
+    background: #eaf5ee;
+    color: #43865b;
+}
+
+.booking-status.full {
+    background: #fdf0e9;
+    color: #bd8064;
+}
+
+.booking-message {
+    background: #f5f7ff;
+    color: #7088e8;
+}
+
+/* חזרה ללוח */
+
+.back-calendar-button {
+    display: block;
+    margin: 22px auto 0;
+    padding: 13px 25px;
+
+    background: transparent;
+    color: #7088e8;
+
+    border: 1px solid #cbd5fa;
+    border-radius: 12px;
+
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.back-calendar-button:hover {
+    background: #f5f7ff;
+}
+
+/* התאמה לנייד */
+
+@media (max-width: 550px) {
+
+    .appointment-details-page {
+        padding: 30px 12px;
+    }
+
+    .details-card {
+        padding: 22px 17px;
+    }
+
+    .details-header h1 {
+        font-size: 25px;
+    }
+
+    .details-info-grid {
+        gap: 10px;
+    }
+
+    .details-info-item {
+        padding: 13px;
+    }
+
+    .details-info-item strong {
+        font-size: 14px;
+    }
+}
+.appointment-details-page {
+    padding: 0;
+    min-height: auto;
+}
+
+.appointment-details-container {
+    padding: 0;
+    width: 100%;
+}
+
+.details-header {
+    margin-bottom: 15px;
+}
+
+.details-card {
+    padding: 20px;
+}
+
+.details-info-grid {
+    gap: 10px;
+}
+
+.details-info-item {
+    padding: 10px;
+}
+
+.details-capacity {
+    margin-top: 15px;
+}
