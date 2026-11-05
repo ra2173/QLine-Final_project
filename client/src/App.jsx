@@ -1,6 +1,7 @@
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
+import Homepage from "./auth/Homepage"
 import UserLogin from "./auth/UserLogin"
 import UserRegister from "./auth/UserRegister"
 import ProviderLogin from "./auth/ProviderLogin"
@@ -43,7 +44,7 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        <Route path="/" element={<Navigate to="/user/login" replace />} />
+        <Route path="/" element={<Homepage />} />
 
         {/* עמודי התחברות והרשמה - ללא תפריט */}
         <Route path="/user/login" element={<UserLogin />} />
