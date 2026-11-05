@@ -213,9 +213,9 @@ const CalendarPage = () => {
                         <button
                             onClick={() => {
                                 if (viewMode === "week") {
-                                    changeWeek(-1)
+                                    changeWeek(1)
                                 } else {
-                                    changeDay(-1)
+                                    changeDay(1)
                                 }
                             }}
                         >
@@ -234,9 +234,9 @@ const CalendarPage = () => {
                         <button
                             onClick={() => {
                                 if (viewMode === "week") {
-                                    changeWeek(1)
+                                    changeWeek(-1)
                                 } else {
-                                    changeDay(1)
+                                    changeDay(-1)
                                 }
                             }}
                         >

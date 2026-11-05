@@ -247,3 +247,85 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* אזור הערך והכפתורים */
+.profile-field-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* כפתור עיפרון */
+.profile-edit-icon,
+.profile-save-icon,
+.profile-cancel-icon {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 5px;
+    transition: 0.2s;
+}
+
+/* עיפרון */
+.profile-edit-icon {
+    color: #7088e8;
+}
+
+.profile-edit-icon:hover {
+    color: #4f68ca;
+    transform: scale(1.15);
+}
+
+/* שמירה */
+.profile-save-icon {
+    color: #269b68;
+    font-weight: bold;
+}
+
+.profile-save-icon:hover {
+    transform: scale(1.15);
+}
+
+/* ביטול */
+.profile-cancel-icon {
+    color: #d65b5b;
+}
+
+.profile-cancel-icon:hover {
+    transform: scale(1.15);
+}
+
+/* שדה עריכה */
+.profile-edit-input {
+    width: 180px;
+    padding: 8px 10px;
+    border: 1px solid #7088e8;
+    border-radius: 8px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    direction: rtl;
+}
+
+.profile-edit-input:focus {
+    border-color: #526bd0;
+    box-shadow: 0 0 0 3px rgba(112, 136, 232, 0.12);
+}
+
+/* הודעות */
+.profile-message {
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+}
+
+.profile-error {
+    color: #c0392b;
+    background: #fdecea;
+}
+
+.profile-success {
+    color: #218653;
+    background: #e8f7ef;
+}

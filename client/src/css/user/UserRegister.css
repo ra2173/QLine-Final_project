@@ -1,0 +1,237 @@
+:root {
+    --auth-blue: #7088e8;
+    --auth-blue-dark: #5c73d0;
+    --auth-peach: #e9bda5;
+    --auth-black: #20212a;
+    --auth-gray: #777987;
+    --auth-bg: #f7f8fc;
+}
+
+/* PAGE */
+
+.auth-page {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 10% 15%, #7088e820, transparent 30%),
+        radial-gradient(circle at 90% 85%, #e9bda530, transparent 30%),
+        var(--auth-bg);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 35px 20px;
+    font-family: 'Heebo', sans-serif;
+}
+
+/* CARD */
+
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+    background: white;
+    padding: 42px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px #20212a12;
+    border: 1px solid #ffffff;
+    animation: authFade 0.7s ease both;
+}
+
+.register-card {
+    max-width: 650px;
+}
+
+/* LOGO */
+
+.auth-logo {
+    font-size: 29px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    text-align: center;
+    color: var(--auth-black);
+}
+
+.auth-logo span {
+    color: var(--auth-blue);
+}
+
+.auth-logo small {
+    display: block;
+    font-size: 8px;
+    letter-spacing: 2px;
+    margin-top: 4px;
+}
+
+/* HEADING */
+
+.auth-heading {
+    text-align: center;
+    margin: 35px 0 30px;
+}
+
+.auth-heading > span {
+    color: var(--auth-blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 3px;
+}
+
+.auth-heading h2 {
+    font-size: 29px;
+    font-weight: 900;
+    color: var(--auth-black);
+    margin: 8px 0;
+}
+
+.auth-heading p {
+    color: var(--auth-gray);
+    font-size: 13px;
+    margin: 0;
+}
+
+/* FORM */
+
+.register-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 15px;
+}
+
+.auth-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.auth-field label {
+    color: var(--auth-black);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.auth-field input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 14px;
+    border: 1px solid #e5e7ee;
+    border-radius: 9px;
+    background: #fafbfe;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: 0.25s;
+}
+
+.auth-field input:focus {
+    border-color: var(--auth-blue);
+    background: white;
+    box-shadow: 0 0 0 3px #7088e820;
+}
+
+.auth-field input::placeholder {
+    color: #b5b7c1;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* MESSAGES */
+
+.auth-error,
+.auth-success {
+    text-align: center;
+    font-size: 13px;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 18px 0;
+}
+
+.auth-error {
+    color: #c03939;
+    background: #fff0f0;
+}
+
+.auth-success {
+    color: #278653;
+    background: #edfaf2;
+}
+
+/* BUTTON */
+
+.auth-submit {
+    width: 100%;
+    padding: 15px;
+    margin-top: 25px;
+    background: var(--auth-blue);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-submit:hover {
+    background: var(--auth-blue-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px #7088e840;
+}
+
+/* LOGIN LINK */
+
+.auth-switch {
+    text-align: center;
+    color: var(--auth-gray);
+    font-size: 13px;
+    margin: 25px 0 0;
+}
+
+.auth-switch a {
+    color: var(--auth-blue);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* ANIMATION */
+
+@keyframes authFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 550px) {
+    .auth-card {
+        padding: 28px 20px;
+    }
+
+    .register-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .auth-heading h2 {
+        font-size: 25px;
+    }
+}
