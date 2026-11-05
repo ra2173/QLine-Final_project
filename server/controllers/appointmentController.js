@@ -76,7 +76,21 @@ const getAppointmentById = async (req, res) => {
 
     if (!appointment)
       return res.status(404).json({ message: 'Appointment not found' })
+    const participantsCount = await Appointment.aggregate([
+      { $match: { _id: appointment._id } },
+      {
+        $project: {
+          participantsCount: { $size: '$participants' }
+        }
+      }
+    ])
 
+    appointment.participantsCount =
+      participantsCount[0]?.participantsCount || 0
+    appointment.isRegistered = await Appointment.exists({
+      _id: appointment._id,
+      participants: req.user._id
+    })
     return res.json(appointment)
 
   } catch (error) {

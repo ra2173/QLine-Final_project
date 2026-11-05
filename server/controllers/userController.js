@@ -34,36 +34,82 @@ const getAllUsers = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        const { _id, name, lastName, username, idNumber, email, password, phone } = req.body
         const currentUser = req.user
-        if (!name || !lastName || !username || !idNumber || !email || !password)
-            return res.status(400).json({ message: 'All fields are required' })
 
-        const isAdmin = currentUser.role?.includes('Admin')
-        const isProvider = currentUser.type === 'Provider' && !isAdmin
+        const isAdmin = currentUser.role?.includes("Admin")
+        const isUser = currentUser.type === "User"
 
-        if (currentUser.type === 'User' && currentUser._id !== _id)
-            return res.status(403).json({ message: 'Forbidden' })
+        // רק משתמש או מנהלת יכולים לעדכן לקוח
+        if (!isUser && !isAdmin) {
+            return res.status(403).json({ message: "Forbidden" })
+        }
 
-        const userId = currentUser.type === 'User' ? currentUser._id : _id
-        if (isProvider && !_id)
-            return res.status(400).json({ message: 'User id is required' })
+        // משתמש רגיל מעדכן את עצמו, מנהלת יכולה לבחור משתמש
+        const userId = isUser ? currentUser._id : req.body._id
 
-        const user = await User.findById(userId).exec()
-        if (!user)
-            return res.status(400).json({ message: 'User not found' })
-        user.name = name
-        user.lastName = lastName
-        user.username = username
-        user.idNumber = idNumber
-        user.email = email
-        user.password = await bcrypt.hash(password, 10)
-        user.phone = phone
+        if (!userId) {
+            return res.status(400).json({ message: "User id is required" })
+        }
+
+        const user = await User.findById(userId)
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" })
+        }
+
+        // השדות שמותר לעדכן
+        const allowedFields = [
+            "name",
+            "lastName",
+            "username",
+            "idNumber",
+            "email",
+            "phone"
+        ]
+
+        // מעדכנים רק שדות שנשלחו בבקשה
+        allowedFields.forEach(field => {
+            if (req.body[field] !== undefined) {
+                user[field] = req.body[field]
+            }
+        })
+
+        // סיסמה מוצפנת רק אם נשלחה סיסמה חדשה
+        if (req.body.password) {
+            user.password = await bcrypt.hash(req.body.password, 10)
+        }
+
         const updatedUser = await user.save()
-        res.json(`'${updatedUser.username}' updated`)
+
+        res.json({
+            message: "User updated successfully",
+            user: {
+                _id: updatedUser._id,
+                name: updatedUser.name,
+                lastName: updatedUser.lastName,
+                username: updatedUser.username,
+                idNumber: updatedUser.idNumber,
+                email: updatedUser.email,
+                phone: updatedUser.phone
+            }
+        })
+
     } catch (error) {
         console.error(error)
-        return res.status(500).json({ message: 'Server error' })
+
+        if (error.code === 11000) {
+            return res.status(400).json({
+                message: "Username, email or ID number already exists"
+            })
+        }
+
+        if (error.name === "ValidationError") {
+            return res.status(400).json({
+                message: error.message
+            })
+        }
+
+        return res.status(500).json({ message: "Server error" })
     }
 }
 
