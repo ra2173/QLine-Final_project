@@ -1,0 +1,21 @@
+
+
+            const res = await axios.post(
+                "http://localhost:2173/api/auth/provider/login",
+                { username, password }
+            )
+
+            const token = res.data.accessToken
+            localStorage.setItem("token", token)
+
+            const payload = JSON.parse(
+                atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"))
+            )
+
+            const role = payload.UserInfo?.role
+            const providerId = payload.UserInfo?._id
+
+            localStorage.setItem("providerId", providerId)
+            localStorage.setItem("accountType", "Provider")
+            localStorage.setItem("role", JSON.stringify(role || []))
+            localStorage.setItem("userId", userId)

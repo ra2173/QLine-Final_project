@@ -30,6 +30,9 @@ const ProviderLogin = () => {
             const role = payload.UserInfo?.role
             const providerId = payload.UserInfo?._id
             localStorage.setItem("providerId", providerId)
+            localStorage.setItem("accountType", "Provider")
+            localStorage.setItem("role", JSON.stringify(role || []))
+            localStorage.setItem("userId", providerId)
 
             setPassword("")
             setUsername("")
@@ -115,3 +118,7 @@ const ProviderLogin = () => {
 }
 
 export default ProviderLogin
+
+
+
+

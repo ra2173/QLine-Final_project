@@ -1,0 +1,77 @@
+.provider-appointments {
+    padding: 25px;
+    direction: rtl;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    margin-bottom: 5px;
+}
+
+.page-header p {
+    color: #888;
+}
+
+.page-header button,
+.appointment-actions button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    background: #7088e8;
+    color: white;
+}
+
+.appointments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.appointment-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 22px;
+    background: white;
+    border: 1px solid #e8e8ed;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.appointment-info p {
+    color: #666;
+    margin: 8px 0;
+}
+
+.appointment-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.appointment-actions button:last-child {
+    background: #d9534f;
+}
+
+.error-message {
+    color: #d9534f;
+}
+
+@media (max-width: 700px) {
+    .appointment-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .appointment-actions {
+        flex-direction: column;
+    }
+}
