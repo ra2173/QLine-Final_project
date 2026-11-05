@@ -87,22 +87,49 @@ const deleteUser = async (req, res) => {
 const getUserById = async (req, res) => {
     try {
         const { id } = req.params
-        const currentUser = req.user
 
-        if (!currentUser.role?.includes('Admin') && currentUser.type !== 'Provider' && currentUser.type !== 'User')
-            return res.status(403).json({ message: 'Forbidden' })
+        // חיפוש המשתמשת
+        const user = await User.findById(id).select('-password')
 
-        if (currentUser.type === 'User' && currentUser._id !== id)
-            return res.status(403).json({ message: 'Forbidden' })
+        if (!user) {
+            return res.status(404).json({
+                message: 'המשתמשת לא נמצאה'
+            })
+        }
 
-        const user = await User.findById(id).select('-password').lean()
-        if (!user)
-            return res.status(400).json({ message: 'No user found' })
-        res.json(user)
+        const now = new Date()
+
+        // מציאת הביקור האחרון שהסתיים
+        const lastAppointment = await Appointment.findOne({
+            participants: user._id,
+            status: 'completed',
+            startTime: { $lte: now }
+        })
+            .sort({ startTime: -1 })
+            .select('startTime')
+
+        // מציאת הביקור העתידי הקרוב
+        const nextAppointment = await Appointment.findOne({
+            participants: user._id,
+            status: { $in: ['empty', 'booked', 'full'] },
+            startTime: { $gt: now }
+        })
+            .sort({ startTime: 1 })
+            .select('startTime')
+
+        // הוספת תאריכי הביקורים לפרטי המשתמשת
+        const userDetails = {
+            ...user.toObject(),
+            lastVisit: lastAppointment?.startTime || null,
+            nextVisit: nextAppointment?.startTime || null
+        }
+
+        res.status(200).json(userDetails)
+
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            message: 'Server error'
+        res.status(500).json({
+            message: 'שגיאה בטעינת פרטי המשתמשת',
+            error: error.message
         })
     }
 }
