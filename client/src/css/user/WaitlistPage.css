@@ -1,0 +1,238 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap');
+
+.waitlist-page {
+    min-height: 100vh;
+    background: #f5f6fa;
+    direction: rtl;
+    padding: 45px 30px;
+    font-family: 'Heebo', sans-serif;
+}
+
+.waitlist-container {
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+/* כותרת */
+.waitlist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.waitlist-header h1 {
+    color: #30344b;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    margin: 0 0 8px;
+}
+
+.waitlist-header p {
+    color: #9297a8;
+    font-size: 14px;
+    margin: 0;
+}
+
+.waitlist-header-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 17px;
+    background: #7088e8;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+
+/* רשימה */
+.waitlist-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.waitlist-card {
+    background: white;
+    border-radius: 18px;
+    padding: 20px 24px;
+    border: 1px solid #eceef5;
+    transition: 0.2s ease;
+}
+
+.waitlist-card:hover {
+    border-color: #cbd3f5;
+    transform: translateY(-2px);
+}
+
+.waitlist-card-main {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* תאריך */
+.waitlist-date {
+    min-width: 68px;
+    height: 72px;
+    border-radius: 15px;
+    background: #e9bda5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #493a32;
+}
+
+.waitlist-date strong {
+    font-size: 25px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.waitlist-date span {
+    font-size: 12px;
+}
+
+/* פרטי שיעור */
+.waitlist-details {
+    flex: 1;
+}
+
+.waitlist-details h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #30344b;
+    margin: 0 0 6px;
+}
+
+.waitlist-time {
+    font-size: 16px;
+    font-weight: 700;
+    color: #7088e8;
+    margin-bottom: 6px;
+}
+
+.waitlist-details p {
+    color: #9297a8;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* סטטוס */
+.waitlist-status {
+    background: #fff1e9;
+    color: #b77e61;
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* תחתית */
+.waitlist-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f0f1f5;
+    margin-top: 18px;
+    padding-top: 12px;
+}
+
+.waitlist-branch {
+    color: #9297a8;
+    font-size: 13px;
+}
+
+.waitlist-remove-btn {
+    font-family: 'Heebo', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+/* רשימה ריקה */
+.waitlist-empty {
+    background: white;
+    border-radius: 20px;
+    padding: 55px 20px;
+    text-align: center;
+    border: 1px solid #eceef5;
+}
+
+.waitlist-empty > span {
+    font-size: 35px;
+    color: #e9bda5;
+}
+
+.waitlist-empty h3 {
+    color: #30344b;
+    font-size: 19px;
+    margin: 12px 0 7px;
+}
+
+.waitlist-empty p {
+    color: #9297a8;
+    font-size: 14px;
+}
+
+/* הודעות */
+.waitlist-message {
+    background: #eaf5ed;
+    color: #398052;
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.waitlist-error {
+    background: #fff0ee;
+    color: #bd443b;
+    padding: 14px 18px;
+    border-radius: 12px;
+}
+
+/* חזרה */
+.waitlist-back {
+    color: #7088e8 !important;
+    font-family: 'Heebo', sans-serif !important;
+    font-weight: 600 !important;
+    margin-top: 20px !important;
+}
+
+/* מובייל */
+@media (max-width: 600px) {
+    .waitlist-page {
+        padding: 28px 16px;
+    }
+
+    .waitlist-header h1 {
+        font-size: 24px;
+    }
+
+    .waitlist-card {
+        padding: 17px;
+    }
+
+    .waitlist-card-main {
+        gap: 12px;
+    }
+
+    .waitlist-date {
+        min-width: 58px;
+        height: 65px;
+    }
+
+    .waitlist-status {
+        font-size: 10px;
+        padding: 6px 9px;
+    }
+
+    .waitlist-card-footer {
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+}
