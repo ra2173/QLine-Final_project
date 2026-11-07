@@ -11,7 +11,6 @@ import UserAppointments from "./user/UserAppointments"
 import UserBookAppointment from "./user/UserBookAppointment"
 import SingleUser from "./user/SingleUser"
 import CalendarPage from "./user/CalendarPage"
-import UpdateUser from "./user/UpdateUser"
 import AppointmentDetails from "./user/AppointmentDetails"
 import WaitlistPage from "./user/WaitlistPage"
 
@@ -58,7 +57,6 @@ function App() {
           <Route path="/user/appointments" element={<UserAppointments />} />
           <Route path="/user/book" element={<UserBookAppointment />} />
           <Route path="/user/profile/:id" element={<SingleUser />} />
-          <Route path="/user/profile/edit/:id" element={<UpdateUser />} />
           <Route path="/appointment/:id" element={<AppointmentDetails />} />
           <Route path="/user/waitlist" element={<WaitlistPage />} />
         </Route>

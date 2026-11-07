@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import { Button, CircularProgress } from "@mui/material"
+import "../css/user/UserAppointments.css"
 
 const UserAppointments = () => {
     const [appointments, setAppointments] = useState([])
@@ -74,74 +76,225 @@ const UserAppointments = () => {
     const pastAppointments = appointments.filter(
         appointment => new Date(appointment.startTime) <= now
     )
-    if (loading) {
-        return <p>טוען תורים...</p>
-    }
-
-    if (error) {
-        return <p>{error}</p>
-    }
-
-
+if (loading) {
     return (
-        <div>
-            <h1>התורים שלי</h1>
-
-            <h2>השיעורים הקרובים שלי</h2>
-
-            {upcomingAppointments.length === 0 ? (
-                <p>אין לך שיעורים קרובים</p>
-            ) : (
-                <ul>
-                    {upcomingAppointments.map(appointment => (
-                        <li key={appointment._id}>
-                            <h3>{appointment.serviceId?.name || "שיעור"}</h3>
-
-                            <p>
-                                מדריכה: {appointment.providerId?.name}{" "}
-                                {appointment.providerId?.lastName}
-                            </p>
-
-                            <p>
-                                תאריך: {new Date(appointment.startTime).toLocaleDateString("he-IL")}
-                            </p>
-
-                            <p>
-                                שעה: {new Date(appointment.startTime).toLocaleTimeString(
-                                    "he-IL",
-                                    { hour: "2-digit", minute: "2-digit" }
-                                )}
-                            </p>
-
-                            <p>משך: {appointment.lengthTime} דקות</p>
-                            <p>סניף: {appointment.branch}</p>
-
-                            <button onClick={() => cancelAppointment(appointment._id)}> ביטול השיבוץ </button>
-                        </li>
-                    ))}
-                </ul>
-            )}
-
-            <h2>שיעורים קודמים</h2>
-
-            {pastAppointments.length === 0 ? (
-                <p>אין שיעורים קודמים</p>
-            ) : (
-                <ul>
-                    {pastAppointments.map(appointment => (
-                        <li key={appointment._id}>
-                            <h3>{appointment.serviceId?.name || "שיעור"}</h3>
-                            <p> תאריך: {new Date(appointment.startTime).toLocaleString("he-IL")}</p>
-                            <p>מדריכה: {appointment.providerId?.name}</p>
-                            <p>סניף: {appointment.branch}</p>
-                        </li>
-                    ))}
-                </ul>
-            )}
-            {cancelError && <p>{cancelError}</p>}
-            <button onClick={() => navigate("/user/home")}> חזרה לדף הבית </button>
+        <div className="appointments-page">
+            <CircularProgress sx={{ color: "#7088e8" }} />
         </div>
     )
 }
 
+if (error) {
+    return (
+        <div className="appointments-page">
+            <p className="appointment-error">{error}</p>
+        </div>
+    )
+}
+
+return (
+    <div className="appointments-page">
+        <div className="appointments-container">
+
+            {/* כותרת */}
+            <header className="appointments-header">
+                <div>
+                    <h1>התורים שלי</h1>
+                    <p>כל האימונים שלך במקום אחד</p>
+                </div>
+
+                <div className="appointments-header-icon">
+                    <span>▦</span>
+                </div>
+            </header>
+
+            {/* שיעורים קרובים */}
+            <section className="upcoming-section">
+
+                <div className="section-heading">
+                    <h2>השיעורים הקרובים</h2>
+                    <span className="appointments-count">
+                        {upcomingAppointments.length} שיעורים
+                    </span>
+                </div>
+
+                {upcomingAppointments.length === 0 ? (
+                    <div className="appointments-empty">
+                        אין לך שיעורים קרובים
+                    </div>
+                ) : (
+                    <div className="upcoming-list">
+
+                        {upcomingAppointments.map(appointment => {
+                            const date = new Date(appointment.startTime)
+
+                            return (
+                                <div
+                                    key={appointment._id}
+                                    className="upcoming-card"
+                                >
+
+                                    <div className="upcoming-main">
+
+                                        {/* תאריך */}
+                                        <div className="appointment-date">
+                                            <strong>
+                                                {date.toLocaleDateString(
+                                                    "he-IL",
+                                                    { day: "2-digit" }
+                                                )}
+                                            </strong>
+
+                                            <span>
+                                                {date.toLocaleDateString(
+                                                    "he-IL",
+                                                    { month: "long" }
+                                                )}
+                                            </span>
+                                        </div>
+
+                                        {/* פרטי השיעור */}
+                                        <div className="appointment-details">
+
+                                            <h3>
+                                                {appointment.serviceId?.name || "שיעור"}
+                                            </h3>
+
+                                            <div className="appointment-time">
+                                                {date.toLocaleTimeString(
+                                                    "he-IL",
+                                                    {
+                                                        hour: "2-digit",
+                                                        minute: "2-digit"
+                                                    }
+                                                )}
+                                            </div>
+
+                                            <p>
+                                                מדריכה:{" "}
+                                                {appointment.providerId?.name}{" "}
+                                                {appointment.providerId?.lastName}
+                                            </p>
+
+                                        </div>
+
+                                        <div className="appointment-icon">
+                                            <span>✓</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div className="appointment-footer">
+
+                                        <div className="appointment-extra">
+                                            <span>
+                                                {appointment.lengthTime} דקות
+                                            </span>
+
+                                            <span className="extra-divider">·</span>
+
+                                            <span>{appointment.branch}</span>
+                                        </div>
+
+                                        <Button
+                                            className="cancel-appointment-btn"
+                                            color="error"
+                                            variant="text"
+                                            onClick={() =>
+                                                cancelAppointment(appointment._id)
+                                            }
+                                        >
+                                            ביטול שיבוץ
+                                        </Button>
+
+                                    </div>
+
+                                </div>
+                            )
+                        })}
+
+                    </div>
+                )}
+
+            </section>
+
+            {/* שיעורים קודמים */}
+            <section className="past-section">
+
+                <div className="section-heading">
+                    <h2>שיעורים קודמים</h2>
+                </div>
+
+                {pastAppointments.length === 0 ? (
+                    <div className="appointments-empty">
+                        אין שיעורים קודמים
+                    </div>
+                ) : (
+                    <div className="past-list">
+
+                        {pastAppointments.map(appointment => {
+                            const date = new Date(appointment.startTime)
+
+                            return (
+                                <div
+                                    key={appointment._id}
+                                    className="past-card"
+                                >
+
+                                    <div className="past-date">
+                                        {date.toLocaleDateString("he-IL", {
+                                            day: "2-digit",
+                                            month: "long"
+                                        })}
+                                    </div>
+
+                                    <div className="past-details">
+                                        <h3>
+                                            {appointment.serviceId?.name || "שיעור"}
+                                        </h3>
+
+                                        <p>
+                                            {date.toLocaleTimeString("he-IL", {
+                                                hour: "2-digit",
+                                                minute: "2-digit"
+                                            })}
+                                            {" · "}
+                                            {appointment.providerId?.name || "מדריכה"}
+                                            {" · "}
+                                            {appointment.branch}
+                                        </p>
+                                    </div>
+
+                                    <span className="past-status">
+                                        הסתיים
+                                    </span>
+
+                                </div>
+                            )
+                        })}
+
+                    </div>
+                )}
+
+            </section>
+
+            {/* הודעת שגיאה בביטול */}
+            {cancelError && (
+                <p className="appointment-error">
+                    {cancelError}
+                </p>
+            )}
+
+            {/* חזרה */}
+            <Button
+                className="appointments-back"
+                variant="text"
+                onClick={() => navigate("/user/home")}
+            >
+                ← חזרה לדף הבית
+            </Button>
+
+        </div>
+    </div>
+)}
 export default UserAppointments

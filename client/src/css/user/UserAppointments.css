@@ -1,0 +1,319 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap');
+
+/* עמוד התורים */
+.appointments-page {
+
+    min-height: 100vh;
+    background: #f5f6fa;
+    direction: rtl;
+    padding: 45px 30px;
+}
+
+.appointments-container {
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+/* כותרת */
+
+.appointments-header {
+    font-family: 'Heebo', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 45px;
+}
+
+.appointments-header h1 {
+    color: #30344b;
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0 0 8px;
+}
+
+.appointments-header p {
+    color: #9297a8;
+    font-size: 14px;
+    margin: 0;
+}
+
+.appointments-header-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 17px;
+    background: #7088e8;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+
+/* כותרות אזורים */
+.upcoming-section,
+.past-section {
+    font-family: 'Heebo', sans-serif;
+    margin-bottom: 42px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    letter-spacing: -1px;
+    color: #30344b;
+    font-size: 21px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.appointments-count {
+    background: #e8ecfc;
+    color: #7088e8;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* רשימת שיעורים קרובים */
+.upcoming-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.upcoming-card {
+    background: white;
+    border-radius: 18px;
+    padding: 20px 24px;
+    border: 1px solid #eceef5;
+    transition: 0.2s ease;
+}
+
+.upcoming-card:hover {
+    border-color: #cbd3f5;
+    transform: translateY(-2px);
+}
+
+.upcoming-main {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* תאריך */
+.appointment-date {
+    min-width: 68px;
+    height: 72px;
+    border-radius: 15px;
+    background: #e9bda5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #493a32;
+}
+
+.appointment-date strong {
+    font-size: 25px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.appointment-date span {
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+/* פרטי השיעור */
+.appointment-details {
+    flex: 1;
+}
+
+.appointment-details h3 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #30344b;
+    margin: 0 0 6px;
+}
+
+.appointment-time {
+    font-size: 16px;
+    font-weight: 800;
+    color: #7088e8;
+    margin-bottom: 6px;
+}
+
+.appointment-details p {
+    color: #9297a8;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* אייקון */
+.appointment-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #edf0fc;
+    color: #7088e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+/* תחתית הכרטיס */
+.appointment-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f0f1f5;
+    margin-top: 18px;
+    padding-top: 12px;
+}
+
+.appointment-extra {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #9297a8;
+    font-size: 12px;
+}
+
+.extra-divider {
+    color: #e9bda5;
+    font-size: 18px;
+}
+
+.cancel-appointment-btn {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    min-width: auto !important;
+}
+
+/* שיעורים קודמים */
+.past-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.past-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    border-radius: 14px;
+    padding: 17px 22px;
+    border: 1px solid #eceef5;
+}
+
+.past-date {
+    min-width: 85px;
+    color: #9297a8;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.past-details {
+    flex: 1;
+}
+
+.past-details h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #555b70;
+    margin: 0 0 5px;
+}
+
+.past-details p {
+    font-size: 12px;
+    color: #a0a4b2;
+    margin: 0;
+}
+
+.past-status {
+    background: #f0f1f5;
+    color: #858a9c;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* אין שיעורים */
+.appointments-empty {
+    background: white;
+    padding: 28px;
+    border-radius: 16px;
+    color: #9297a8;
+    text-align: center;
+}
+
+/* הודעות */
+.appointment-error {
+    background: #fff0ee;
+    color: #bd443b;
+    padding: 14px 18px;
+    border-radius: 12px;
+}
+
+/* חזרה */
+.appointments-back {
+    color: #7088e8 !important;
+    font-weight: 700 !important;
+    margin-top: 5px !important;
+}
+
+/* מובייל */
+@media (max-width: 600px) {
+    .appointments-page {
+        padding: 28px 16px;
+    }
+
+    .appointments-header h1 {
+        font-size: 27px;
+    }
+
+    .upcoming-card {
+        padding: 17px;
+    }
+
+    .upcoming-main {
+        gap: 13px;
+    }
+
+    .appointment-date {
+        min-width: 58px;
+        height: 65px;
+    }
+
+    .appointment-icon {
+        display: none;
+    }
+
+    .appointment-footer {
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .appointment-extra {
+        flex-wrap: wrap;
+    }
+
+    .past-card {
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .past-date {
+        min-width: 70px;
+    }
+}

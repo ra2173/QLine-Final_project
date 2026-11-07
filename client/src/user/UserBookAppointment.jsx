@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import "../css/user/UserBookAppointment.css"
+
 
 const UserBookAppointment = () => {
     const [appointments, setAppointments] = useState([])
@@ -76,60 +78,77 @@ const UserBookAppointment = () => {
     }
 
     if (loading) return <p>טוען תורים פנויים...</p>
+return (
+<div className="book-page">
+<div className="book-container">
 
-    return (
-        <div>
-            <h1>קביעת תור</h1>
+        <h1 className="book-title">קביעת תור</h1>
 
-            {message && <p>{message}</p>}
-            {error && <p>{error}</p>}
+        {message && (
+            <p className="book-message book-success">
+                {message}
+            </p>
+        )}
 
-            {appointments.length === 0 ? (
-                <p>אין כרגע תורים פנויים</p>
-            ) : (
-                <ul>
-                    {appointments.map((appointment) => (
-                        <li key={appointment._id}>
-                            <p>
-                                תאריך:
-                                {" "}
-                                {new Date(
-                                    appointment.startTime
-                                ).toLocaleString("he-IL")}
-                            </p>
+        {error && (
+            <p className="book-message book-error">
+                {error}
+            </p>
+        )}
 
-                            <p>
-                                מורה:
-                                {" "}
-                                {appointment.providerId?.name || "לא צוין"}
-                                {" "}
-                                {appointment.providerId?.lastName || ""}
-                            </p>
+        {appointments.length === 0 ? (
+            <div className="book-empty">
+                אין כרגע תורים פנויים
+            </div>
+        ) : (
+            <ul className="book-list">
+                {appointments.map((appointment) => (
+                    <li key={appointment._id} className="book-card">
 
-                            <p>
-                                שירות:
-                                {" "}
-                                {appointment.serviceId?.name || "לא צוין"}
-                            </p>
+                        <p className="book-info">
+                            <strong>תאריך:</strong>{" "}
+                            {new Date(appointment.startTime).toLocaleString("he-IL")}
+                        </p>
 
-                            <button
-                                onClick={() => bookAppointment(appointment._id)}
-                                disabled={bookingId !== null}
-                            >
-                                {bookingId === appointment._id
-                                    ? "קובעת תור..."
-                                    : "קביעת תור"}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            )}
+                        <p className="book-info">
+                            <strong>מורה:</strong>{" "}
+                            {appointment.providerId?.name || "לא צוין"}{" "}
+                            {appointment.providerId?.lastName || ""}
+                        </p>
 
-            <button onClick={() => navigate("/user/home")}>
-                חזרה לדף הבית
-            </button>
-        </div>
-    )
+                        <p className="book-info">
+                            <strong>שירות:</strong>{" "}
+                            {appointment.serviceId?.name || "לא צוין"}
+                        </p>
+
+                        <Button
+                            variant="contained"
+                            className="book-button"
+                            onClick={() => bookAppointment(appointment._id)}
+                            disabled={bookingId !== null}
+                        >
+                            {bookingId === appointment._id
+                                ? "קובעת תור..."
+                                : "קביעת תור"}
+                        </Button>
+
+                    </li>
+                ))}
+            </ul>
+        )}
+
+        <Button
+            variant="text"
+            className="book-back"
+            onClick={() => navigate("/user/home")}
+        >
+            חזרה לדף הבית
+        </Button>
+
+    </div>
+</div>
+
+)
 }
 
 export default UserBookAppointment
