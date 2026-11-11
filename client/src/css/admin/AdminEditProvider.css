@@ -1,0 +1,284 @@
+/* ===== OVERLAY ===== */
+
+.editProviderOverlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+    background: rgba(25, 27, 40, 0.45);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    direction: rtl;
+    overflow: hidden;
+    font-family: inherit;
+}
+
+/* ===== MODAL ===== */
+
+.editProviderModal {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    max-height: 100%;
+    background: #ffffff;
+    border-radius: 23px;
+    box-sizing: border-box;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.16);
+}
+
+/* ===== HEADER ===== */
+
+.editProviderHeader {
+    text-align: center;
+    padding: 22px 30px 17px;
+    background: linear-gradient(180deg,
+            #f8eee8 0%,
+            #ffffff 100%);
+}
+
+.editProviderBrand {
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #7088e8;
+    margin-bottom: 6px;
+}
+
+.editProviderHeader h1 {
+    font-size: 25px;
+    font-weight: 800;
+    color: #252638;
+    margin: 0 0 6px;
+}
+
+.editProviderHeader p {
+    font-size: 14px;
+    color: #888a99;
+    margin: 0;
+}
+
+/* ===== CLOSE BUTTON ===== */
+
+.editProviderClose {
+    position: absolute;
+    top: 14px;
+    left: 17px;
+    width: 31px;
+    height: 31px;
+    border: none;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #7088e8;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    transition: 0.2s;
+}
+
+.editProviderClose:hover {
+    background: #f0f2fc;
+}
+
+/* ===== FORM ===== */
+
+.editProviderForm {
+    padding: 22px 30px 25px;
+    box-sizing: border-box;
+}
+
+/* שתי עמודות */
+
+.editProviderGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 20px;
+}
+
+.editProviderField {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.editProviderField label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #454657;
+}
+
+/* ===== INPUTS ===== */
+
+.editProviderField input {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    border: 1px solid #e7e8ef;
+    border-radius: 10px;
+    background: #fafbfe;
+    color: #303142;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.editProviderField input:focus {
+    border-color: #7088e8;
+    box-shadow: 0 0 0 3px rgba(112, 136, 232, 0.1);
+    background: #ffffff;
+}
+
+.editProviderField input::placeholder {
+    color: #a5a6b1;
+    font-size: 12px;
+}
+
+/* ===== PASSWORD HINT ===== */
+
+.editProviderHint {
+    font-size: 11px;
+    color: #999baa;
+    margin-top: -2px;
+}
+
+/* ===== ERROR ===== */
+
+.editProviderError {
+    margin: 14px 0 0;
+    padding: 9px 12px;
+    border-radius: 8px;
+    background: #fff0f0;
+    color: #d94343;
+    font-size: 13px;
+}
+
+/* ===== BUTTONS ===== */
+
+.editProviderButtons {
+    display: flex;
+    gap: 12px;
+    margin-top: 23px;
+}
+
+.editProviderButtons button {
+    flex: 1;
+    height: 44px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.editProviderSubmit {
+    border: none;
+    background: #7088e8;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(112, 136, 232, 0.2);
+}
+
+.editProviderSubmit:hover {
+    background: #5c73d0;
+}
+
+.editProviderCancel {
+    border: 1px solid #e6e7ed;
+    background: #f5f6fa;
+    color: #55566a;
+}
+
+.editProviderCancel:hover {
+    background: #e9bda5;
+    color: #ffffff;
+}
+
+/* ===== SHORT SCREENS ===== */
+
+@media (max-height: 700px) {
+    .editProviderHeader {
+        padding: 12px 25px 9px;
+    }
+
+    .editProviderHeader h1 {
+        font-size: 21px;
+    }
+
+    .editProviderForm {
+        padding: 12px 25px 14px;
+    }
+
+    .editProviderGrid {
+        gap: 9px 16px;
+    }
+
+    .editProviderField {
+        gap: 4px;
+    }
+
+    .editProviderField input {
+        height: 36px;
+    }
+
+    .editProviderButtons {
+        margin-top: 13px;
+    }
+
+    .editProviderButtons button {
+        height: 38px;
+    }
+}
+
+@media (max-height: 550px) {
+    .editProviderHeader {
+        padding: 6px 20px 4px;
+    }
+
+    .editProviderHeader p {
+        display: none;
+    }
+
+    .editProviderForm {
+        padding: 7px 18px 8px;
+    }
+
+    .editProviderGrid {
+        gap: 5px 12px;
+    }
+
+    .editProviderField {
+        gap: 2px;
+    }
+
+    .editProviderField label {
+        font-size: 11px;
+    }
+
+    .editProviderField input {
+        height: 29px;
+        font-size: 12px;
+    }
+
+    .editProviderHint {
+        font-size: 9px;
+    }
+
+    .editProviderButtons {
+        margin-top: 8px;
+    }
+
+    .editProviderButtons button {
+        height: 31px;
+        font-size: 12px;
+    }
+}

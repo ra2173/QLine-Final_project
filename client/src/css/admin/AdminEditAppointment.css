@@ -1,0 +1,321 @@
+
+/* ===== OVERLAY ===== */
+
+.editAppointmentOverlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+    background: rgba(25, 27, 40, 0.45);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    direction: rtl;
+    overflow: hidden;
+    font-family: inherit;
+}
+
+/* ===== MODAL ===== */
+
+.editAppointmentModal {
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    max-height: 100%;
+    background: #ffffff;
+    border-radius: 23px;
+    box-sizing: border-box;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.16);
+}
+
+/* ===== HEADER ===== */
+
+.editAppointmentHeader {
+    text-align: center;
+    padding: 20px 30px 15px;
+    background: linear-gradient(
+        180deg,
+        #f8eee8 0%,
+        #ffffff 100%
+    );
+}
+
+.editAppointmentBrand {
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #7088e8;
+    margin-bottom: 6px;
+}
+
+.editAppointmentHeader h1 {
+    font-size: 25px;
+    font-weight: 800;
+    color: #252638;
+    margin: 0 0 6px;
+}
+
+.editAppointmentHeader p {
+    font-size: 14px;
+    color: #888a99;
+    margin: 0;
+}
+
+/* ===== CLOSE ===== */
+
+.editAppointmentClose {
+    position: absolute;
+    top: 14px;
+    left: 17px;
+    width: 31px;
+    height: 31px;
+    border: none;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #7088e8;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    transition: 0.2s;
+}
+
+.editAppointmentClose:hover {
+    background: #f0f2fc;
+}
+
+/* ===== FORM ===== */
+
+.editAppointmentForm {
+    padding: 20px 30px 23px;
+    box-sizing: border-box;
+}
+
+/* ===== GRID ===== */
+
+.editAppointmentGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 20px;
+}
+
+.editAppointmentField {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.editAppointmentField label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #454657;
+}
+
+/* ===== INPUTS ===== */
+
+.editAppointmentField input,
+.editAppointmentField select,
+.editAppointmentField textarea {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    border: 1px solid #e7e8ef;
+    border-radius: 10px;
+    background: #fafbfe;
+    color: #303142;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.editAppointmentField input:focus,
+.editAppointmentField select:focus,
+.editAppointmentField textarea:focus {
+    border-color: #7088e8;
+    box-shadow: 0 0 0 3px rgba(112, 136, 232, 0.1);
+    background: #ffffff;
+}
+
+/* ===== NOTES ===== */
+
+.editAppointmentField textarea {
+    height: 42px;
+    padding: 10px 12px;
+    resize: none;
+}
+
+.editAppointmentField input::placeholder,
+.editAppointmentField textarea::placeholder {
+    color: #a5a6b1;
+}
+
+/* ===== ERROR ===== */
+
+.editAppointmentError {
+    margin: 13px 0 0;
+    padding: 9px 12px;
+    border-radius: 8px;
+    background: #fff0f0;
+    color: #d94343;
+    font-size: 13px;
+}
+
+/* ===== BUTTONS ===== */
+
+.editAppointmentButtons {
+    display: flex;
+    gap: 12px;
+    margin-top: 21px;
+}
+
+.editAppointmentButtons button {
+    flex: 1;
+    height: 43px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.editAppointmentSubmit {
+    border: none;
+    background: #7088e8;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(112, 136, 232, 0.2);
+}
+
+.editAppointmentSubmit:hover {
+    background: #5c73d0;
+}
+
+.editAppointmentCancel {
+    border: 1px solid #e6e7ed;
+    background: #f5f6fa;
+    color: #55566a;
+}
+
+.editAppointmentCancel:hover {
+    background: #e9bda5;
+    color: #ffffff;
+}
+
+/* ===== SHORT SCREENS ===== */
+
+@media (max-height: 700px) {
+    .editAppointmentHeader {
+        padding: 11px 25px 8px;
+    }
+
+    .editAppointmentHeader h1 {
+        font-size: 21px;
+    }
+
+    .editAppointmentForm {
+        padding: 11px 25px 13px;
+    }
+
+    .editAppointmentGrid {
+        gap: 8px 16px;
+    }
+
+    .editAppointmentField {
+        gap: 3px;
+    }
+
+    .editAppointmentField label {
+        font-size: 12px;
+    }
+
+    .editAppointmentField input,
+    .editAppointmentField select {
+        height: 35px;
+    }
+
+    .editAppointmentField textarea {
+        height: 35px;
+    }
+
+    .editAppointmentButtons {
+        margin-top: 12px;
+    }
+
+    .editAppointmentButtons button {
+        height: 36px;
+    }
+}
+
+/* ===== VERY SHORT SCREENS ===== */
+
+@media (max-height: 550px) {
+    .editAppointmentHeader {
+        padding: 5px 20px 4px;
+    }
+
+    .editAppointmentHeader p {
+        display: none;
+    }
+
+    .editAppointmentForm {
+        padding: 6px 18px 8px;
+    }
+
+    .editAppointmentGrid {
+        gap: 4px 12px;
+    }
+
+    .editAppointmentField {
+        gap: 2px;
+    }
+
+    .editAppointmentField label {
+        font-size: 11px;
+    }
+
+    .editAppointmentField input,
+    .editAppointmentField select {
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .editAppointmentField textarea {
+        height: 28px;
+        padding: 5px 8px;
+    }
+
+    .editAppointmentButtons {
+        margin-top: 7px;
+    }
+
+    .editAppointmentButtons button {
+        height: 29px;
+        font-size: 12px;
+    }
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 550px) {
+    .editAppointmentModal {
+        max-width: 430px;
+    }
+
+    .editAppointmentForm {
+        padding: 15px 18px 18px;
+    }
+
+    .editAppointmentGrid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+}

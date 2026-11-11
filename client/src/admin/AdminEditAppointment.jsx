@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
+import "../css/admin/AdminEditAppointment.css"
+
 function AdminEditAppointment() {
     const { id } = useParams()
     const navigate = useNavigate()
@@ -142,116 +144,180 @@ function AdminEditAppointment() {
     if (loading)
         return <p>טוען פרטי שיעור...</p>
 
+
     return (
-        <div>
-            <h1>עריכת שיעור</h1>
-
-            <form onSubmit={handleSubmit}>
-
-                <label>מדריכה</label>
-                <select
-                    name="providerId"
-                    value={formData.providerId}
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="">בחרי מדריכה</option>
-
-                    {providers.map(provider => (
-                        <option key={provider._id} value={provider._id}>
-                            {provider.name} {provider.lastName}
-                        </option>
-                    ))}
-                </select>
-
-                <label>שירות</label>
-                <select
-                    name="serviceId"
-                    value={formData.serviceId}
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="">בחרי שירות</option>
-
-                    {services.map(service => (
-                        <option key={service._id} value={service._id}>
-                            {service.name}
-                        </option>
-                    ))}
-                </select>
-
-                <label>תאריך ושעה</label>
-                <input
-                    type="datetime-local"
-                    name="startTime"
-                    value={formData.startTime}
-                    onChange={handleChange}
-                    required
-                />
-
-                <label>משך השיעור בדקות</label>
-                <input
-                    type="number"
-                    name="lengthTime"
-                    value={formData.lengthTime}
-                    onChange={handleChange}
-                    min="1"
-                    required
-                />
-
-                <label>מספר משתתפים מרבי</label>
-                <input
-                    type="number"
-                    name="maxParticipants"
-                    value={formData.maxParticipants}
-                    onChange={handleChange}
-                    min="1"
-                    required
-                />
-
-                <label>סניף</label>
-                <input
-                    name="branch"
-                    value={formData.branch}
-                    onChange={handleChange}
-                    required
-                />
-
-                <label>הערות</label>
-                <textarea
-                    name="notes"
-                    value={formData.notes}
-                    onChange={handleChange}
-                />
-
-                <label>סטטוס</label>
-                <select
-                    name="status"
-                    value={formData.status}
-                    onChange={handleChange}
-                >
-                    <option value="empty">פנוי</option>
-                    <option value="booked">רשום</option>
-                    <option value="completed">הושלם</option>
-                    <option value="late cancel">ביטול מאוחר</option>
-                </select>
-
-                {error && <p>{error}</p>}
-
-                <button type="submit">
-                    שמירת שינויים
-                </button>
+        <div className="editAppointmentOverlay">
+            <div className="editAppointmentModal">
 
                 <button
+                    className="editAppointmentClose"
                     type="button"
                     onClick={() => navigate("/admin/appointments")}
                 >
-                    ביטול
+                    ✕
                 </button>
 
-            </form>
+                <div className="editAppointmentHeader">
+                    <span className="editAppointmentBrand">QLINE</span>
+                    <h1>עריכת שיעור</h1>
+                    <p>עדכון פרטי השיעור במערכת</p>
+                </div>
+
+                <form
+                    className="editAppointmentForm"
+                    onSubmit={handleSubmit}
+                >
+
+                    <div className="editAppointmentGrid">
+
+
+                        <div className="editAppointmentField">
+                            <label>מדריכה</label>
+                            <select
+                                name="providerId"
+                                value={formData.providerId}
+                                onChange={(e) => {
+                                    setFormData({
+                                        ...formData,
+                                        providerId: e.target.value,
+                                        serviceId: ""
+                                    })
+                                }}
+                                required
+                            >
+                                <option value="">בחרי מדריכה</option>
+
+                                {providers.map(provider => (
+                                    <option key={provider._id} value={provider._id}>
+                                        {provider.name} {provider.lastName}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="editAppointmentField">
+                            <label>שירות</label>
+                            <select
+                                name="serviceId"
+                                value={formData.serviceId}
+                                onChange={handleChange}
+                                required
+                                disabled={!formData.providerId}
+                            >
+                                <option value="">בחרי שירות</option>
+
+                                {services
+                                    .filter(service =>
+                                        service.providerId?._id === formData.providerId
+                                    )
+                                    .map(service => (
+                                        <option key={service._id} value={service._id}>
+                                            {service.name}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
+
+
+                        <div className="editAppointmentField">
+                            <label>תאריך ושעה</label>
+                            <input
+                                type="datetime-local"
+                                name="startTime"
+                                value={formData.startTime}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="editAppointmentField">
+                            <label>משך השיעור בדקות</label>
+                            <input
+                                type="number"
+                                name="lengthTime"
+                                value={formData.lengthTime}
+                                onChange={handleChange}
+                                min="1"
+                                required
+                            />
+                        </div>
+
+                        <div className="editAppointmentField">
+                            <label>מספר משתתפים מרבי</label>
+                            <input
+                                type="number"
+                                name="maxParticipants"
+                                value={formData.maxParticipants}
+                                onChange={handleChange}
+                                min="1"
+                                required
+                            />
+                        </div>
+
+                        <div className="editAppointmentField">
+                            <label>סניף</label>
+                            <input
+                                name="branch"
+                                value={formData.branch}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="editAppointmentField">
+                            <label>סטטוס השיעור</label>
+                            <select
+                                name="status"
+                                value={formData.status}
+                                onChange={handleChange}
+                            >
+                                <option value="empty">פנוי</option>
+                                <option value="booked">רשום</option>
+                                <option value="completed">הושלם</option>
+                                <option value="late cancel">ביטול מאוחר</option>
+                            </select>
+                        </div>
+
+                        <div className="editAppointmentField">
+                            <label>הערות</label>
+                            <textarea
+                                name="notes"
+                                value={formData.notes}
+                                onChange={handleChange}
+                                placeholder="הערות נוספות לשיעור..."
+                            />
+                        </div>
+
+                    </div>
+
+                    {error && (
+                        <p className="editAppointmentError">{error}</p>
+                    )}
+
+                    <div className="editAppointmentButtons">
+
+                        <button
+                            type="submit"
+                            className="editAppointmentSubmit"
+                        >
+                            שמירת שינויים
+                        </button>
+
+                        <button
+                            type="button"
+                            className="editAppointmentCancel"
+                            onClick={() => navigate("/admin/appointments")}
+                        >
+                            ביטול
+                        </button>
+
+                    </div>
+
+                </form>
+            </div>
         </div>
     )
+
 }
 
 export default AdminEditAppointment

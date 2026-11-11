@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import "../css/admin/AdminEditProvider.css"
 
 function AdminEditProvider() {
     const { id } = useParams()
@@ -118,94 +119,144 @@ function AdminEditProvider() {
     if (loading)
         return <p>טוען פרטי מדריכה...</p>
 
-    return (
-        <div>
-            <h1>עריכת מדריכה</h1>
+return (
+    <div className="editProviderOverlay">
+        <div className="editProviderModal">
 
-            <form onSubmit={handleSubmit}>
+            <button
+                className="editProviderClose"
+                type="button"
+                onClick={() => navigate("/admin/providers")}
+            >
+                ✕
+            </button>
 
-                <label>שם פרטי</label>
-                <input
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                />
+            <div className="editProviderHeader">
+                <span className="editProviderBrand">QLINE</span>
+                <h1>עריכת מדריכה</h1>
+                <p>עדכון פרטי המדריכה במערכת</p>
+            </div>
 
-                <label>שם משפחה</label>
-                <input
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                />
+            <form className="editProviderForm" onSubmit={handleSubmit}>
 
-                <label>שם משתמש</label>
-                <input
-                    name="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                    required
-                />
+                <div className="editProviderGrid">
 
-                <label>תעודת זהות</label>
-                <input
-                    name="id"
-                    value={formData.id}
-                    onChange={handleChange}
-                    minLength={9}
-                    maxLength={9}
-                    required
-                />
+                    <div className="editProviderField">
+                        <label>שם פרטי</label>
+                        <input
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                <label>אימייל</label>
-                <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
+                    <div className="editProviderField">
+                        <label>שם משפחה</label>
+                        <input
+                            name="lastName"
+                            value={formData.lastName}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                <label>טלפון</label>
-                <input
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                />
+                    <div className="editProviderField">
+                        <label>שם משתמש</label>
+                        <input
+                            name="username"
+                            value={formData.username}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                <label>שירות</label>
-                <input
-                    name="service"
-                    value={formData.service}
-                    onChange={handleChange}
-                    required
-                />
+                    <div className="editProviderField">
+                        <label>תעודת זהות</label>
+                        <input
+                            name="id"
+                            value={formData.id}
+                            onChange={handleChange}
+                            minLength={9}
+                            maxLength={9}
+                            required
+                        />
+                    </div>
 
-                <label>סיסמה חדשה (להשאיר ריק אם אין שינוי)</label>
-                <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                />
+                    <div className="editProviderField">
+                        <label>אימייל</label>
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                {error && <p>{error}</p>}
+                    <div className="editProviderField">
+                        <label>טלפון</label>
+                        <input
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                <button type="submit">
-                    שמירת שינויים
-                </button>
+                    <div className="editProviderField">
+                        <label>שירות</label>
+                        <input
+                            name="service"
+                            value={formData.service}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                <button
-                    type="button"
-                    onClick={() => navigate("/admin/providers")}
-                >
-                    ביטול
-                </button>
+                    <div className="editProviderField">
+                        <label>סיסמה חדשה</label>
+                        <input
+                            type="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            placeholder="השאירי ריק ללא שינוי"
+                        />
+                        <span className="editProviderHint">
+                            יש להזין רק אם רוצים לשנות סיסמה
+                        </span>
+                    </div>
+
+                </div>
+
+                {error && (
+                    <p className="editProviderError">{error}</p>
+                )}
+
+                <div className="editProviderButtons">
+
+                    <button
+                        type="submit"
+                        className="editProviderSubmit"
+                    >
+                        שמירת שינויים
+                    </button>
+
+                    <button
+                        type="button"
+                        className="editProviderCancel"
+                        onClick={() => navigate("/admin/providers")}
+                    >
+                        ביטול
+                    </button>
+
+                </div>
 
             </form>
         </div>
-    )
+    </div>
+)
+
 }
 
 export default AdminEditProvider
