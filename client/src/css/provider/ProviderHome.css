@@ -1,0 +1,309 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+.providerHome {
+    min-height: 100vh;
+    direction: rtl;
+    background: #F7F8FA;
+    font-family: 'Heebo', sans-serif;
+    color: #292b35;
+}
+
+/* Header */
+
+.providerHomeHeader {
+    height: 78px;
+    padding: 0 7%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.035);
+}
+
+.providerHomeLogo {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #7088e8;
+}
+
+.providerHomeLogout {
+    border: 1px solid #e9bda5;
+    background: transparent;
+    color: #555765;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.providerHomeLogout:hover {
+    background: #e9bda5;
+    color: white;
+}
+
+.providerHomeLogout span {
+    font-size: 18px;
+}
+
+/* Main content */
+
+.providerHomeContent {
+    max-width: 1200px;
+    width: 86%;
+    margin: 0 auto;
+    padding: 55px 0 25px;
+}
+
+/* Welcome section */
+
+.providerHomeWelcome {
+    min-height: 230px;
+    background: linear-gradient(115deg, #7088e8, #8fa1ed);
+    border-radius: 24px;
+    padding: 45px 55px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    box-shadow: 0 12px 30px rgba(112, 136, 232, 0.18);
+}
+
+.providerHomeLabel {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.18);
+    padding: 7px 15px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+.providerHomeWelcome h1 {
+    font-size: 36px;
+    font-weight: 800;
+    margin: 0 0 8px;
+}
+
+.providerHomeWelcome p {
+    font-size: 16px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.providerHomeDecoration {
+    position: absolute;
+    left: 65px;
+    top: -65px;
+    font-size: 290px;
+    line-height: 1;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.10);
+    pointer-events: none;
+}
+
+/* Section title */
+
+.providerHomeSection {
+    margin-top: 50px;
+}
+
+.providerHomeSectionTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.providerHomeSectionTitle h2 {
+    font-size: 23px;
+    font-weight: 800;
+    margin: 0;
+    color: #292b35;
+}
+
+.providerHomeSectionTitle span {
+    font-size: 13px;
+    color: #9294a0;
+}
+
+/* Cards */
+
+.providerHomeGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.providerHomeCard {
+    min-height: 185px;
+    padding: 25px;
+    background: white;
+    border: 1px solid #f0f0f3;
+    border-radius: 20px;
+    text-align: right;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.035);
+}
+
+.providerHomeCard:hover {
+    transform: translateY(-6px);
+    background: #5c73d0;
+    border-color: #5c73d0;
+    box-shadow: 0 12px 25px rgba(92, 115, 208, 0.2);
+}
+
+.providerHomeCardTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.providerHomeIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 15px;
+    background: #eef0ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    transition: 0.3s ease;
+}
+
+.providerHomeArrow {
+    color: #a1a3ad;
+    font-size: 23px;
+    transition: 0.3s ease;
+}
+
+.providerHomeCardText h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #30323d;
+    margin: 15px 0 5px;
+    transition: 0.3s ease;
+}
+
+.providerHomeCardText p {
+    font-size: 13px;
+    color: #9294a0;
+    margin: 0;
+    transition: 0.3s ease;
+}
+
+/* Hover */
+
+.providerHomeCard:hover .providerHomeCardText h3,
+.providerHomeCard:hover .providerHomeCardText p,
+.providerHomeCard:hover .providerHomeArrow {
+    color: white;
+}
+
+.providerHomeCard:hover .providerHomeIcon {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.providerHomeCard:hover .providerHomeArrow {
+    transform: translateX(-5px);
+}
+
+/* Peach accent */
+
+.providerHomeCard3 .providerHomeIcon,
+.providerHomeCard5 .providerHomeIcon {
+    background: #fbf0e9;
+}
+
+/* Footer */
+
+.providerHomeFooter {
+    text-align: center;
+    color: #b0b1ba;
+    font-size: 12px;
+    margin-top: 55px;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+    .providerHomeGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .providerHomeContent {
+        width: 90%;
+    }
+}
+
+@media (max-width: 600px) {
+    .providerHomeHeader {
+        padding: 0 5%;
+        height: 68px;
+    }
+
+    .providerHomeContent {
+        width: 90%;
+        padding-top: 30px;
+    }
+
+    .providerHomeWelcome {
+        min-height: 190px;
+        padding: 30px 25px;
+        border-radius: 18px;
+    }
+
+    .providerHomeWelcome h1 {
+        font-size: 28px;
+    }
+
+    .providerHomeWelcome p {
+        font-size: 14px;
+        max-width: 230px;
+    }
+
+    .providerHomeDecoration {
+        left: -10px;
+        top: 5px;
+        font-size: 180px;
+    }
+
+    .providerHomeSection {
+        margin-top: 35px;
+    }
+
+    .providerHomeSectionTitle h2 {
+        font-size: 19px;
+    }
+
+    .providerHomeSectionTitle span {
+        display: none;
+    }
+
+    .providerHomeGrid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .providerHomeCard {
+        min-height: 155px;
+    }
+}
