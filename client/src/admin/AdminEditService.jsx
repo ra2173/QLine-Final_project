@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import "../css/admin/AdminEditService.css"
 
 function AdminEditService() {
     const { id } = useParams()
@@ -119,77 +120,126 @@ function AdminEditService() {
     if (loading)
         return <p>טוען פרטי שירות...</p>
 
-    return (
-        <div>
-            <h1>עריכת שירות</h1>
 
-            <form onSubmit={handleSubmit}>
+return (
+    <div className="editServiceOverlay">
+        <div className="editServiceModal">
 
-                <label>מדריכה</label>
-                <select
-                    name="providerId"
-                    value={formData.providerId}
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="">בחרי מדריכה</option>
+            <button
+                className="editServiceClose"
+                type="button"
+                onClick={() => navigate("/admin/services")}
+            >
+                ✕
+            </button>
 
-                    {providers.map(provider => (
-                        <option key={provider._id} value={provider._id}>
-                            {provider.name} {provider.lastName}
-                        </option>
-                    ))}
-                </select>
+            <div className="editServiceHeader">
+                <span className="editServiceBrand">QLINE</span>
+                <h1>עריכת שירות</h1>
+                <p>עדכון פרטי השירות במערכת</p>
+            </div>
 
-                <label>שם השירות</label>
-                <input
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                />
+            <form className="editServiceForm" onSubmit={handleSubmit}>
 
-                <label>תיאור השירות</label>
-                <textarea
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                />
+                <div className="editServiceField">
+                    <label>מדריכה</label>
+                    <select
+                        name="providerId"
+                        value={formData.providerId}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">בחרי מדריכה</option>
 
-                <label>מחיר</label>
-                <input
-                    type="number"
-                    name="price"
-                    value={formData.price}
-                    onChange={handleChange}
-                    min="0"
-                    required
-                />
+                        {providers.map(provider => (
+                            <option key={provider._id} value={provider._id}>
+                                {provider.name} {provider.lastName}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
-                <label>צבע השירות</label>
-                <input
-                    type="color"
-                    name="color"
-                    value={formData.color}
-                    onChange={handleChange}
-                />
+                <div className="editServiceField">
+                    <label>שם השירות</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="שם השירות"
+                        required
+                    />
+                </div>
 
-                {error && <p>{error}</p>}
+                <div className="editServiceField">
+                    <label>תיאור השירות</label>
+                    <textarea
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        placeholder="תיאור קצר של השירות..."
+                    />
+                </div>
 
-                <button type="submit">
-                    שמירת שינויים
-                </button>
+                <div className="editServiceTwoColumns">
 
-                <button
-                    type="button"
-                    onClick={() => navigate("/admin/services")}
-                >
-                    ביטול
-                </button>
+                    <div className="editServiceField">
+                        <label>מחיר</label>
+                        <input
+                            type="number"
+                            name="price"
+                            value={formData.price}
+                            onChange={handleChange}
+                            min="0"
+                            placeholder="מחיר"
+                            required
+                        />
+                    </div>
+
+                    <div className="editServiceField">
+                        <label>צבע השירות</label>
+
+                        <div className="editServiceColorBox">
+                            <input
+                                type="color"
+                                name="color"
+                                value={formData.color}
+                                onChange={handleChange}
+                            />
+                            <span>{formData.color}</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                {error && (
+                    <p className="editServiceError">{error}</p>
+                )}
+
+                <div className="editServiceButtons">
+
+                    <button
+                        type="submit"
+                        className="editServiceSubmit"
+                    >
+                        שמירת שינויים
+                    </button>
+
+                    <button
+                        type="button"
+                        className="editServiceCancel"
+                        onClick={() => navigate("/admin/services")}
+                    >
+                        ביטול
+                    </button>
+
+                </div>
 
             </form>
         </div>
-    )
+    </div>
+)
+
 }
 
 export default AdminEditService

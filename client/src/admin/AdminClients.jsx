@@ -1,5 +1,7 @@
+
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import "../css/admin/AdminClients.css"
 
 function AdminClients() {
     const navigate = useNavigate()
@@ -80,36 +82,54 @@ function AdminClients() {
     if (loading)
         return <p>טוען לקוחות...</p>
 
-    return (
-        <div>
+if (loading)
+    return <p className="clients-loading">טוען לקוחות...</p>
+
+return (
+    <div className="admin-clients">
+
+        <div className="clients-header">
             <h1>ניהול לקוחות</h1>
 
-            <button onClick={() => navigate("/admin")}>
+            <button
+                className="clients-back-button"
+                onClick={() => navigate("/admin")}
+            >
                 חזרה לדף הבית
             </button>
+        </div>
 
-            <input
-                type="text"
-                placeholder="חיפוש לקוח..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-            />
+        <input
+            className="clients-search"
+            type="text"
+            placeholder="חיפוש לקוח..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+        />
 
-            {error && <p>{error}</p>}
+        {error && (
+            <p className="clients-error">{error}</p>
+        )}
 
-            {filteredClients.length === 0 ? (
-                <p>לא נמצאו לקוחות</p>
-            ) : (
-                <div>
-                    {filteredClients.map(client => (
-                        <div key={client._id}>
-                            <h3>
-                                {client.name} {client.lastName}
-                            </h3>
+        {filteredClients.length === 0 ? (
+            <p className="clients-empty">לא נמצאו לקוחות</p>
+        ) : (
+            <div className="clients-list">
 
-                            <p>שם משתמש: {client.username}</p>
-                            <p>אימייל: {client.email}</p>
-                            <p>טלפון: {client.phone}</p>
+                {filteredClients.map(client => (
+                    <div
+                        className="client-card"
+                        key={client._id}
+                    >
+                        <h3>
+                            {client.name} {client.lastName}
+                        </h3>
+
+                        <p>שם משתמש: {client.username}</p>
+                        <p>אימייל: {client.email}</p>
+                        <p>טלפון: {client.phone}</p>
+
+                        <div className="client-card-buttons">
 
                             <button
                                 onClick={() =>
@@ -124,12 +144,16 @@ function AdminClients() {
                             >
                                 מחיקה
                             </button>
+
                         </div>
-                    ))}
-                </div>
-            )}
-        </div>
-    )
+                    </div>
+                ))}
+
+            </div>
+        )}
+
+    </div>
+)
 }
 
 export default AdminClients

@@ -1,0 +1,298 @@
+
+/* ===== OVERLAY ===== */
+
+.serviceModalOverlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    box-sizing: border-box;
+    background: rgba(25, 27, 40, 0.45);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    direction: rtl;
+    overflow: hidden;
+    font-family: inherit;
+}
+
+/* ===== MODAL ===== */
+
+.serviceModal {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    max-height: 100%;
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 0;
+    box-sizing: border-box;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.16);
+    overflow: hidden;
+}
+
+/* ===== HEADER ===== */
+
+.serviceModalHeader {
+    text-align: center;
+    padding: 22px 25px 15px;
+    background: linear-gradient(
+        180deg,
+        #f8eee8 0%,
+        #ffffff 100%
+    );
+}
+
+.serviceBrand {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #7088e8;
+    margin-bottom: 5px;
+}
+
+.serviceModalHeader h1 {
+    font-size: 23px;
+    font-weight: 800;
+    color: #252638;
+    margin: 0 0 5px;
+}
+
+.serviceModalHeader p {
+    font-size: 13px;
+    color: #888a99;
+    margin: 0;
+}
+
+/* ===== CLOSE BUTTON ===== */
+
+.serviceClose {
+    position: absolute;
+    top: 13px;
+    left: 15px;
+    width: 29px;
+    height: 29px;
+    border: none;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #7088e8;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    transition: 0.2s;
+}
+
+.serviceClose:hover {
+    background: #f0f2fc;
+}
+
+/* ===== FORM ===== */
+
+.serviceForm {
+    padding: 18px 25px 23px;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    box-sizing: border-box;
+}
+
+.serviceField {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+
+.serviceField label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #454657;
+}
+
+.serviceField input:not([type="color"]),
+.serviceField select,
+.serviceField textarea {
+    width: 100%;
+    height: 39px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    border: 1px solid #e7e8ef;
+    border-radius: 9px;
+    background: #fafbfe;
+    color: #303142;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.serviceField input:focus,
+.serviceField select:focus,
+.serviceField textarea:focus {
+    border-color: #7088e8;
+    box-shadow: 0 0 0 3px rgba(112, 136, 232, 0.1);
+    background: #ffffff;
+}
+
+.serviceField textarea {
+    height: 65px;
+    padding: 10px 12px;
+    resize: none;
+}
+
+/* ===== PRICE + COLOR ===== */
+
+.serviceTwoColumns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.serviceColorBox {
+    height: 39px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px;
+    border: 1px solid #e7e8ef;
+    border-radius: 9px;
+    background: #fafbfe;
+    box-sizing: border-box;
+}
+
+.serviceColorBox input {
+    width: 28px;
+    height: 27px;
+    border: none;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.serviceColorBox span {
+    font-size: 12px;
+    color: #77798a;
+    direction: ltr;
+}
+
+/* ===== ERROR ===== */
+
+.serviceError {
+    margin: 0;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: #fff0f0;
+    color: #d94343;
+    font-size: 12px;
+}
+
+/* ===== BUTTONS ===== */
+
+.serviceButtons {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.serviceButtons button {
+    flex: 1;
+    height: 42px;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.serviceSubmit {
+    border: none;
+    background: #7088e8;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(112, 136, 232, 0.2);
+}
+
+.serviceSubmit:hover {
+    background: #5c73d0;
+}
+
+.serviceCancel {
+    border: 1px solid #e6e7ed;
+    background: #f5f6fa;
+    color: #55566a;
+}
+
+.serviceCancel:hover {
+    background: #e9bda5;
+    color: #ffffff;
+}
+
+/* ===== SMALL SCREENS ===== */
+
+@media (max-height: 700px) {
+    .serviceModalHeader {
+        padding: 12px 20px 9px;
+    }
+
+    .serviceModalHeader h1 {
+        font-size: 20px;
+    }
+
+    .serviceForm {
+        padding: 12px 22px 15px;
+        gap: 8px;
+    }
+
+    .serviceField textarea {
+        height: 48px;
+    }
+
+    .serviceButtons button {
+        height: 36px;
+    }
+}
+
+@media (max-height: 550px) {
+    .serviceModalHeader {
+        padding: 7px 20px 5px;
+    }
+
+    .serviceModalHeader p {
+        display: none;
+    }
+
+    .serviceForm {
+        padding: 7px 18px 9px;
+        gap: 5px;
+    }
+
+    .serviceField {
+        gap: 2px;
+    }
+
+    .serviceField label {
+        font-size: 11px;
+    }
+
+    .serviceField input:not([type="color"]),
+    .serviceField select {
+        height: 31px;
+    }
+
+    .serviceField textarea {
+        height: 36px;
+    }
+
+    .serviceColorBox {
+        height: 31px;
+    }
+
+    .serviceButtons button {
+        height: 32px;
+    }
+}

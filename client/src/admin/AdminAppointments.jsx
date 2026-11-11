@@ -1,5 +1,16 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { Box, Button, Card, CardContent, Typography, IconButton, CircularProgress, Alert, Chip, Stack} from "@mui/material"
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
+import AddIcon from "@mui/icons-material/Add"
+import EditIcon from "@mui/icons-material/Edit"
+import DeleteIcon from "@mui/icons-material/Delete"
+import AccessTimeIcon from "@mui/icons-material/AccessTime"
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
+import LocationOnIcon from "@mui/icons-material/LocationOn"
+import GroupsIcon from "@mui/icons-material/Groups"
+import "../css/admin/AdminAppintments.css"
+
 
 function AdminAppointments() {
     const navigate = useNavigate()
@@ -77,79 +88,174 @@ function AdminAppointments() {
     if (loading)
         return <p>טוען שיעורים...</p>
 
-    return (
-        <div>
-            <h1>ניהול שיעורים</h1>
+ return (
+    <Box className="admin-appointments-page" dir="rtl">
 
-            <button onClick={() => navigate("/admin")}>
-                חזרה לדף הבית
-            </button>
+        {/* כותרת */}
+        <Box className="appointments-header">
+            <Box>
+                <Typography className="appointments-title">
+                    ניהול שיעורים
+                </Typography>
 
-            <button onClick={() => navigate("/admin/appointments/new")}>
-                יצירת שיעור חדש
-            </button>
+                <Typography className="appointments-subtitle">
+                    צפייה וניהול כל השיעורים במערכת
+                </Typography>
+            </Box>
 
-            {error && <p>{error}</p>}
+            <Stack direction="row" spacing={1}>
+                <Button
+                    variant="outlined"
+                    startIcon={<ArrowForwardIcon />}
+                    onClick={() => navigate("/admin")}
+                >
+                    חזרה
+                </Button>
 
-            {appointments.length === 0 ? (
-                <p>לא נמצאו שיעורים</p>
-            ) : (
-                <div>
-                    {appointments.map(appointment => (
-                        <div key={appointment._id}>
-                            <h3>
-                                {appointment.serviceId?.name || "שיעור"}
-                            </h3>
+                <Button
+                    variant="contained"
+                    startIcon={<AddIcon />}
+                    onClick={() => navigate("/admin/appointments/new")}
+                    className="add-appointment-button"
+                >
+                    יצירת שיעור חדש
+                </Button>
+            </Stack>
+        </Box>
 
-                            <p>
-                                מדריכה: {appointment.providerId?.name}
-                                {" "}
-                                {appointment.providerId?.lastName}
-                            </p>
+        {error && (
+            <Typography className="appointments-error">
+                {error}
+            </Typography>
+        )}
 
-                            <p>
-                                תאריך:
-                                {" "}
-                                {new Date(appointment.startTime).toLocaleDateString("he-IL")}
-                            </p>
+        {/* כמות שיעורים */}
+        <Box className="appointments-count">
+            <Typography>סך הכול שיעורים</Typography>
+            <Typography className="appointments-count-number">
+                {appointments.length}
+            </Typography>
+        </Box>
 
-                            <p>
-                                שעה:
-                                {" "}
-                                {new Date(appointment.startTime).toLocaleTimeString("he-IL", {
-                                    hour: "2-digit",
-                                    minute: "2-digit"
-                                })}
-                            </p>
+        {appointments.length === 0 ? (
+            <Box className="appointments-empty">
+                <CalendarMonthIcon />
+                <Typography>לא נמצאו שיעורים</Typography>
+            </Box>
+        ) : (
 
-                            <p>סניף: {appointment.branch}</p>
-                            <p>משך השיעור: {appointment.lengthTime} דקות</p>
+            <Box className="appointments-grid">
 
-                            <p>
-                                משתתפים: {appointment.participants || 0}
-                                {" / "}
-                                {appointment.maxParticipants}
-                            </p>
+                {appointments.map(appointment => (
+                    <Card
+                        key={appointment._id}
+                        className="appointment-card"
+                        elevation={0}
+                    >
+                        <CardContent>
 
-                            <button
-                                onClick={() =>
-                                    navigate(`/admin/appointments/edit/${appointment._id}`)
-                                }
-                            >
-                                עריכה
-                            </button>
+                            {/* כותרת הכרטיס */}
+                            <Box className="appointment-card-header">
+                                <Box>
+                                    <Typography className="appointment-service">
+                                        {appointment.serviceId?.name || "שיעור"}
+                                    </Typography>
 
-                            <button
-                                onClick={() => handleDelete(appointment._id)}
-                            >
-                                מחיקה
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            )}
-        </div>
-    )
+                                    <Typography className="appointment-provider">
+                                        מדריכה: {appointment.providerId?.name}{" "}
+                                        {appointment.providerId?.lastName}
+                                    </Typography>
+                                </Box>
+
+                                <Chip
+                                    label={
+                                        appointment.status === "full"
+                                            ? "מלא"
+                                            : appointment.status === "completed"
+                                                ? "הושלם"
+                                                : appointment.status === "booked"
+                                                    ? "רשומות"
+                                                    : appointment.status === "empty"
+                                                        ? "פתוח"
+                                                        : appointment.status
+                                    }
+                                    className={`appointment-status status-${appointment.status}`}
+                                />
+                            </Box>
+
+                            {/* פרטי השיעור */}
+                            <Box className="appointment-details">
+
+                                <Box className="appointment-detail">
+                                    <CalendarMonthIcon />
+                                    <Typography>
+                                        {new Date(appointment.startTime).toLocaleDateString("he-IL")}
+                                    </Typography>
+                                </Box>
+
+                                <Box className="appointment-detail">
+                                    <AccessTimeIcon />
+                                    <Typography>
+                                        {new Date(appointment.startTime).toLocaleTimeString("he-IL", {
+                                            hour: "2-digit",
+                                            minute: "2-digit"
+                                        })}
+                                    </Typography>
+                                </Box>
+
+                                <Box className="appointment-detail">
+                                    <LocationOnIcon />
+                                    <Typography>
+                                        {appointment.branch}
+                                    </Typography>
+                                </Box>
+
+                                <Box className="appointment-detail">
+                                    <GroupsIcon />
+                                    <Typography>
+                                        משתתפים: {appointment.participants || 0}
+                                        {" / "}
+                                        {appointment.maxParticipants}
+                                    </Typography>
+                                </Box>
+
+                            </Box>
+
+                            <Typography className="appointment-duration">
+                                משך השיעור: {appointment.lengthTime} דקות
+                            </Typography>
+
+                            {/* כפתורי פעולה */}
+                            <Box className="appointment-actions">
+
+                                <Button
+                                    variant="outlined"
+                                    startIcon={<EditIcon />}
+                                    onClick={() =>
+                                        navigate(`/admin/appointments/edit/${appointment._id}`)
+                                    }
+                                >
+                                    עריכה
+                                </Button>
+
+                                <Button className="delete-appointment-button"
+                                    variant="outlined"                                    startIcon={<DeleteIcon />}
+                                    onClick={() => handleDelete(appointment._id)}
+                                >
+                                    מחיקה
+                                </Button>
+
+                            </Box>
+
+                        </CardContent>
+                    </Card>
+                ))}
+
+            </Box>
+        )}
+
+    </Box>
+)
 }
 
 export default AdminAppointments

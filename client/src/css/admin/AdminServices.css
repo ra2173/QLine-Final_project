@@ -1,0 +1,169 @@
+.pageContainer {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+  direction: rtl;
+  font-family: inherit;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background: #ffffff;
+  padding: 24px 30px;
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+.pageTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.headerButtons {
+  display: flex;
+  gap: 12px;
+}
+
+.primaryButton {
+  background-color: #7383e1 !important;
+  color: #ffffff !important;
+  border-radius: 12px !important;
+  padding: 8px 18px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  box-shadow: none !important;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.primaryButton:hover {
+  background-color: #5d6ecd !important;
+}
+
+.secondaryButton {
+  background-color: #f5f6fa !important;
+  color: #444444 !important;
+  border-radius: 12px !important;
+  padding: 8px 18px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  border: 1px solid #eaeaea !important;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.secondaryButton:hover {
+  background-color: #eaeef6 !important;
+}
+
+.errorText {
+  color: #e53935;
+  background-color: #fdeded;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.loadingText, .emptyText {
+  text-align: center;
+  color: #888888;
+  font-size: 1.1rem;
+  margin-top: 50px;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.serviceCard {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #f0f0f0;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.serviceName {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.colorIndicator {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.serviceDescription {
+  font-size: 0.9rem;
+  color: #666666;
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.serviceMeta {
+  font-size: 0.85rem;
+  color: #444444;
+  background-color: #fcfcfc;
+  border: 1px solid #f0f0f0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.metaItem {
+  margin: 4px 0;
+}
+
+.cardActions {
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid #f5f5f5;
+  padding-top: 16px;
+}
+
+.editButton {
+  flex: 1;
+  background-color: #f0f3ff !important;
+  color: #7383e1 !important;
+  border-radius: 10px !important;
+  padding: 8px 0 !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  border: none;
+  cursor: pointer;
+}
+
+.deleteButton {
+  flex: 1;
+  background-color: #fdf2f2 !important;
+  color: #e53935 !important;
+  border-radius: 10px !important;
+  padding: 8px 0 !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  border: none;
+  cursor: pointer;
+}

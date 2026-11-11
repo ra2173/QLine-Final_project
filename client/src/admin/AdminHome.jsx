@@ -40,12 +40,12 @@ function AdminHome() {
 
                 <button onClick={() => navigate("/admin/appointments")}>
                     <CalendarMonthIcon />
-                    <span>ניהול שיעורים</span>
+                    <span>ניהול לוח שיעורים</span>
                 </button>
 
                 <button onClick={() => navigate("/admin/services")}>
                     <MiscellaneousServicesIcon />
-                    <span>ניהול שירותים</span>
+                    <span>ניהול סוגי שיעורים</span>
                 </button>
             </div>
 

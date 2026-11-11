@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "../css/admin/AdminProviders.css"
+import AdminNewProvider from "./AdminNewProvider"
 
 function AdminProviders() {
     const navigate = useNavigate()
@@ -8,6 +9,7 @@ function AdminProviders() {
     const [providers, setProviders] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
+    const [showNewProvider, setShowNewProvider] = useState(false)
 
     // טעינת כל המדריכות
     const fetchProviders = async () => {
@@ -72,59 +74,69 @@ function AdminProviders() {
     if (loading)
         return <p>טוען מדריכות...</p>
 
- return (
-    <div className="admin-providers">
+    return (
+        <div className="admin-providers">
 
-        <header className="providers-header">
-            <h1>ניהול מדריכות</h1>
+            <header className="providers-header">
+                <h1>ניהול מדריכות</h1>
 
-            <div className="providers-header-buttons">
-                <button onClick={() => navigate("/admin")}>
-                    חזרה לדף הבית
-                </button>
+                <div className="providers-header-buttons">
+                    <button onClick={() => navigate("/admin")}>
+                        חזרה לדף הבית
+                    </button>
 
-                <button onClick={() => navigate("/admin/providers/new")}>
-                    + הוספת מדריכה חדשה
-                </button>
-            </div>
-        </header>
+                    <button onClick={() => setShowNewProvider(true)}>
+                        + הוספת מדריכה חדשה
+                    </button>
+                </div>
+            </header>
 
-        {error && <p className="providers-error">{error}</p>}
+            {error && <p className="providers-error">{error}</p>}
 
-        {providers.length === 0 ? (
-            <p className="providers-empty">לא נמצאו מדריכות במערכת</p>
-        ) : (
-            <div className="providers-list">
-                {providers.map(provider => (
-                    <div className="provider-card" key={provider._id}>
+            {providers.length === 0 ? (
+                <p className="providers-empty">לא נמצאו מדריכות במערכת</p>
+            ) : (
+                <div className="providers-list">
+                    {providers.map(provider => (
+                        <div className="provider-card" key={provider._id}>
 
-                        <h3>{provider.name} {provider.lastName}</h3>
+                            <h3>{provider.name} {provider.lastName}</h3>
 
-                        <p>שם משתמש: {provider.username}</p>
-                        <p>אימייל: {provider.email}</p>
-                        <p>טלפון: {provider.phone}</p>
-                        <p>שירות: {provider.service}</p>
+                            <p>שם משתמש: {provider.username}</p>
+                            <p>אימייל: {provider.email}</p>
+                            <p>טלפון: {provider.phone}</p>
+                            <p>שירות: {provider.service}</p>
 
-                        <div className="provider-card-buttons">
-                            <button
-                                onClick={() =>
-                                    navigate(`/admin/providers/edit/${provider._id}`)
-                                }
-                            >
-                                עריכה
-                            </button>
+                            <div className="provider-card-buttons">
+                                <button
+                                    onClick={() =>
+                                        navigate(`/admin/providers/edit/${provider._id}`)
+                                    }
+                                >
+                                    עריכה
+                                </button>
 
-                            <button onClick={() => handleDelete(provider._id)}>
-                                מחיקה
-                            </button>
+                                <button onClick={() => handleDelete(provider._id)}>
+                                    מחיקה
+                                </button>
+                            </div>
+
                         </div>
-
-                    </div>
-                ))}
-            </div>
-        )}
-    </div>
-)
+                    ))}
+                </div>
+                
+            )}
+            {showNewProvider && (
+    <AdminNewProvider
+        onClose={() => setShowNewProvider(false)}
+        onSuccess={async () => {
+            setShowNewProvider(false)
+            await fetchProviders()
+        }}
+    />
+)}
+        </div>
+    )
 }
 
 export default AdminProviders

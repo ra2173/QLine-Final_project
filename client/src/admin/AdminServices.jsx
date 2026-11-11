@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import "../css/admin/AdminServices.css"
 
 function AdminServices() {
     const navigate = useNavigate()
@@ -8,7 +9,7 @@ function AdminServices() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
 
-    // טעינת כל השירותים
+    // טעינת כל השיעורים
     const fetchServices = async () => {
         try {
             const token = localStorage.getItem("token")
@@ -22,7 +23,7 @@ function AdminServices() {
             const data = await response.json()
 
             if (!response.ok)
-                throw new Error(data.message || "טעינת השירותים נכשלה")
+                throw new Error(data.message || "טעינת השיעורים  נכשלה")
 
             setServices(data)
 
@@ -69,61 +70,66 @@ function AdminServices() {
     }
 
     if (loading)
-        return <p>טוען שירותים...</p>
+        return <p>טוען שיעורים ...</p>
 
-    return (
-        <div>
-            <h1>ניהול שירותים</h1>
+return (
+        <div className="pageContainer">
+            <div className="pageHeader">
+                <h1 className="pageTitle">ניהול סוגי שיעורים</h1>
+                <div className="headerButtons">
+                    <button className="secondaryButton" onClick={() => navigate("/admin")}>
+                        חזרה לדף הבית
+                    </button>
+                    <button className="primaryButton" onClick={() => navigate("/admin/services/new")}>
+                        הוספת שירות חדש
+                    </button>
+                </div>
+            </div>
 
-            <button onClick={() => navigate("/admin")}>
-                חזרה לדף הבית
-            </button>
-
-            <button onClick={() => navigate("/admin/services/new")}>
-                הוספת שירות חדש
-            </button>
-
-            {error && <p>{error}</p>}
+            {error && <p className="errorText">{error}</p>}
 
             {services.length === 0 ? (
-                <p>לא נמצאו שירותים</p>
+                <p className="emptyText">לא נמצאו שיעורים</p>
             ) : (
-                <div>
+                <div className="servicesGrid">
                     {services.map(service => (
-                        <div key={service._id}>
-                            <h3>{service.name}</h3>
+                        <div key={service._id} className="serviceCard">
+                            <div>
+                                <div className="cardTop">
+                                    <h3 className="serviceName">{service.name}</h3>
+                                    <div
+                                        className="colorIndicator"
+                                        style={{ backgroundColor: service.color }}
+                                    />
+                                </div>
 
-                            <p>{service.description}</p>
-                            <p>מחיר: {service.price} ₪</p>
+                                <p className="serviceDescription">{service.description}</p>
+                                
+                                <div className="serviceMeta">
+                                    <p className="metaItem"><strong>מחיר:</strong> {service.price} ₪</p>
+                                    <p className="metaItem">
+                                        <strong>מדריכה:</strong> {service.providerId?.name || "לא ידוע"} {service.providerId?.lastName || ""}
+                                    </p>
+                                </div>
+                            </div>
 
-                            <p>
-                                מדריכה: {service.providerId?.name || "לא ידוע"}
-                                {" "}
-                                {service.providerId?.lastName || ""}
-                            </p>
+                            <div className="cardActions">
+                                <button
+                                    className="editButton"
+                                    onClick={() =>
+                                        navigate(`/admin/services/edit/${service._id}`)
+                                    }
+                                >
+                                    עריכה
+                                </button>
 
-                            <div
-                                style={{
-                                    backgroundColor: service.color,
-                                    width: "30px",
-                                    height: "30px",
-                                    borderRadius: "50%"
-                                }}
-                            />
-
-                            <button
-                                onClick={() =>
-                                    navigate(`/admin/services/edit/${service._id}`)
-                                }
-                            >
-                                עריכה
-                            </button>
-
-                            <button
-                                onClick={() => handleDelete(service._id)}
-                            >
-                                מחיקה
-                            </button>
+                                <button
+                                    className="deleteButton"
+                                    onClick={() => handleDelete(service._id)}
+                                >
+                                    מחיקה
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </div>

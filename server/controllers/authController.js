@@ -94,7 +94,7 @@ const login = async (req, res) => {
                 }
             },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '15m' }
+            { expiresIn: '100m' }
         )
 
         return res.json({ accessToken })
@@ -206,7 +206,7 @@ const loginProvider = async (req, res) => {
                 }
             },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '15m' }
+            { expiresIn: '100m' }
         )
 
         return res.json({ accessToken })

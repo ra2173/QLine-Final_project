@@ -1,0 +1,282 @@
+
+/* הגדרות כלליות */
+.admin-appointments-page {
+    direction: rtl;
+    min-height: 100vh;
+    padding: 35px;
+    background: #F7F8FA;
+    font-family: 'Heebo', sans-serif;
+}
+
+/* כותרת */
+.appointments-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+.appointments-title {
+    font-family: 'Heebo', sans-serif !important;
+    font-size: 30px !important;
+    font-weight: 700 !important;
+    color: #292D42;
+}
+
+.appointments-subtitle {
+    font-family: 'Heebo', sans-serif !important;
+    color: #9296A5;
+    margin-top: 5px !important;
+}
+
+/* כפתורים עליונים */
+.appointments-header .MuiButton-root {
+    font-family: 'Heebo', sans-serif;
+    border-radius: 12px;
+    padding: 10px 18px;
+    font-weight: 600;
+}
+
+.appointments-header .MuiButton-outlined {
+    color: #5c73d0;
+    border-color: #5c73d0;
+}
+
+.appointments-header .MuiButton-outlined:hover {
+    background: #eef0fc;
+    border-color: #5c73d0;
+}
+
+.add-appointment-button.MuiButton-root {
+    background: #5c73d0;
+    color: white;
+    box-shadow: none;
+}
+
+.add-appointment-button.MuiButton-root:hover {
+    background: #495fb8;
+    box-shadow: none;
+}
+
+/* מונה שיעורים */
+.appointments-count {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: fit-content;
+    padding: 12px 20px;
+    margin-bottom: 25px;
+    background: white;
+    border-radius: 14px;
+    color: #9296A5;
+    border: 1px solid #f1e4df;
+}
+
+.appointments-count-number {
+    font-size: 23px !important;
+    font-weight: 700 !important;
+    color: #5c73d0;
+}
+
+/* כרטיסיות */
+.appointments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 22px;
+}
+
+.appointment-card.MuiCard-root {
+    border-radius: 20px;
+    background: white;
+    border: 1px solid #f1e4df;
+    transition: 0.25s ease;
+}
+
+.appointment-card.MuiCard-root:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(92, 115, 208, 0.12);
+}
+
+.appointment-card .MuiCardContent-root {
+    padding: 22px;
+}
+
+/* כותרת הכרטיס */
+.appointment-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #F0F0F4;
+}
+
+.appointment-service {
+    font-family: 'Heebo', sans-serif !important;
+    font-size: 19px !important;
+    font-weight: 700 !important;
+    color: #292D42;
+}
+
+.appointment-provider {
+    font-family: 'Heebo', sans-serif !important;
+    font-size: 14px !important;
+    color: #9296A5;
+    margin-top: 4px !important;
+}
+
+/* סטטוסים */
+.appointment-status.MuiChip-root {
+    font-family: 'Heebo', sans-serif;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.status-empty {
+    background: #eef0fc !important;
+    color: #5c73d0 !important;
+}
+
+.status-booked {
+    background: #f8e9e1 !important;
+    color: #9b6b52 !important;
+}
+
+.status-full {
+    background: #f5e1d8 !important;
+    color: #95644f !important;
+}
+
+.status-completed {
+    background: #e8f1eb !important;
+    color: #528064 !important;
+}
+
+/* פרטי השיעור */
+.appointment-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 17px 10px;
+    padding: 20px 0;
+}
+
+.appointment-detail {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #777D91;
+}
+
+.appointment-detail svg {
+    font-size: 19px;
+    color: #5c73d0;
+}
+
+.appointment-detail .MuiTypography-root {
+    font-family: 'Heebo', sans-serif;
+    font-size: 13px;
+}
+
+/* משך השיעור */
+.appointment-duration {
+    background: #faf2ee;
+    border-radius: 10px;
+    padding: 10px 13px;
+    color: #80695e;
+    font-size: 13px !important;
+    margin-bottom: 18px !important;
+    font-family: 'Heebo', sans-serif !important;
+}
+
+/* כפתורי פעולה */
+.appointment-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.appointment-actions .MuiButton-root {
+    flex: 1;
+    font-family: 'Heebo', sans-serif;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+/* כפתור עריכה */
+.appointment-actions .MuiButton-outlined:not(.delete-appointment-button) {
+    color: #f8f8f8;
+    border-color: #5c73d0;
+}
+
+.appointment-actions .MuiButton-outlined:not(.delete-appointment-button):hover {
+    background: #eef0fc;
+    border-color: #5c73d0;
+    color: #495fb8;
+}
+
+/* כפתור מחיקה */
+.delete-appointment-button {
+    color: #ffffff !important;
+    background: #e5a07b !important;
+    border-color: #e9bda5 !important;
+}
+
+.delete-appointment-button:hover {
+    background: #f8e9e1 !important;
+    border-color: #e9bda5 !important;
+    color: #e9a886 !important;
+}
+
+/* מצב ללא שיעורים */
+.appointments-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 65px 20px;
+    background: white;
+    border-radius: 20px;
+    color: #9296A5;
+    border: 1px solid #f1e4df;
+}
+
+.appointments-empty svg {
+    font-size: 45px;
+    color: #5c73d0;
+}
+
+.appointments-empty .MuiTypography-root {
+    font-family: 'Heebo', sans-serif;
+}
+
+/* שגיאה */
+.appointments-error {
+    color: #95644f;
+    margin-bottom: 20px !important;
+}
+
+/* מובייל */
+@media (max-width: 700px) {
+    .admin-appointments-page {
+        padding: 20px 14px;
+    }
+
+    .appointments-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .appointments-header > .MuiStack-root {
+        flex-wrap: wrap;
+    }
+
+    .appointments-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 380px) {
+    .appointment-details {
+        grid-template-columns: 1fr;
+    }
+}

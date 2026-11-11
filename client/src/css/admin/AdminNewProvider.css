@@ -1,0 +1,277 @@
+/* רקע החלונית */
+.provider-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    background: rgba(35, 42, 65, 0.45);
+    backdrop-filter: blur(7px);
+
+}
+
+/* החלונית עצמה */
+.provider-container {
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    max-height: calc(100vh - 32px);
+    padding: 24px 34px;
+    background: #ffffff;
+    border-radius: 25px;
+    border: 1px solid #bcbcbc;
+    box-shadow: 0 20px 60px rgba(40, 50, 90, 0.18);
+    overflow: hidden;
+    direction: rtl;
+    animation: providerModalIn 0.25s ease;
+     background:
+        radial-gradient(circle at top right, #f5ded1 0%, transparent 35%),
+        radial-gradient(circle at bottom left, #dce5ff 0%, transparent 40%),
+        #f8f7f6;
+
+}
+
+@keyframes providerModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* כפתור סגירה */
+.provider-close {
+    position: absolute;
+    top: 17px;
+    left: 18px;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: #f0f2fc;
+    color: #7088e8;
+    font-size: 23px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.provider-close:hover {
+    background: #7088e8;
+    color: white;
+}
+
+/* כותרת */
+.provider-brand {
+    color: #7088e8;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.provider-container h1 {
+    margin: 0;
+    color: #30364b;
+    font-size: 25px;
+    font-weight: 750;
+}
+
+.provider-subtitle {
+    margin: 6px 0 18px;
+    color: #9298a9;
+    font-size: 13px;
+}
+
+/* טופס */
+.provider-form {
+    width: 100%;
+}
+
+/* כותרת פרטי המדריכה */
+.provider-form-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    background: #f7f8fc;
+    border-radius: 15px;
+    border: 1px solid #e5e8f1;
+}
+
+.provider-form-title h2 {
+    margin: 0;
+    color: #3d455c;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.provider-form-title p {
+    margin: 4px 0 0;
+    color: #9a9eae;
+    font-size: 12px;
+}
+
+.provider-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: #f5e5dd;
+    color: #7088e8;
+    font-size: 20px;
+}
+
+/* שדות - שתי עמודות */
+.provider-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px 18px;
+}
+
+.provider-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.provider-field label {
+    color: #555d72;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.provider-field input {
+    width: 100%;
+    height: 42px;
+    box-sizing: border-box;
+    padding: 0 13px;
+    border: 1px solid #e5e8f1;
+    border-radius: 11px;
+    outline: none;
+    background: #fbfcfe;
+    color: #343b50;
+    font-family: inherit;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.provider-field input::placeholder {
+    color: #b5bac8;
+}
+
+.provider-field input:focus {
+    border-color: #7088e8;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(112, 136, 232, 0.11);
+}
+
+/* הודעת שגיאה */
+.provider-form-error {
+    margin: 12px 0 0;
+    color: #d95368;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* כפתורים */
+.provider-form-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.provider-form-buttons button {
+    flex: 1;
+    height: 44px;
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid #7088e8;
+}
+
+.provider-form-buttons button[type="submit"] {
+    background: #7088e8;
+    color: white;
+    box-shadow: 0 5px 14px rgba(112, 136, 232, 0.22);
+}
+
+.provider-form-buttons button[type="submit"]:hover {
+    background: #5e76d5;
+    transform: translateY(-1px);
+}
+
+.provider-form-buttons button[type="button"] {
+    background: #f1f2f8;
+    color: #68718b;
+}
+
+.provider-form-buttons button[type="button"]:hover {
+    background: #e7e9f3;
+}
+
+/* מסכים קטנים */
+@media (max-width: 600px) {
+    .provider-container {
+        padding: 22px 18px;
+        border-radius: 20px;
+    }
+
+    .provider-container h1 {
+        font-size: 21px;
+    }
+
+    .provider-subtitle {
+        font-size: 12px;
+        margin-bottom: 13px;
+    }
+
+    .provider-form-title {
+        margin-bottom: 12px;
+        padding: 10px 12px;
+    }
+
+    .provider-fields {
+        gap: 11px 10px;
+    }
+
+    .provider-field label {
+        font-size: 12px;
+    }
+
+    .provider-field input {
+        height: 39px;
+        padding: 0 9px;
+        font-size: 12px;
+    }
+
+    .provider-form-buttons {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 360px) {
+    .provider-container {
+        padding: 20px 12px;
+    }
+
+    .provider-fields {
+        gap: 10px 7px;
+    }
+
+    .provider-field input {
+        padding: 0 6px;
+        font-size: 11px;
+    }
+}

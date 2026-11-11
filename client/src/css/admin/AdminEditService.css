@@ -1,0 +1,299 @@
+
+/* ===== OVERLAY ===== */
+
+.editServiceOverlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+    background: rgba(25, 27, 40, 0.45);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    direction: rtl;
+    overflow: hidden;
+    font-family: inherit;
+}
+
+/* ===== MODAL ===== */
+
+.editServiceModal {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    max-height: 100%;
+    background: #ffffff;
+    border-radius: 23px;
+    box-sizing: border-box;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.16);
+}
+
+/* ===== HEADER ===== */
+
+.editServiceHeader {
+    text-align: center;
+    padding: 25px 30px 19px;
+    background: linear-gradient(
+        180deg,
+        #f8eee8 0%,
+        #ffffff 100%
+    );
+}
+
+.editServiceBrand {
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #7088e8;
+    margin-bottom: 7px;
+}
+
+.editServiceHeader h1 {
+    font-size: 25px;
+    font-weight: 800;
+    color: #252638;
+    margin: 0 0 6px;
+}
+
+.editServiceHeader p {
+    font-size: 14px;
+    color: #888a99;
+    margin: 0;
+}
+
+/* ===== CLOSE ===== */
+
+.editServiceClose {
+    position: absolute;
+    top: 15px;
+    left: 17px;
+    width: 31px;
+    height: 31px;
+    border: none;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #7088e8;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    transition: 0.2s;
+}
+
+.editServiceClose:hover {
+    background: #f0f2fc;
+}
+
+/* ===== FORM ===== */
+
+.editServiceForm {
+    padding: 22px 30px 27px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-sizing: border-box;
+}
+
+.editServiceField {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.editServiceField label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #454657;
+}
+
+.editServiceField input:not([type="color"]),
+.editServiceField select,
+.editServiceField textarea {
+    width: 100%;
+    height: 43px;
+    padding: 0 13px;
+    box-sizing: border-box;
+    border: 1px solid #e7e8ef;
+    border-radius: 10px;
+    background: #fafbfe;
+    color: #303142;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.editServiceField input:focus,
+.editServiceField select:focus,
+.editServiceField textarea:focus {
+    border-color: #7088e8;
+    box-shadow: 0 0 0 3px rgba(112, 136, 232, 0.1);
+    background: #ffffff;
+}
+
+/* ===== DESCRIPTION ===== */
+
+.editServiceField textarea {
+    height: 85px;
+    padding: 11px 13px;
+    resize: none;
+}
+
+/* ===== PRICE + COLOR ===== */
+
+.editServiceTwoColumns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.editServiceColorBox {
+    height: 43px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 12px;
+    border: 1px solid #e7e8ef;
+    border-radius: 10px;
+    background: #fafbfe;
+    box-sizing: border-box;
+}
+
+.editServiceColorBox input {
+    width: 32px;
+    height: 30px;
+    border: none;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.editServiceColorBox span {
+    font-size: 13px;
+    color: #77798a;
+    direction: ltr;
+}
+
+/* ===== ERROR ===== */
+
+.editServiceError {
+    margin: 0;
+    padding: 9px 12px;
+    border-radius: 8px;
+    background: #fff0f0;
+    color: #d94343;
+    font-size: 13px;
+}
+
+/* ===== BUTTONS ===== */
+
+.editServiceButtons {
+    display: flex;
+    gap: 12px;
+    margin-top: 5px;
+}
+
+.editServiceButtons button {
+    flex: 1;
+    height: 45px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.editServiceSubmit {
+    border: none;
+    background: #7088e8;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(112, 136, 232, 0.2);
+}
+
+.editServiceSubmit:hover {
+    background: #5c73d0;
+}
+
+.editServiceCancel {
+    border: 1px solid #e6e7ed;
+    background: #f5f6fa;
+    color: #55566a;
+}
+
+.editServiceCancel:hover {
+    background: #e9bda5;
+    color: #ffffff;
+}
+
+/* ===== SMALL SCREENS ===== */
+
+@media (max-height: 700px) {
+    .editServiceHeader {
+        padding: 13px 25px 10px;
+    }
+
+    .editServiceHeader h1 {
+        font-size: 21px;
+    }
+
+    .editServiceForm {
+        padding: 12px 25px 15px;
+        gap: 8px;
+    }
+
+    .editServiceField textarea {
+        height: 48px;
+    }
+
+    .editServiceButtons button {
+        height: 37px;
+    }
+}
+
+@media (max-height: 550px) {
+    .editServiceHeader {
+        padding: 7px 20px 5px;
+    }
+
+    .editServiceHeader p {
+        display: none;
+    }
+
+    .editServiceForm {
+        padding: 7px 18px 9px;
+        gap: 5px;
+    }
+
+    .editServiceField {
+        gap: 2px;
+    }
+
+    .editServiceField label {
+        font-size: 11px;
+    }
+
+    .editServiceField input:not([type="color"]),
+    .editServiceField select {
+        height: 31px;
+    }
+
+    .editServiceField textarea {
+        height: 36px;
+    }
+
+    .editServiceColorBox {
+        height: 31px;
+    }
+
+    .editServiceButtons button {
+        height: 32px;
+    }
+}

@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import "../css/admin/AdminNewProvider.css"
 
-function AdminNewProvider() {
-    const navigate = useNavigate()
+function AdminNewProvider({ onClose, onSuccess }) {
 
     const [formData, setFormData] = useState({
         name: "",
@@ -49,83 +49,122 @@ function AdminNewProvider() {
             if (!response.ok)
                 throw new Error(data.message || "יצירת המדריכה נכשלה")
 
-            navigate("/admin/providers")
-
+            await onSuccess()
         } catch (error) {
             setError(error.message)
         }
     }
 
-    return (
-        <div>
+return (
+    <div
+        className="provider-modal-overlay"
+        onClick={onClose}
+    >
+        <div
+            className="provider-container"
+            onClick={(e) => e.stopPropagation()}
+        >
+
+            <button
+                type="button"
+                className="provider-close"
+                onClick={onClose}
+            >
+                ×
+            </button>
+
+            <div className="provider-brand">Qline</div>
+
             <h1>הוספת מדריכה חדשה</h1>
 
-            <form onSubmit={handleSubmit}>
+            <p className="provider-subtitle">
+                מלאי את הפרטים כדי להוסיף מדריכה למערכת
+            </p>
 
-                <label>שם פרטי</label>
-                <input
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                />
+            <form className="provider-form" onSubmit={handleSubmit}>
 
-                <label>שם משפחה</label>
-                <input
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                />
+                <div className="provider-form-title">
+                    <div>
+                        <h2>פרטי המדריכה</h2>
+                        <p>פרטים אישיים ופרטי התחברות</p>
+                    </div>
 
-                <label>שם משתמש</label>
-                <input
-                    name="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                    required
-                />
+                    <div className="provider-icon">✦</div>
+                </div>
 
-                <label>תעודת זהות</label>
-                <input
-                    name="id"
-                    value={formData.id}
-                    onChange={handleChange}
-                    minLength={9}
-                    maxLength={9}
-                    required
-                />
+                <div className="provider-fields">
 
-                <label>אימייל</label>
-                <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
+                    <div className="provider-field">
+                        <label>שם פרטי</label>
+                        <input name="name" value={formData.name}
+                            onChange={handleChange} required />
+                    </div>
 
-                <label>סיסמה</label>
-                <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                />
+                    <div className="provider-field">
+                        <label>שם משפחה</label>
+                        <input name="lastName" value={formData.lastName}
+                            onChange={handleChange} required />
+                    </div>
 
-                <label>טלפון</label>
-                <input name="phone" value={formData.phone} onChange={handleChange} />
-                <label>שירות</label>
-                <input name="service" value={formData.service} onChange={handleChange} required />
-                {error && <p>{error}</p>}
+                    <div className="provider-field">
+                        <label>שם משתמש</label>
+                        <input name="username" value={formData.username}
+                            onChange={handleChange} required />
+                    </div>
 
-                <button type="submit"> הוספת מדריכה </button>
-                <button type="button" onClick={() => navigate("/admin/providers")} > ביטול </button>
+                    <div className="provider-field">
+                        <label>תעודת זהות</label>
+                        <input name="id" value={formData.id}
+                            onChange={handleChange}
+                            minLength={9} maxLength={9} required />
+                    </div>
+
+                    <div className="provider-field">
+                        <label>אימייל</label>
+                        <input type="email" name="email"
+                            value={formData.email}
+                            onChange={handleChange} required />
+                    </div>
+
+                    <div className="provider-field">
+                        <label>סיסמה</label>
+                        <input type="password" name="password"
+                            value={formData.password}
+                            onChange={handleChange} required />
+                    </div>
+
+                    <div className="provider-field">
+                        <label>טלפון</label>
+                        <input name="phone" value={formData.phone}
+                            onChange={handleChange} />
+                    </div>
+
+                    <div className="provider-field">
+                        <label>שירות</label>
+                        <input name="service" value={formData.service}
+                            onChange={handleChange} required />
+                    </div>
+
+                </div>
+
+                {error && (
+                    <p className="provider-form-error">{error}</p>
+                )}
+
+                <div className="provider-form-buttons">
+                    <button type="submit">
+                        הוספת מדריכה
+                    </button>
+
+                    <button type="button" onClick={onClose}>
+                        ביטול
+                    </button>
+                </div>
 
             </form>
         </div>
-    )
+    </div>
+)
 }
 
 export default AdminNewProvider
