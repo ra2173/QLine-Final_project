@@ -1,4 +1,6 @@
+
 import { useEffect, useState } from "react"
+import "../css/provider/ProviderProfile.css"
 
 const ProviderProfile = () => {
     const [form, setForm] = useState({
@@ -12,11 +14,12 @@ const ProviderProfile = () => {
         password: ""
     })
 
+    const [editing, setEditing] = useState({})
     const [loading, setLoading] = useState(true)
+    const [saving, setSaving] = useState(false)
     const [error, setError] = useState("")
     const [message, setMessage] = useState("")
 
-    // טעינת פרטי המורה
     useEffect(() => {
         const fetchProfile = async () => {
             try {
@@ -34,8 +37,9 @@ const ProviderProfile = () => {
 
                 const data = await response.json()
 
-                if (!response.ok)
+                if (!response.ok) {
                     throw new Error(data.message || "טעינת הפרופיל נכשלה")
+                }
 
                 setForm({
                     name: data.name || "",
@@ -67,19 +71,28 @@ const ProviderProfile = () => {
         }))
     }
 
-    // עדכון הפרופיל
+    const toggleEdit = (field) => {
+        setEditing(prev => ({
+            ...prev,
+            [field]: !prev[field]
+        }))
+        setMessage("")
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError("")
         setMessage("")
+        setSaving(true)
 
         try {
             const token = localStorage.getItem("token")
 
-            // לא שולחים סיסמה אם לא ביקשו לשנות אותה
             const updatedData = { ...form }
-            if (!updatedData.password)
+
+            if (!updatedData.password) {
                 delete updatedData.password
+            }
 
             const response = await fetch(
                 "http://localhost:2173/api/providers",
@@ -95,92 +108,165 @@ const ProviderProfile = () => {
 
             const data = await response.json()
 
-            if (!response.ok)
+            if (!response.ok) {
                 throw new Error(data.message || "עדכון הפרופיל נכשל")
+            }
 
-            setForm(prev => ({ ...prev, password: "" }))
+            setForm(prev => ({
+                ...prev,
+                password: ""
+            }))
+
+            setEditing({})
             setMessage("הפרופיל עודכן בהצלחה")
 
         } catch (error) {
             setError(error.message)
+        } finally {
+            setSaving(false)
         }
     }
 
-    if (loading) return <p>טוען פרופיל...</p>
+    const fields = [
+        { name: "name", label: "שם פרטי" },
+        { name: "lastName", label: "שם משפחה" },
+        { name: "id", label: "תעודת זהות" },
+        { name: "username", label: "שם משתמש" },
+        { name: "email", label: "כתובת אימייל", type: "email" },
+        { name: "phone", label: "טלפון" },
+        { name: "service", label: "תחום השירות" },
+        { name: "password", label: "סיסמה חדשה", type: "password" }
+    ]
+
+    if (loading) {
+        return (
+            <div className="providerProfileLoading">
+                טוען פרופיל...
+            </div>
+        )
+    }
 
     return (
-        <div dir="rtl">
-            <h2>הפרופיל שלי</h2>
+        <div className="providerProfilePage" dir="rtl">
 
-            <form onSubmit={handleSubmit}>
-                <label>שם פרטי</label>
-                <input
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                />
+            <div className="providerProfileContainer">
 
-                <label>שם משפחה</label>
-                <input
-                    name="lastName"
-                    value={form.lastName}
-                    onChange={handleChange}
-                    required
-                />
+                {/* כותרת ראשית */}
+                <div className="providerProfileHero">
+                    <span className="providerProfileBrand">QLINE</span>
+                    <h1>הפרופיל שלי</h1>
+                    <p>צפייה ועדכון פרטי החשבון</p>
+                </div>
 
-                <label>שם משתמש</label>
-                <input
-                    name="username"
-                    value={form.username}
-                    onChange={handleChange}
-                />
+                <div className="providerProfileLayout">
 
-                <label>תעודת זהות</label>
-                <input
-                    name="id"
-                    value={form.id}
-                    onChange={handleChange}
-                    required
-                />
+                    {/* כרטיס פרטים אישיים */}
+                    <div className="providerProfileMainCard">
 
-                <label>דוא"ל</label>
-                <input
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                />
+                        <form onSubmit={handleSubmit}>
 
-                <label>טלפון</label>
-                <input
-                    name="phone"
-                    value={form.phone}
-                    onChange={handleChange}
-                />
+                            <h2>פרטים אישיים</h2>
 
-                <label>תחום השירות</label>
-                <input
-                    name="service"
-                    value={form.service}
-                    onChange={handleChange}
-                    required
-                />
+                            {fields.map((field, index) => (
+                                <div key={field.name}>
 
-                <label>סיסמה חדשה (לא חובה)</label>
-                <input
-                    type="password"
-                    name="password"
-                    value={form.password}
-                    onChange={handleChange}
-                />
+                                    {index === 3 && (
+                                        <h2 className="providerProfileSectionTitle">
+                                            פרטי חשבון ויצירת קשר
+                                        </h2>
+                                    )}
 
-                {error && <p>{error}</p>}
-                {message && <p>{message}</p>}
+                                    <div className="providerProfileField">
 
-                <button type="submit">שמירת שינויים</button>
-            </form>
+                                        <label htmlFor={`profile-${field.name}`}>
+                                            {field.label}
+                                        </label>
+
+                                        <div className="providerProfileFieldValue">
+
+                                            {editing[field.name] ? (
+                                                <input
+                                                    id={`profile-${field.name}`}
+                                                    name={field.name}
+                                                    type={field.type || "text"}
+                                                    value={form[field.name]}
+                                                    onChange={handleChange}
+                                                    autoFocus
+                                                />
+                                            ) : (
+                                                <span>
+                                                    {field.name === "password"
+                                                        ? "••••••••"
+                                                        : form[field.name] || "לא הוזן"}
+                                                </span>
+                                            )}
+
+                                            <button
+                                                type="button"
+                                                className="providerProfileEditButton"
+                                                onClick={() => toggleEdit(field.name)}
+                                                title={editing[field.name] ? "סיום עריכה" : "עריכה"}
+                                            >
+                                                {editing[field.name] ? "✓" : "✎"}
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+
+                            {error && (
+                                <p className="providerProfileError">{error}</p>
+                            )}
+
+                            {message && (
+                                <p className="providerProfileSuccess">{message}</p>
+                            )}
+
+                            <div className="providerProfileActions">
+                                <button
+                                    type="submit"
+                                    className="providerProfileSaveButton"
+                                    disabled={saving}
+                                >
+                                    {saving ? "שומר שינויים..." : "שמירת שינויים"}
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    {/* כרטיס מידע צדדי */}
+                    <aside className="providerProfileSideCard">
+
+                        <h2>פרטי המדריכה</h2>
+
+                        <div className="providerProfileSideItem">
+                            <span>שם מלא</span>
+                            <strong>
+                                {form.name} {form.lastName}
+                            </strong>
+                        </div>
+
+                        <div className="providerProfileSideItem">
+                            <span>תחום השירות</span>
+                            <strong>{form.service || "לא הוזן"}</strong>
+                        </div>
+
+                        <div className="providerProfileSideItem">
+                            <span>שם משתמש</span>
+                            <strong>{form.username || "לא הוזן"}</strong>
+                        </div>
+
+                        <div className="providerProfileSideItem">
+                            <span>כתובת אימייל</span>
+                            <strong>{form.email || "לא הוזן"}</strong>
+                        </div>
+
+                    </aside>
+
+                </div>
+            </div>
         </div>
     )
 }

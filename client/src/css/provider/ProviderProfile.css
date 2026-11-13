@@ -1,0 +1,304 @@
+
+.providerProfilePage {
+    min-height: 100vh;
+    padding: 5px 30px 55px;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(233, 189, 165, 0.30),
+            transparent 38%
+        ),
+        #F7F8FA;
+    font-family: "Heebo", sans-serif;
+    color: #222b3b;
+    box-sizing: border-box;
+}
+
+.providerProfilePage * {
+    box-sizing: border-box;
+}
+
+.providerProfileContainer {
+    max-width: 1065px;
+    margin: 0 auto;
+}
+
+/* כותרת עליונה */
+
+.providerProfileHero {
+    background: #fff;
+    border: 1px solid #e1e5ed;
+    border-radius: 18px;
+    padding: 36px 32px 30px;
+    min-height: 175px;
+    margin-bottom: 27px;
+    text-align: right;
+}
+
+.providerProfileBrand {
+    display: block;
+    color: #7088e8;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 17px;
+}
+
+.providerProfileHero h1 {
+    margin: 0 0 13px;
+    font-size: 27px;
+    font-weight: 800;
+    color: #253047;
+}
+
+.providerProfileHero p {
+    margin: 0;
+    color: #98a2b3;
+    font-size: 15px;
+}
+
+/* פריסת הכרטיסים */
+
+.providerProfileLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    gap: 25px;
+    align-items: start;
+}
+
+.providerProfileMainCard,
+.providerProfileSideCard {
+    background: white;
+    border: 1px solid #e1e5ed;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(34, 48, 78, 0.04);
+}
+
+/* כרטיס פרטים אישיים */
+
+.providerProfileMainCard {
+    padding: 28px 38px 30px;
+}
+
+.providerProfileMainCard h2 {
+    margin: 0;
+    padding: 4px 0 20px;
+    border-bottom: 1px solid #e6e9f0;
+    color: #7088e8;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.providerProfileMainCard .providerProfileSectionTitle {
+    padding-top: 25px;
+}
+
+/* שורות פרטים */
+
+.providerProfileField {
+    display: grid;
+    grid-template-columns: 155px minmax(0, 1fr);
+    align-items: center;
+    min-height: 79px;
+    gap: 15px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.providerProfileField:last-child {
+    border-bottom: none;
+}
+
+.providerProfileField label {
+    color: #929cad;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.providerProfileFieldValue {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+}
+
+.providerProfileFieldValue span {
+    font-size: 14px;
+    font-weight: 700;
+    color: #253047;
+    overflow-wrap: anywhere;
+}
+
+.providerProfileFieldValue input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid #cbd5fa;
+    border-radius: 9px;
+    outline: none;
+    background: #fafbff;
+    color: #253047;
+    font-family: inherit;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.providerProfileFieldValue input:focus {
+    border-color: #7088e8;
+    box-shadow: 0 0 0 3px rgba(112, 136, 232, 0.10);
+}
+
+/* כפתור עריכה */
+
+.providerProfileEditButton {
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
+    color: #7088e8;
+    font-size: 21px;
+    cursor: pointer;
+    padding: 7px;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+.providerProfileEditButton:hover {
+    background: #eef1ff;
+    color: #5c73d0;
+}
+
+/* שמירה */
+
+.providerProfileActions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 28px;
+}
+
+.providerProfileSaveButton {
+    padding: 12px 29px;
+    background: #7088e8;
+    color: white;
+    border: none;
+    border-radius: 11px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.providerProfileSaveButton:hover {
+    background: #5c73d0;
+}
+
+.providerProfileSaveButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* הודעות */
+
+.providerProfileError,
+.providerProfileSuccess {
+    padding: 12px 15px;
+    margin-top: 20px;
+    border-radius: 9px;
+    font-size: 13px;
+}
+
+.providerProfileError {
+    background: #fff1f1;
+    color: #ba5555;
+}
+
+.providerProfileSuccess {
+    background: #edf8f1;
+    color: #367c51;
+}
+
+/* כרטיס צדדי */
+
+.providerProfileSideCard h2 {
+    margin: 0;
+    padding: 26px 28px;
+    background: #f5f6f9;
+    border-bottom: 1px solid #e1e5ed;
+    color: #253047;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.providerProfileSideItem {
+    padding: 25px 28px;
+    border-bottom: 1px solid #edf0f4;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.providerProfileSideItem:last-child {
+    border-bottom: none;
+}
+
+.providerProfileSideItem span {
+    font-size: 14px;
+    color: #929cad;
+}
+
+.providerProfileSideItem strong {
+    color: #253047;
+    font-size: 15px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+/* טעינה */
+
+.providerProfileLoading {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #F7F8FA;
+    font-family: "Heebo", sans-serif;
+    font-size: 17px;
+    color: #7088e8;
+}
+
+/* התאמה למסכים קטנים */
+
+@media (max-width: 850px) {
+    .providerProfileLayout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .providerProfilePage {
+        padding: 15px 12px 35px;
+    }
+
+    .providerProfileHero {
+        padding: 28px 22px;
+    }
+
+    .providerProfileMainCard {
+        padding: 22px 20px;
+    }
+
+    .providerProfileField {
+        grid-template-columns: 1fr;
+        gap: 7px;
+        padding: 16px 0;
+    }
+
+    .providerProfileFieldValue {
+        width: 100%;
+    }
+
+    .providerProfileSideItem {
+        padding: 20px 22px;
+    }
+}

@@ -1,0 +1,250 @@
+
+.providerClientsPage {
+    min-height: 100vh;
+    padding: 35px 30px 55px;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(233, 189, 165, 0.30),
+            transparent 38%
+        ),
+        #F7F8FA;
+    font-family: "Heebo", sans-serif;
+    color: #253047;
+    box-sizing: border-box;
+}
+
+.providerClientsPage * {
+    box-sizing: border-box;
+}
+
+.providerClientsContainer {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* כותרת עליונה */
+
+.providerClientsHero {
+    background: #ffffff;
+    border: 1px solid #e1e5ed;
+    border-radius: 18px;
+    padding: 36px 32px;
+    min-height: 175px;
+    margin-bottom: 27px;
+}
+
+.providerClientsBrand {
+    display: block;
+    color: #7088e8;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 17px;
+}
+
+.providerClientsHero h1 {
+    margin: 0 0 13px;
+    color: #253047;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.providerClientsHero p {
+    margin: 0;
+    color: #98a2b3;
+    font-size: 15px;
+}
+
+/* כרטיס רשימת הלקוחות */
+
+.providerClientsMainCard {
+    background: white;
+    border: 1px solid #e1e5ed;
+    border-radius: 18px;
+    padding: 30px 35px 35px;
+    box-shadow: 0 10px 30px rgba(34, 48, 78, 0.04);
+}
+
+/* אזור כותרת וחיפוש */
+
+.providerClientsToolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #e6e9f0;
+}
+
+.providerClientsToolbar h2 {
+    margin: 0 0 8px;
+    color: #7088e8;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.providerClientsToolbar p {
+    margin: 0;
+    color: #98a2b3;
+    font-size: 13px;
+}
+
+/* שדה חיפוש */
+
+.providerClientsSearch {
+    width: 280px;
+    max-width: 100%;
+}
+
+.providerClientsSearch input {
+    width: 100%;
+    padding: 12px 16px;
+    background: #fafbff;
+    border: 1px solid #e1e5ed;
+    border-radius: 11px;
+    color: #253047;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.providerClientsSearch input::placeholder {
+    color: #a1aaba;
+}
+
+.providerClientsSearch input:focus {
+    border-color: #7088e8;
+    box-shadow: 0 0 0 3px rgba(112, 136, 232, 0.10);
+}
+
+/* טבלה */
+
+.providerClientsTableWrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.providerClientsTable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: right;
+}
+
+.providerClientsTable thead {
+    background: #f3f5ff;
+}
+
+.providerClientsTable th {
+    padding: 17px 20px;
+    color: #7088e8;
+    font-size: 14px;
+    font-weight: 800;
+    border-bottom: 1px solid #e3e8f5;
+}
+
+.providerClientsTable th:first-child {
+    border-radius: 0 12px 12px 0;
+}
+
+.providerClientsTable th:last-child {
+    border-radius: 12px 0 0 12px;
+}
+
+.providerClientsTable td {
+    padding: 19px 20px;
+    color: #344054;
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.providerClientsTable tbody tr {
+    transition: background 0.2s;
+}
+
+.providerClientsTable tbody tr:hover {
+    background: #fafbff;
+}
+
+.providerClientsTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* הודעות */
+
+.providerClientsLoading {
+    text-align: center;
+    padding: 50px 0;
+    color: #7088e8;
+    font-size: 15px;
+}
+
+.providerClientsError {
+    padding: 13px 17px;
+    background: #fff2f2;
+    color: #bb5a5a;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.providerClientsEmpty {
+    text-align: center;
+    padding: 65px 20px;
+    background: #fafbff;
+    border: 1px dashed #dce2f3;
+    border-radius: 14px;
+}
+
+.providerClientsEmpty h3 {
+    margin: 0 0 12px;
+    color: #253047;
+    font-size: 18px;
+}
+
+.providerClientsEmpty p {
+    margin: 0;
+    color: #98a2b3;
+    font-size: 14px;
+}
+
+.providerClientsNoResults {
+    text-align: center;
+    padding: 35px 0;
+    color: #98a2b3;
+    font-size: 14px;
+}
+
+/* התאמה למסכים קטנים */
+
+@media (max-width: 768px) {
+    .providerClientsPage {
+        padding: 18px 12px 35px;
+    }
+
+    .providerClientsHero {
+        padding: 28px 22px;
+    }
+
+    .providerClientsMainCard {
+        padding: 23px 18px;
+    }
+
+    .providerClientsToolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .providerClientsSearch {
+        width: 100%;
+    }
+
+    .providerClientsTable th,
+    .providerClientsTable td {
+        padding: 15px 12px;
+        font-size: 13px;
+    }
+}

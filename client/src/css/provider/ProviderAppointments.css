@@ -1,77 +1,487 @@
-.provider-appointments {
-    padding: 25px;
-    direction: rtl;
+
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
+
+.providerAppointmentsPage {
+    min-height: 100vh;
+    background: #F7F8FA;
+    color: #292b35;
+    font-family: 'Heebo', sans-serif;
 }
 
-.page-header {
+/* Header */
+
+.providerAppointmentsHeader {
+    height: 76px;
+    padding: 0 7%;
+    background: white;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    justify-content: space-between;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.035);
 }
 
-.page-header h1 {
-    margin-bottom: 5px;
+.providerAppointmentsLogo {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #7088e8;
 }
 
-.page-header p {
-    color: #888;
+.providerAppointmentsBack {
+    border: 1px solid #e5e6ec;
+    background: white;
+    color: #555765;
+    padding: 10px 20px;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.page-header button,
-.appointment-actions button {
+.providerAppointmentsBack:hover {
+    background: #f3f5ff;
+    border-color: #7088e8;
+    color: #5c73d0;
+}
+
+/* Content */
+
+.providerAppointmentsContent {
+    width: 86%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 45px 0 25px;
+}
+
+/* Banner */
+
+.providerAppointmentsBanner {
+    min-height: 190px;
+    padding: 38px 45px;
+    background: linear-gradient(110deg, #7088e8, #8799e9);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.providerAppointmentsLabel {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.17);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.providerAppointmentsBanner h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0 0 8px;
+}
+
+.providerAppointmentsBanner p {
+    font-size: 15px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.providerAppointmentsBannerIcon {
+    position: absolute;
+    left: 55px;
+    font-size: 130px;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.12);
+}
+
+/* Section */
+
+.providerAppointmentsSection {
+    margin-top: 42px;
+}
+
+.providerAppointmentsSectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.providerAppointmentsSectionHeader h2 {
+    font-size: 23px;
+    font-weight: 800;
+    margin: 0 0 4px;
+}
+
+.providerAppointmentsSectionHeader p {
+    color: #9294a0;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* Add button */
+
+.providerAppointmentsAdd {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 21px;
+    border: none;
+    border-radius: 9px;
+    background: #7088e8;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.providerAppointmentsAdd:hover {
+    background: #5c73d0;
+}
+
+.providerAppointmentsAdd span {
+    font-size: 19px;
+}
+
+/* Grid */
+
+.providerAppointmentsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+/* Cards */
+
+.providerAppointmentCard {
+    background: white;
+    border: 1px solid #eceef2;
+    border-radius: 15px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.025);
+    transition: 0.25s;
+}
+
+.providerAppointmentCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.065);
+    border-color: #dfe4fa;
+}
+
+.providerAppointmentCardTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.providerAppointmentIcon {
+    width: 48px;
+    height: 42px;
+    border-radius: 8px;
+    background: #f0f2ff;
+    color: #5c73d0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* Status */
+
+.providerAppointmentStatus {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-empty {
+    background: #edf0ff;
+    color: #5c73d0;
+}
+
+.status-booked {
+    background: #f9eee7;
+    color: #a9785d;
+}
+
+.status-completed {
+    background: #e9f5ed;
+    color: #43865b;
+}
+
+.status-cancelled {
+    background: #f2eeee;
+    color: #8c7777;
+}
+
+/* Info */
+
+.providerAppointmentInfo {
+    flex: 1;
+}
+
+.providerAppointmentInfo h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: #30323d;
+    margin: 0 0 18px;
+}
+
+.providerAppointmentDetail {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 13px;
+}
+
+.providerAppointmentDetail span {
+    font-size: 12px;
+    color: #9294a0;
+    font-weight: 500;
+}
+
+.providerAppointmentDetail p {
+    font-size: 14px;
+    color: #454754;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Actions */
+
+.providerAppointmentActions {
+    border-top: 1px solid #f0f0f3;
+    margin-top: 12px;
+    padding-top: 16px;
+}
+
+.providerAppointmentActions button {
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.providerAppointmentDetailsButton {
+    width: 100%;
+    padding: 11px;
     border: none;
     border-radius: 8px;
-    padding: 10px 16px;
-    cursor: pointer;
     background: #7088e8;
+    color: white;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.providerAppointmentDetailsButton:hover {
+    background: #5c73d0;
+}
+
+.providerAppointmentSecondaryActions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.providerAppointmentEditButton,
+.providerAppointmentDeleteButton {
+    padding: 9px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.providerAppointmentEditButton {
+    border: 1px solid #dce2ff;
+    background: #f7f8ff;
+    color: #5c73d0;
+}
+
+.providerAppointmentEditButton:hover {
+    background: #e9edff;
+}
+
+.providerAppointmentDeleteButton {
+    border: 1px solid #efd9ce;
+    background: #fffaf7;
+    color: #ae8068;
+}
+
+.providerAppointmentDeleteButton:hover {
+    background: #e9bda5;
     color: white;
 }
 
-.appointments-list {
+/* Empty */
+
+.providerAppointmentsEmpty {
+    background: white;
+    border: 1px solid #eceef2;
+    border-radius: 15px;
+    padding: 55px 20px;
+    text-align: center;
+}
+
+.providerAppointmentsEmpty h3 {
+    font-size: 21px;
+    margin: 0 0 8px;
+}
+
+.providerAppointmentsEmpty p {
+    color: #9294a0;
+    font-size: 14px;
+    margin-bottom: 22px;
+}
+
+.providerAppointmentsEmpty button {
+    background: #7088e8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 24px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.providerAppointmentsEmpty button:hover {
+    background: #5c73d0;
+}
+
+/* Error */
+
+.providerAppointmentsError {
+    background: #fff5f2;
+    color: #a65e50;
+    border: 1px solid #f0d9d2;
+    border-radius: 9px;
+    padding: 12px 17px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* Loading */
+
+.providerAppointmentsLoading {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-}
-
-.appointment-card {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 20px;
-    padding: 22px;
-    background: white;
-    border: 1px solid #e8e8ed;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    justify-content: center;
+    gap: 15px;
+    background: #F7F8FA;
+    font-family: 'Heebo', sans-serif;
+    color: #777987;
 }
 
-.appointment-info p {
-    color: #666;
-    margin: 8px 0;
+.providerAppointmentsSpinner {
+    width: 34px;
+    height: 34px;
+    border: 3px solid #e5e9fb;
+    border-top-color: #7088e8;
+    border-radius: 50%;
+    animation: providerAppointmentsSpin 0.8s linear infinite;
 }
 
-.appointment-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+@keyframes providerAppointmentsSpin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-.appointment-actions button:last-child {
-    background: #d9534f;
+/* Footer */
+
+.providerAppointmentsFooter {
+    text-align: center;
+    color: #b0b1ba;
+    font-size: 12px;
+    margin-top: 45px;
 }
 
-.error-message {
-    color: #d9534f;
+/* Responsive */
+
+@media (max-width: 1000px) {
+    .providerAppointmentsGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
-@media (max-width: 700px) {
-    .appointment-card {
-        flex-direction: column;
-        align-items: stretch;
+@media (max-width: 650px) {
+    .providerAppointmentsHeader {
+        padding: 0 5%;
+        height: 68px;
     }
 
-    .appointment-actions {
-        flex-direction: column;
+    .providerAppointmentsContent {
+        width: 90%;
+        padding-top: 30px;
+    }
+
+    .providerAppointmentsBanner {
+        min-height: 175px;
+        padding: 28px 24px;
+        border-radius: 14px;
+    }
+
+    .providerAppointmentsBanner h1 {
+        font-size: 26px;
+    }
+
+    .providerAppointmentsBanner p {
+        font-size: 13px;
+        max-width: 240px;
+    }
+
+    .providerAppointmentsBannerIcon {
+        left: 15px;
+        font-size: 95px;
+    }
+
+    .providerAppointmentsSectionHeader {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .providerAppointmentsSectionHeader h2 {
+        font-size: 20px;
+    }
+
+    .providerAppointmentsAdd {
+        padding: 10px 14px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .providerAppointmentsGrid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .providerAppointmentCard {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 380px) {
+    .providerAppointmentsBack {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .providerAppointmentsLogo {
+        font-size: 24px;
     }
 }

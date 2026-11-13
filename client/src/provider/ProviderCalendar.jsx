@@ -1,8 +1,15 @@
 
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { addDays, addWeeks, format, startOfWeek, isSameDay } from "date-fns"
+import {
+    addDays,
+    addWeeks,
+    format,
+    startOfWeek,
+    isSameDay
+} from "date-fns"
 import { he } from "date-fns/locale"
+import "../css/provider/ProviderCalendar.css"
 
 const hebrewDate = (date) => {
     const parts = new Intl.DateTimeFormat("he-u-ca-hebrew", {
@@ -27,13 +34,26 @@ const hebrewDate = (date) => {
 const ProviderCalendar = () => {
     const navigate = useNavigate()
 
-    const [week, setWeek] = useState(new Date())
+    const [selectedDate, setSelectedDate] = useState(new Date())
+    const [view, setView] = useState("weekly")
     const [appointments, setAppointments] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
 
-    const firstDay = startOfWeek(week, { weekStartsOn: 0 })
-    const lastDay = addDays(firstDay, 7)
+    const firstDay = startOfWeek(selectedDate, {
+        weekStartsOn: 0
+    })
+
+    const lastDay = addDays(firstDay, 6)
+
+    const days = []
+
+    for (let i = 0; i < 7; i++) {
+        days.push(addDays(firstDay, i))
+    }
+
+    const displayedDays =
+        view === "weekly" ? days : [selectedDate]
 
     const fetchAppointments = async () => {
         try {
@@ -41,6 +61,7 @@ const ProviderCalendar = () => {
             setError("")
 
             const token = localStorage.getItem("token")
+            const providerId = localStorage.getItem("providerId")
 
             if (!token) {
                 navigate("/provider/login")
@@ -62,20 +83,23 @@ const ProviderCalendar = () => {
 
             const data = await response.json()
 
-            // מציגים רק שיעורים של המדריכה בשבוע הנבחר
-            const weeklyAppointments = data.filter(appointment => {
-                const startTime = new Date(appointment.startTime)
+            const allAppointments = Array.isArray(data)
+                ? data
+                : data.appointments || []
 
-                return startTime >= firstDay &&
-                    startTime < lastDay
+            const myAppointments = allAppointments.filter(appointment => {
+                const appointmentProviderId =
+                    appointment.providerId?._id ||
+                    appointment.providerId
+
+                return String(appointmentProviderId) === String(providerId)
             })
 
-            setAppointments(weeklyAppointments)
+            setAppointments(myAppointments)
 
         } catch (error) {
             console.error(error)
             setError(error.message || "לא הצלחנו לטעון את השיעורים")
-
         } finally {
             setLoading(false)
         }
@@ -83,112 +107,171 @@ const ProviderCalendar = () => {
 
     useEffect(() => {
         fetchAppointments()
-    }, [week])
+    }, [])
 
-    const days = []
-
-    for (let i = 0; i < 7; i++) {
-        days.push(addDays(firstDay, i))
+    const changeDate = (direction) => {
+        if (view === "weekly") {
+            setSelectedDate(addWeeks(selectedDate, direction))
+        } else {
+            setSelectedDate(addDays(selectedDate, direction))
+        }
     }
 
-    if (loading) return <p>טוען שיעורים...</p>
-
-    if (error) return <p>{error}</p>
+    const getDayAppointments = (day) => {
+        return appointments
+            .filter(appointment =>
+                isSameDay(new Date(appointment.startTime), day)
+            )
+            .sort((a, b) =>
+                new Date(a.startTime) - new Date(b.startTime)
+            )
+    }
 
     return (
-        <div dir="rtl">
-            <h2>לוח השיעורים שלי</h2>
+        <div className="providerCalendarPage" dir="rtl">
+            <div className="providerCalendarContainer">
 
-            <button onClick={() => setWeek(addWeeks(week, -1))}>
-                שבוע קודם
-            </button>
+                <div className="providerCalendarHeader">
+                    <h1>השיעורים הקרובים</h1>
+                    <p>בחרי יום כדי לראות את השיעורים הזמינים</p>
+                </div>
 
-            <button onClick={() => setWeek(new Date())}>
-                השבוע
-            </button>
+                <div className="providerCalendarToolbar">
 
-            <button onClick={() => setWeek(addWeeks(week, 1))}>
-                שבוע הבא
-            </button>
+                    <div className="providerCalendarViewSwitch">
+                        <button
+                            className={view === "weekly" ? "active" : ""}
+                            onClick={() => setView("weekly")}
+                        >
+                            שבועי
+                        </button>
 
-            <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(7, minmax(130px, 1fr))",
-                gap: "8px",
-                overflowX: "auto",
-                marginTop: "16px"
-            }}>
+                        <button
+                            className={view === "daily" ? "active" : ""}
+                            onClick={() => setView("daily")}
+                        >
+                            יומי
+                        </button>
+                    </div>
 
-                {days.map(day => {
-                    const dayAppointments = appointments
-                        .filter(appointment =>
-                            isSameDay(
-                                new Date(appointment.startTime),
-                                day
-                            )
-                        )
-                        .sort((a, b) =>
-                            new Date(a.startTime) - new Date(b.startTime)
-                        )
+                    <div className="providerCalendarDateNavigation">
+                        <button onClick={() => changeDate(-1)}>
+                            ‹
+                        </button>
 
-                    return (
-                        <div key={day.toISOString()}>
-                            <h3>{format(day, "EEEE", { locale: he })}</h3>
-                            <div>{format(day, "dd/MM/yyyy")}</div>
-                            <div>{hebrewDate(day)}</div>
+                        <strong>
+                            {view === "weekly"
+                                ? `${format(firstDay, "dd/MM/yyyy")} - ${format(lastDay, "dd/MM/yyyy")}`
+                                : format(selectedDate, "dd/MM/yyyy")}
+                        </strong>
 
-                            {dayAppointments.length === 0 && (
-                                <p>אין שיעורים</p>
-                            )}
+                        <button onClick={() => changeDate(1)}>
+                            ›
+                        </button>
+                    </div>
 
-                            {dayAppointments.map(appointment => {
-                                const participants = appointment.participants || 0
-                                const capacity = appointment.maxParticipants || 10
+                    <button
+                        className="providerCalendarToday"
+                        onClick={() => setSelectedDate(new Date())}
+                    >
+                        היום
+                    </button>
+                </div>
 
-                                return (
-                                    <div
-                                        key={appointment._id}
-                                        style={{
-                                            border: "1px solid #aaa",
-                                            padding: "8px",
-                                            marginTop: "8px",
-                                            borderRadius: "6px"
-                                        }}
-                                    >
-                                        <strong>
-                                            {format(
-                                                new Date(appointment.startTime),
-                                                "HH:mm"
-                                            )}
-                                        </strong>
+                <div className="providerCalendarDivider"></div>
 
-                                        <div>
-                                            שיעור:{" "}
-                                            {appointment.serviceId?.name || "שיעור"}
-                                        </div>
+                {error && (
+                    <p className="providerCalendarError">{error}</p>
+                )}
 
-                                        <div>
-                                            משתתפות: {participants}/{capacity}
-                                        </div>
+                {loading ? (
+                    <p className="providerCalendarLoading">
+                        טוען שיעורים...
+                    </p>
+                ) : (
+                    <div
+                        className={`providerCalendarGrid ${
+                            view === "daily" ? "daily" : ""
+                        }`}
+                    >
+                        {displayedDays.map(day => {
+                            const dayAppointments = getDayAppointments(day)
 
-                                        <button
-                                            onClick={() =>
-                                                navigate(`/provider/appointment/${appointment._id}`)
-                                            }
-                                        >
-                                            פרטים נוספים
-                                        </button>
+                            return (
+                                <div
+                                    className="providerCalendarDay"
+                                    key={day.toISOString()}
+                                >
+                                    <div className="providerCalendarDayHeader">
+                                        <h3>
+                                            {format(day, "EEEE", { locale: he })}
+                                        </h3>
+
+                                        <span>
+                                            {format(day, "dd/MM")}
+                                        </span>
+
+                                        <span>
+                                            {hebrewDate(day)}
+                                        </span>
                                     </div>
-                                )
-                            })}
-                        </div>
-                    )
-                })}
-            </div>
 
-            <button onClick={() => navigate("/provider/home")}>
-                חזרה לדף הבית
-            </button>
+                                    <div className="providerCalendarDayBody">
+                                        {dayAppointments.length === 0 && (
+                                            <p className="providerCalendarEmpty">
+                                                אין שיעורים
+                                            </p>
+                                        )}
+
+                                        {dayAppointments.map(appointment => {
+                                            const participants =
+                                                appointment.participantsCount ??
+                                                appointment.participants?.length ??
+                                                0
+
+                                            const capacity =
+                                                appointment.maxParticipants || 10
+
+                                            return (
+                                                <div
+                                                    className="providerCalendarLesson"
+                                                    key={appointment._id}
+                                                >
+                                                    <div className="providerCalendarLessonTime">
+                                                        {format(
+                                                            new Date(appointment.startTime),
+                                                            "HH:mm"
+                                                        )}
+                                                    </div>
+
+                                                    <div className="providerCalendarLessonName">
+                                                        {appointment.serviceId?.name || "שיעור"}
+                                                    </div>
+
+                                                    <div className="providerCalendarLessonCount">
+                                                        משתתפות: {participants}/{capacity}
+                                                    </div>
+
+                                                    <button
+                                                        onClick={() =>
+                                                            navigate(
+                                                                `/provider/appointment/${appointment._id}`
+                                                            )
+                                                        }
+                                                    >
+                                                        פרטים נוספים
+                                                    </button>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                )}
+
+            </div>
         </div>
     )
 }

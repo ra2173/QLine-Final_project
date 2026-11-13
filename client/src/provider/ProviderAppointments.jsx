@@ -1,30 +1,83 @@
+
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import "../css/provider/ProviderAppointments.css"
+import {
+    addDays,
+    addWeeks,
+    format,
+    startOfWeek,
+    isSameDay
+} from "date-fns"
+import { he } from "date-fns/locale"
+import "../css/provider/ProviderCalendar.css"
 
+const hebrewDate = (date) => {
+    const parts = new Intl.DateTimeFormat("he-u-ca-hebrew", {
+        day: "numeric",
+        month: "long"
+    }).formatToParts(date)
 
-const API_URL = "http://localhost:2173/api/appointments"
+    const day = Number(parts.find(part => part.type === "day").value)
+    const month = parts.find(part => part.type === "month").value
 
-const ProviderAppointments = () => {
+    const hebrewNumbers = [
+        "",
+        "א׳", "ב׳", "ג׳", "ד׳", "ה׳", "ו׳", "ז׳", "ח׳", "ט׳",
+        "י׳", "י״א", "י״ב", "י״ג", "י״ד", "ט״ו", "ט״ז",
+        "י״ז", "י״ח", "י״ט", "כ׳", "כ״א", "כ״ב", "כ״ג",
+        "כ״ד", "כ״ה", "כ״ו", "כ״ז", "כ״ח", "כ״ט", "ל׳"
+    ]
+
+    return `${hebrewNumbers[day]} ב${month}`
+}
+
+const ProviderCalendar = () => {
     const navigate = useNavigate()
 
+    const [selectedDate, setSelectedDate] = useState(new Date())
+    const [view, setView] = useState("weekly")
     const [appointments, setAppointments] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
 
-    const token = localStorage.getItem("token")
+    const firstDay = startOfWeek(selectedDate, {
+        weekStartsOn: 0
+    })
 
-    // טעינת השיעורים של המדריכה
-    const getAppointments = async () => {
+    const lastDay = addDays(firstDay, 6)
+
+    // יצירת מערך של שבעת ימי השבוע
+    const days = []
+
+    for (let i = 0; i < 7; i++) {
+        days.push(addDays(firstDay, i))
+    }
+
+    // בחירת הימים שיוצגו לפי סוג התצוגה
+    const displayedDays =
+        view === "weekly" ? days : [selectedDate]
+
+    // טעינת השיעורים של המדריכה מהשרת
+    const fetchAppointments = async () => {
         try {
             setLoading(true)
             setError("")
 
-            const response = await fetch(API_URL, {
-                headers: {
-                    Authorization: `Bearer ${token}`
+            const token = localStorage.getItem("token")
+
+            if (!token) {
+                navigate("/provider/login")
+                return
+            }
+
+            const response = await fetch(
+                "http://localhost:2173/api/appointments/mine",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
                 }
-            })
+            )
 
             if (!response.ok) {
                 throw new Error("טעינת השיעורים נכשלה")
@@ -32,152 +85,212 @@ const ProviderAppointments = () => {
 
             const data = await response.json()
 
-            // בהנחה שהשרת מחזיר מערך שיעורים
-            setAppointments(Array.isArray(data) ? data : data.appointments || [])
+            setAppointments(
+                Array.isArray(data)
+                    ? data
+                    : data.appointments || []
+            )
 
-        } catch (err) {
-            setError(err.message)
+        } catch (error) {
+            console.error(error)
+            setError(error.message || "לא הצלחנו לטעון את השיעורים")
         } finally {
             setLoading(false)
         }
     }
 
     useEffect(() => {
-        getAppointments()
+        fetchAppointments()
     }, [])
 
-    // מחיקת שיעור
-    const deleteAppointment = async (id) => {
-        const confirmDelete = window.confirm("האם למחוק את השיעור?")
-
-        if (!confirmDelete) return
-
-        try {
-            const response = await fetch(`${API_URL}/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-
-            if (!response.ok) {
-                throw new Error("מחיקת השיעור נכשלה")
-            }
-
-            setAppointments(prev =>
-                prev.filter(appointment => appointment._id !== id)
-            )
-
-        } catch (err) {
-            alert(err.message)
+    // מעבר בין ימים או שבועות
+    const changeDate = (direction) => {
+        if (view === "weekly") {
+            setSelectedDate(addWeeks(selectedDate, direction))
+        } else {
+            setSelectedDate(addDays(selectedDate, direction))
         }
     }
 
-    // מעבר להוספת שיעור
-    const addAppointment = () => {
-        navigate("/provider/appointments/new")
-    }
-
-    // מעבר לעריכת שיעור
-    const editAppointment = (id) => {
-        navigate(`/provider/appointments/edit/${id}`)
-    }
-
-    // מעבר לפרטי השיעור
-    const showAppointment = (id) => {
-        navigate(`/provider/appointment/${id}`)
-    }
-
-    if (loading) {
-        return <p>טוען שיעורים...</p>
+    // סינון שיעורים לפי יום
+    const getDayAppointments = (day) => {
+        return appointments
+            .filter(appointment =>
+                isSameDay(
+                    new Date(appointment.startTime),
+                    day
+                )
+            )
+            .sort((a, b) =>
+                new Date(a.startTime) - new Date(b.startTime)
+            )
     }
 
     return (
-        <div className="provider-appointments" dir="rtl">
+        <div className="providerCalendarPage" dir="rtl">
+            <div className="providerCalendarContainer">
 
-            <div className="page-header">
-                <div>
-                    <h1>ניהול שיעורים</h1>
-                    <p>צפייה וניהול השיעורים שלך</p>
+                {/* כותרת */}
+                <div className="providerCalendarHeader">
+                    <h1>לוח השיעורים שלי</h1>
+                    <p>צפייה בשיעורים שלי לפי יום או שבוע</p>
                 </div>
 
-                <button onClick={addAppointment}>
-                    + הוספת שיעור
-                </button>
-            </div>
+                {/* ניווט ותצוגה */}
+                <div className="providerCalendarToolbar">
 
-            {error && <p className="error-message">{error}</p>}
-
-            {appointments.length === 0 ? (
-                <p>לא נמצאו שיעורים</p>
-            ) : (
-                <div className="appointments-list">
-
-                    {appointments.map(appointment => (
-                        <div
-                            className="appointment-card"
-                            key={appointment._id}
+                    {/* בחירת תצוגה */}
+                    <div className="providerCalendarViewSwitch">
+                        <button
+                            className={view === "weekly" ? "active" : ""}
+                            onClick={() => setView("weekly")}
                         >
-                            <div className="appointment-info">
+                            שבועי
+                        </button>
 
-                                <h3>
-                                    {appointment.serviceId?.name || "שיעור"}
-                                </h3>
+                        <button
+                            className={view === "daily" ? "active" : ""}
+                            onClick={() => setView("daily")}
+                        >
+                            יומי
+                        </button>
+                    </div>
 
-                                <p>
-                                    תאריך ושעה:{" "}
-                                    {new Date(appointment.startTime).toLocaleString("he-IL")}
-                                </p>
+                    {/* מעבר בין תאריכים */}
+                    <div className="providerCalendarDateNavigation">
+                        <button onClick={() => changeDate(-1)}>
+                            ‹
+                        </button>
 
-                                <p>
-                                    משך השיעור: {appointment.lengthTime} דקות
-                                </p>
+                        <strong>
+                            {view === "weekly"
+                                ? `${format(firstDay, "dd/MM/yyyy")} - ${format(lastDay, "dd/MM/yyyy")}`
+                                : format(selectedDate, "dd/MM/yyyy")}
+                        </strong>
 
-                                <p>
-                                    משתתפות: {appointment.participants?.length || 0}
-                                    {" / "}
-                                    {appointment.maxParticipants}
-                                </p>
+                        <button onClick={() => changeDate(1)}>
+                            ›
+                        </button>
+                    </div>
 
-                                <p>
-                                    סניף: {appointment.branch}
-                                </p>
-
-                                <p>
-                                    סטטוס: {appointment.status}
-                                </p>
-
-                            </div>
-
-                            <div className="appointment-actions">
-
-                                <button
-                                    onClick={() => showAppointment(appointment._id)}
-                                >
-                                    פרטים ומשתתפות
-                                </button>
-
-                                <button
-                                    onClick={() => editAppointment(appointment._id)}
-                                >
-                                    עריכה
-                                </button>
-
-                                <button
-                                    onClick={() => deleteAppointment(appointment._id)}
-                                >
-                                    מחיקה
-                                </button>
-
-                            </div>
-                        </div>
-                    ))}
+                    {/* חזרה להיום */}
+                    <button
+                        className="providerCalendarToday"
+                        onClick={() => setSelectedDate(new Date())}
+                    >
+                        היום
+                    </button>
 
                 </div>
-            )}
 
+                <div className="providerCalendarDivider"></div>
+
+                {/* הודעת שגיאה */}
+                {error && (
+                    <p className="providerCalendarError">
+                        {error}
+                    </p>
+                )}
+
+                {/* טעינה */}
+                {loading ? (
+                    <p className="providerCalendarLoading">
+                        טוען שיעורים...
+                    </p>
+                ) : (
+
+                    /* לוח השנה */
+                    <div
+                        className={`providerCalendarGrid ${
+                            view === "daily" ? "daily" : ""
+                        }`}
+                    >
+                        {displayedDays.map(day => {
+                            const dayAppointments = getDayAppointments(day)
+
+                            return (
+                                <div
+                                    className="providerCalendarDay"
+                                    key={day.toISOString()}
+                                >
+
+                                    {/* כותרת יום */}
+                                    <div className="providerCalendarDayHeader">
+                                        <h3>
+                                            {format(day, "EEEE", { locale: he })}
+                                        </h3>
+
+                                        <span>
+                                            {format(day, "dd/MM")}
+                                        </span>
+
+                                        <span>
+                                            {hebrewDate(day)}
+                                        </span>
+                                    </div>
+
+                                    {/* השיעורים באותו יום */}
+                                    <div className="providerCalendarDayBody">
+
+                                        {dayAppointments.length === 0 && (
+                                            <p className="providerCalendarEmpty">
+                                                אין שיעורים
+                                            </p>
+                                        )}
+
+                                        {dayAppointments.map(appointment => {
+                                            const participants =
+                                                appointment.participantsCount ??
+                                                0
+
+                                            const capacity =
+                                                appointment.maxParticipants || 10
+
+                                            return (
+                                                <div
+                                                    className="providerCalendarLesson"
+                                                    key={appointment._id}
+                                                >
+
+                                                    <div className="providerCalendarLessonTime">
+                                                        {format(
+                                                            new Date(appointment.startTime),
+                                                            "HH:mm"
+                                                        )}
+                                                    </div>
+
+                                                    <div className="providerCalendarLessonName">
+                                                        {appointment.serviceId?.name || "שיעור"}
+                                                    </div>
+
+                                                    <div className="providerCalendarLessonCount">
+                                                        משתתפות: {participants}/{capacity}
+                                                    </div>
+
+                                                    <button
+                                                        onClick={() =>
+                                                            navigate(
+                                                                `/provider/appointment/${appointment._id}`
+                                                            )
+                                                        }
+                                                    >
+                                                        פרטים נוספים
+                                                    </button>
+
+                                                </div>
+                                            )
+                                        })}
+
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                )}
+
+            </div>
         </div>
     )
 }
 
-export default ProviderAppointments
+export default ProviderCalendar

@@ -289,9 +289,9 @@ return (
             <Button
                 className="appointments-back"
                 variant="text"
-                onClick={() => navigate("/user/home")}
+                onClick={() => navigate("/user/calendar")}
             >
-                ← חזרה לדף הבית
+                ← חזרה ללוח שיעורים
             </Button>
 
         </div>

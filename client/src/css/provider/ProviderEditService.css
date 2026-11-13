@@ -1,0 +1,259 @@
+
+/* רקע מאחורי החלונית */
+
+.providerEditServiceOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(29, 37, 59, 0.45);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: "Heebo", sans-serif;
+}
+
+/* החלונית */
+
+.providerEditServiceModal {
+    width: 100%;
+    max-width: 580px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 22px;
+    box-shadow: 0 25px 70px rgba(20, 30, 60, 0.20);
+    padding: 30px 35px;
+    box-sizing: border-box;
+}
+
+.providerEditServiceModal * {
+    box-sizing: border-box;
+}
+
+/* כותרת */
+
+.providerEditServiceHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 22px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #e8eaf1;
+}
+
+.providerEditServiceBrand {
+    display: block;
+    color: #7088e8;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.providerEditServiceHeader h2 {
+    margin: 0 0 7px;
+    color: #253047;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.providerEditServiceHeader p {
+    margin: 0;
+    color: #98a2b3;
+    font-size: 13px;
+}
+
+/* כפתור סגירה */
+
+.providerEditServiceClose {
+    width: 35px;
+    height: 35px;
+    background: #f3f5fa;
+    border: none;
+    border-radius: 10px;
+    color: #8993a5;
+    font-size: 25px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.providerEditServiceClose:hover {
+    background: #e9bda5;
+    color: #513d34;
+}
+
+/* שדות */
+
+.providerEditServiceFields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 19px;
+}
+
+.providerEditServiceField {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.providerEditServiceField label {
+    color: #596477;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.providerEditServiceField input:not([type="color"]),
+.providerEditServiceField textarea {
+    width: 100%;
+    border: 1px solid #e0e5ee;
+    border-radius: 10px;
+    padding: 12px 14px;
+    background: #fafbff;
+    color: #253047;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.providerEditServiceField input:focus,
+.providerEditServiceField textarea:focus {
+    border-color: #7088e8;
+    box-shadow: 0 0 0 3px rgba(112, 136, 232, 0.10);
+}
+
+.providerEditServiceField textarea {
+    resize: vertical;
+    min-height: 85px;
+}
+
+.providerEditServiceFull {
+    grid-column: 1 / -1;
+}
+
+/* בחירת צבע */
+
+.providerEditServiceColorBox {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 13px;
+    border: 1px solid #e0e5ee;
+    border-radius: 10px;
+    background: #fafbff;
+}
+
+.providerEditServiceColorBox input[type="color"] {
+    width: 45px;
+    height: 35px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+}
+
+.providerEditServiceColorBox span {
+    direction: ltr;
+    color: #596477;
+    font-size: 13px;
+}
+
+/* כפתורי פעולה */
+
+.providerEditServiceActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 27px;
+    padding-top: 22px;
+    border-top: 1px solid #e8eaf1;
+}
+
+.providerEditServiceActions button {
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.providerEditServiceCancel {
+    background: #f3f5fa;
+    color: #596477;
+    border: 1px solid #e5e8f0;
+}
+
+.providerEditServiceCancel:hover {
+    background: #e8ebf2;
+}
+
+.providerEditServiceSave {
+    background: #7088e8;
+    color: white;
+    border: 1px solid #7088e8;
+}
+
+.providerEditServiceSave:hover {
+    background: #5c73d0;
+}
+
+.providerEditServiceSave:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* הודעות */
+
+.providerEditServiceLoading {
+    text-align: center;
+    padding: 35px 0;
+    color: #7088e8;
+}
+
+.providerEditServiceError {
+    margin-top: 17px;
+    padding: 11px 14px;
+    background: #fff2f2;
+    color: #ba5555;
+    border-radius: 9px;
+    font-size: 13px;
+}
+
+/* התאמה למסכים קטנים */
+
+@media (max-width: 600px) {
+    .providerEditServiceModal {
+        padding: 24px 20px;
+        border-radius: 17px;
+    }
+
+    .providerEditServiceFields {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .providerEditServiceHeader h2 {
+        font-size: 21px;
+    }
+}
+
+@media (max-height: 650px) {
+    .providerEditServiceModal {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .providerEditServiceHeader {
+        margin-bottom: 16px;
+        padding-bottom: 15px;
+    }
+
+    .providerEditServiceFields {
+        gap: 12px;
+    }
+}

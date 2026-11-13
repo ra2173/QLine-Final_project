@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
 
-const ProviderEditService = () => {
-    const { id } = useParams()
-    const navigate = useNavigate()
+import { useEffect, useState } from "react"
+import "../css/provider/ProviderEditService.css"
+
+const ProviderEditService = ({ serviceId, onClose, onUpdated }) => {
 
     const [form, setForm] = useState({
         name: "",
@@ -13,16 +12,17 @@ const ProviderEditService = () => {
     })
 
     const [loading, setLoading] = useState(true)
+    const [saving, setSaving] = useState(false)
     const [error, setError] = useState("")
 
-    // טעינת השירות הקיים
+    // טעינת פרטי השירות
     useEffect(() => {
         const fetchService = async () => {
             try {
                 const token = localStorage.getItem("token")
 
                 const response = await fetch(
-                    `http://localhost:2173/api/services/${id}`,
+                    `http://localhost:2173/api/services/${serviceId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -32,13 +32,14 @@ const ProviderEditService = () => {
 
                 const data = await response.json()
 
-                if (!response.ok)
+                if (!response.ok) {
                     throw new Error(data.message || "טעינת השירות נכשלה")
+                }
 
                 setForm({
-                    name: data.name,
+                    name: data.name || "",
                     description: data.description || "",
-                    price: data.price,
+                    price: data.price ?? "",
                     color: data.color || "#3b82f6"
                 })
 
@@ -50,21 +51,22 @@ const ProviderEditService = () => {
         }
 
         fetchService()
-    }, [id])
+    }, [serviceId])
 
     const handleChange = (e) => {
         const { name, value } = e.target
 
-        setForm({
-            ...form,
+        setForm(prev => ({
+            ...prev,
             [name]: value
-        })
+        }))
     }
 
     // שמירת השינויים
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError("")
+        setSaving(true)
 
         try {
             const token = localStorage.getItem("token")
@@ -78,7 +80,7 @@ const ProviderEditService = () => {
                         Authorization: `Bearer ${token}`
                     },
                     body: JSON.stringify({
-                        _id: id,
+                        _id: serviceId,
                         ...form,
                         price: Number(form.price)
                     })
@@ -87,67 +89,162 @@ const ProviderEditService = () => {
 
             const data = await response.json()
 
-            if (!response.ok)
+            if (!response.ok) {
                 throw new Error(data.message || "עדכון השירות נכשל")
+            }
 
-            navigate("/provider/services")
+            onUpdated({
+                _id: serviceId,
+                ...form,
+                price: Number(form.price)
+            })
 
         } catch (error) {
             setError(error.message)
+        } finally {
+            setSaving(false)
         }
     }
 
-    if (loading) return <p>טוען שירות...</p>
-
     return (
-        <div dir="rtl">
-            <h2>עריכת שירות</h2>
+        <div
+            className="providerEditServiceOverlay"
+            onClick={onClose}
+        >
+            <div
+                className="providerEditServiceModal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="providerEditServiceTitle"
+                dir="rtl"
+                onClick={(e) => e.stopPropagation()}
+            >
 
-            <form onSubmit={handleSubmit}>
-                <label>שם השירות</label>
-                <input
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                />
+                <div className="providerEditServiceHeader">
+                    <div>
+                        <span className="providerEditServiceBrand">
+                            QLINE
+                        </span>
 
-                <label>תיאור</label>
-                <textarea
-                    name="description"
-                    value={form.description}
-                    onChange={handleChange}
-                />
+                        <h2 id="providerEditServiceTitle">
+                            עריכת שירות
+                        </h2>
 
-                <label>מחיר</label>
-                <input
-                    type="number"
-                    name="price"
-                    value={form.price}
-                    onChange={handleChange}
-                    min="0"
-                    required
-                />
+                        <p>עדכון פרטי השירות הקיים</p>
+                    </div>
 
-                <label>צבע השירות</label>
-                <input
-                    type="color"
-                    name="color"
-                    value={form.color}
-                    onChange={handleChange}
-                />
+                    <button
+                        type="button"
+                        className="providerEditServiceClose"
+                        onClick={onClose}
+                        aria-label="סגירה"
+                    >
+                        ×
+                    </button>
+                </div>
 
-                {error && <p>{error}</p>}
+                {loading ? (
+                    <p className="providerEditServiceLoading">
+                        טוען שירות...
+                    </p>
+                ) : (
+                    <form onSubmit={handleSubmit}>
 
-                <button type="submit">שמירת שינויים</button>
+                        <div className="providerEditServiceFields">
 
-                <button
-                    type="button"
-                    onClick={() => navigate("/provider/services")}
-                >
-                    ביטול
-                </button>
-            </form>
+                            <div className="providerEditServiceField">
+                                <label htmlFor="edit-service-name">
+                                    שם השירות
+                                </label>
+
+                                <input
+                                    id="edit-service-name"
+                                    name="name"
+                                    value={form.name}
+                                    onChange={handleChange}
+                                    placeholder="הזיני שם שירות"
+                                    required
+                                />
+                            </div>
+
+                            <div className="providerEditServiceField">
+                                <label htmlFor="edit-service-price">
+                                    מחיר השירות (₪)
+                                </label>
+
+                                <input
+                                    id="edit-service-price"
+                                    type="number"
+                                    name="price"
+                                    value={form.price}
+                                    onChange={handleChange}
+                                    min="0"
+                                    required
+                                />
+                            </div>
+
+                            <div className="providerEditServiceField providerEditServiceFull">
+                                <label htmlFor="edit-service-description">
+                                    תיאור השירות
+                                </label>
+
+                                <textarea
+                                    id="edit-service-description"
+                                    name="description"
+                                    value={form.description}
+                                    onChange={handleChange}
+                                    placeholder="תיאור קצר של השירות"
+                                    rows="3"
+                                />
+                            </div>
+
+                            <div className="providerEditServiceField providerEditServiceFull">
+                                <label htmlFor="edit-service-color">
+                                    צבע השירות בלוח השנה
+                                </label>
+
+                                <div className="providerEditServiceColorBox">
+                                    <input
+                                        id="edit-service-color"
+                                        type="color"
+                                        name="color"
+                                        value={form.color}
+                                        onChange={handleChange}
+                                    />
+
+                                    <span>{form.color}</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {error && (
+                            <p className="providerEditServiceError">
+                                {error}
+                            </p>
+                        )}
+
+                        <div className="providerEditServiceActions">
+                            <button
+                                type="button"
+                                className="providerEditServiceCancel"
+                                onClick={onClose}
+                            >
+                                ביטול
+                            </button>
+
+                            <button
+                                type="submit"
+                                className="providerEditServiceSave"
+                                disabled={saving}
+                            >
+                                {saving ? "שומר שינויים..." : "שמירת שינויים"}
+                            </button>
+                        </div>
+
+                    </form>
+                )}
+            </div>
         </div>
     )
 }

@@ -1,0 +1,386 @@
+
+.providerCalendarPage {
+    min-height: 100vh;
+    padding: 55px 40px;
+    box-sizing: border-box;
+    font-family: "Heebo", sans-serif;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(233, 189, 165, 0.38),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom left,
+            rgba(112, 136, 232, 0.20),
+            transparent 35%
+        ),
+        #fafafa;
+    color: #222b3b;
+}
+
+/* המסגרת הראשית */
+
+.providerCalendarContainer {
+    width: 100%;
+    max-width: 1450px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 35px;
+    padding: 48px 44px 44px;
+    box-sizing: border-box;
+    box-shadow: 0 20px 55px rgba(30, 45, 85, 0.08);
+}
+
+/* כותרת */
+
+.providerCalendarHeader {
+    text-align: right;
+    margin-bottom: 55px;
+}
+
+.providerCalendarHeader h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    color: #202838;
+}
+
+.providerCalendarHeader p {
+    margin: 15px 0 0;
+    font-size: 15px;
+    color: #98a2b3;
+}
+
+/* סרגל עליון */
+
+.providerCalendarToolbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 29px;
+}
+
+/* תצוגה שבועית / יומית */
+
+.providerCalendarViewSwitch {
+    display: flex;
+    justify-self: start;
+    background: #f1f2f7;
+    padding: 6px;
+    border-radius: 15px;
+    gap: 4px;
+}
+
+.providerCalendarViewSwitch button {
+    border: none;
+    background: transparent;
+    color: #98a2b3;
+    padding: 12px 25px;
+    min-width: 92px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.providerCalendarViewSwitch button.active {
+    background: white;
+    color: #7088e8;
+    box-shadow: 0 3px 9px rgba(40, 50, 80, 0.09);
+}
+
+/* ניווט בתאריכים */
+
+.providerCalendarDateNavigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    white-space: nowrap;
+}
+
+.providerCalendarDateNavigation button {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: #eaf0ff;
+    color: #7088e8;
+    border-radius: 12px;
+    font-size: 26px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.providerCalendarDateNavigation button:hover {
+    background: #dce5ff;
+}
+
+.providerCalendarDateNavigation strong {
+    font-size: 17px;
+    font-weight: 800;
+    color: #253047;
+    direction: ltr;
+}
+
+/* כפתור היום */
+
+.providerCalendarToday {
+    justify-self: end;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 30px;
+    background: #7088e8;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.providerCalendarToday:hover {
+    background: #5c73d0;
+}
+
+/* קו הפרדה */
+
+.providerCalendarDivider {
+    height: 1px;
+    background: #e9e8e8;
+    margin-bottom: 31px;
+}
+
+/* עמודות השבוע */
+
+.providerCalendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 14px;
+}
+
+/* עמודת יום */
+
+.providerCalendarDay {
+    min-width: 0;
+    min-height: 267px;
+    background: #faf9f9;
+    border: 1px solid #e8e7e7;
+    border-radius: 19px;
+    overflow: hidden;
+}
+
+/* כותרת היום */
+
+.providerCalendarDayHeader {
+    background: #f3f5ff;
+    padding: 24px 8px 23px;
+    min-height: 136px;
+    box-sizing: border-box;
+    text-align: center;
+    border-bottom: 2px solid #dce4ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.providerCalendarDayHeader h3 {
+    margin: 0;
+    color: #7088e8;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.providerCalendarDayHeader span {
+    color: #98a2b3;
+    font-size: 13px;
+}
+
+/* תוכן העמודה */
+
+.providerCalendarDayBody {
+    padding: 13px 9px;
+    min-height: 125px;
+}
+
+.providerCalendarEmpty {
+    text-align: center;
+    margin: 42px 0 0;
+    color: #a1aaba;
+    font-size: 13px;
+}
+
+/* כרטיס שיעור */
+
+.providerCalendarLesson {
+    background: white;
+    border: 1px solid #e5e9f8;
+    border-right: 3px solid #7088e8;
+    border-radius: 11px;
+    padding: 12px 9px;
+    margin-bottom: 10px;
+    box-shadow: 0 3px 10px rgba(40, 50, 90, 0.04);
+    transition: 0.2s;
+}
+
+.providerCalendarLesson:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(40, 50, 90, 0.09);
+}
+
+.providerCalendarLessonTime {
+    font-size: 16px;
+    font-weight: 800;
+    color: #7088e8;
+    margin-bottom: 7px;
+}
+
+.providerCalendarLessonName {
+    font-size: 13px;
+    font-weight: 700;
+    color: #30394b;
+    margin-bottom: 8px;
+}
+
+.providerCalendarLessonCount {
+    font-size: 12px;
+    color: #8b95a6;
+    margin-bottom: 12px;
+}
+
+.providerCalendarLesson button {
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 5px;
+    background: #eef1ff;
+    color: #5c73d0;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.providerCalendarLesson button:hover {
+    background: #7088e8;
+    color: white;
+}
+
+/* תצוגה יומית */
+
+.providerCalendarGrid.daily {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.providerCalendarGrid.daily .providerCalendarDay {
+    min-height: 300px;
+}
+
+.providerCalendarGrid.daily .providerCalendarDayHeader {
+    min-height: auto;
+    padding: 22px;
+}
+
+.providerCalendarGrid.daily .providerCalendarDayBody {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 14px;
+    padding: 20px;
+    align-content: start;
+}
+
+.providerCalendarGrid.daily .providerCalendarLesson {
+    margin-bottom: 0;
+}
+
+.providerCalendarGrid.daily .providerCalendarEmpty {
+    grid-column: 1 / -1;
+    margin: 45px 0;
+}
+
+/* הודעות */
+
+.providerCalendarLoading,
+.providerCalendarError {
+    text-align: center;
+    padding: 40px 0;
+    font-size: 15px;
+    color: #98a2b3;
+}
+
+.providerCalendarError {
+    color: #bd6262;
+}
+
+/* מסכים בינוניים */
+
+@media (max-width: 1100px) {
+    .providerCalendarGrid {
+        grid-template-columns: repeat(7, minmax(145px, 1fr));
+        overflow-x: auto;
+        padding-bottom: 10px;
+    }
+}
+
+/* מובייל */
+
+@media (max-width: 768px) {
+    .providerCalendarPage {
+        padding: 18px 10px;
+    }
+
+    .providerCalendarContainer {
+        padding: 28px 18px;
+        border-radius: 23px;
+    }
+
+    .providerCalendarHeader {
+        margin-bottom: 30px;
+    }
+
+    .providerCalendarHeader h1 {
+        font-size: 25px;
+    }
+
+    .providerCalendarToolbar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 18px;
+    }
+
+    .providerCalendarDateNavigation {
+        order: 3;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .providerCalendarDateNavigation strong {
+        font-size: 14px;
+    }
+
+    .providerCalendarViewSwitch button {
+        min-width: 65px;
+        padding: 10px 15px;
+    }
+
+    .providerCalendarToday {
+        padding: 11px 19px;
+    }
+
+    .providerCalendarGrid {
+        grid-template-columns: repeat(7, minmax(145px, 1fr));
+    }
+
+    .providerCalendarGrid.daily {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
