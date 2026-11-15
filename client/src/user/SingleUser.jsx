@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { Button, CircularProgress } from "@mui/material"
+
 import axios from "axios"
 import "../css/user/SingleUser.css"
 
@@ -250,12 +252,13 @@ const renderField = (field, label, type = "text") => (
 
                 <div className="single-user-actions">
 
-                    <button
-                        className="profile-back-button"
-                        onClick={() => navigate("/user/home")}
-                    >
-                        חזרה לדף הבית
-                    </button>
+                      <Button
+                                    className="appointments-back"
+                                    variant="text"
+                                    onClick={() => navigate("/user/calendar")}
+                                >
+                                    ← חזרה ללוח שיעורים
+                                </Button>
 
                 </div>
 

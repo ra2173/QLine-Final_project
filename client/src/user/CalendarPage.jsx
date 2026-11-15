@@ -42,7 +42,6 @@ const CalendarPage = () => {
     const [error, setError] = useState("")
     const [selectedAppointment, setSelectedAppointment] = useState(null)
 
-
     // חישוב היום הראשון והיום האחרון של השבוע
     const firstDay = startOfWeek(week, { weekStartsOn: 0 })
     const lastDay = addDays(firstDay, 7)
@@ -63,7 +62,7 @@ const CalendarPage = () => {
             }
 
             const response = await fetch(
-                "http://localhost:2173/api/appointments/available",
+                "http://localhost:2173/api/appointments",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -309,14 +308,17 @@ const CalendarPage = () => {
                                     startTime,
                                     appointment.lengthTime || 0
                                 )
+                                const isPast = endTime <= new Date()
 
                                 return (
 
                                     <div
                                         key={appointment._id}
-                                        className={`appointment-card color-${index % 3}`}
+                                        className={`appointment-card ${isPast ? "past-appointment" : ""}`}
+                                        style={{
+                                            "--service-color": appointment.serviceId?.color || "#5c73d0"
+                                        }}
                                     >
-
                                         <div className="appointment-info">
 
                                             <strong className="appointment-time">
@@ -345,9 +347,10 @@ const CalendarPage = () => {
 
                                         <button
                                             className="appointment-button"
+                                            disabled={isPast}
                                             onClick={() => setSelectedAppointment(appointment._id)}
                                         >
-                                            פרטים נוספים
+                                            {isPast ? "השיעור הסתיים" : "פרטים נוספים"}
                                         </button>
 
                                     </div>
@@ -434,12 +437,16 @@ const CalendarPage = () => {
                                                 startTime,
                                                 appointment.lengthTime || 0
                                             )
+                                            const isPast = endTime <= new Date()
 
                                             return (
 
                                                 <div
                                                     key={appointment._id}
-                                                    className={`weekly-appointment-card color-${index % 3}`}
+                                                    className={`weekly-appointment-card ${isPast ? "past-appointment" : ""}`}
+                                                    style={{
+                                                        "--service-color": appointment.serviceId?.color || "#5c73d0"
+                                                    }}
                                                 >
 
                                                     <strong className="weekly-time">
@@ -463,9 +470,10 @@ const CalendarPage = () => {
                                                     </span>
 
                                                     <button
+                                                        disabled={isPast}
                                                         onClick={() => setSelectedAppointment(appointment._id)}
                                                     >
-                                                        פרטים
+                                                        {isPast ? "הסתיים" : "פרטים"}
                                                     </button>
 
                                                 </div>

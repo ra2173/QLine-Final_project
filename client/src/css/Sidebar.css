@@ -66,3 +66,48 @@
     padding: 25px;
     box-sizing: border-box;
 }
+
+/* כפתור התנתקות */
+.sidebar-logout {
+    width: calc(100% - 32px);
+    margin: auto 16px 20px;
+    padding: 12px 18px;
+
+    background: #ffffff;
+    color: #5c73d0;
+
+    border: 1px solid #e9bda5;
+    border-radius: 12px;
+
+    font-family: "Heebo", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* מעבר עכבר */
+.sidebar-logout:hover {
+    background: #e9bda5;
+    color: #20212a;
+    border-color: #e9bda5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(233, 189, 165, 0.25);
+}
+
+/* לחיצה */
+.sidebar-logout:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* מיקום בתחתית הסיידבר */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-nav {
+    flex: 1;
+}

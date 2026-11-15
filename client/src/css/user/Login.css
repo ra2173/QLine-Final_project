@@ -300,3 +300,42 @@
         transition: none;
     }
 }
+
+/* חזרה לדף הבית */
+.login-back-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    width: 100%;
+    margin-top: 16px;
+    padding: 11px 16px;
+
+    background: transparent;
+    border: 1px solid #e4e7ef;
+    border-radius: 12px;
+
+    color: #777987;
+    font-family: "Heebo", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.login-back-home:hover {
+    background: #f3f5ff;
+    border-color: #5c73d0;
+    color: #5c73d0;
+}
+
+.login-back-home span {
+    font-size: 18px;
+    transition: transform 0.25s ease;
+}
+
+.login-back-home:hover span {
+    transform: translateX(4px);
+}

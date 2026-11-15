@@ -317,3 +317,89 @@
         min-width: 70px;
     }
 }
+
+/* שיעורים שכבר עברו */
+.past-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    background: #f1f2f4;
+    border: 1px solid #e0e2e6;
+    border-radius: 16px;
+
+    padding: 20px 24px;
+    margin-bottom: 12px;
+
+    opacity: 0.7;
+    filter: grayscale(100%);
+
+    box-shadow: none;
+    transition: none;
+}
+
+/* בלי אפקט מעבר עכבר */
+.past-card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* תאריך */
+.past-date {
+    color: #8b909a;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* פרטי השיעור */
+.past-details h3 {
+    color: #777d88;
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 6px;
+}
+
+.past-details p {
+    color: #999ea7;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* תגית הסתיים */
+.past-status {
+    background: #e2e4e8;
+    color: #858b95;
+
+    padding: 7px 15px;
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* התאמה לנייד */
+@media (max-width: 600px) {
+    .past-card {
+        flex-wrap: wrap;
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .past-status {
+        margin-right: auto;
+    }
+}
+
+.appointment-error {
+    background: #fff3f0;
+    color: #b45345;
+    border: 1px solid #f2c9c1;
+    border-radius: 12px;
+    padding: 12px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}

@@ -58,7 +58,7 @@ const ProviderLogin = () => {
             <div className="provider-login-card">
 
                 <div className="login-brand">
-                    <img className="login-logo" src="/logo.jpg" alt="Qline" />
+                    <img className="login-logo" src="../public/qline-icon.svg" alt="Qline" />
                     <h1>Qline</h1>
                     <p>הדרך שלך להתחיל לזוז</p>
                 </div>
@@ -111,7 +111,14 @@ const ProviderLogin = () => {
                     <span className="login-footer-dot"></span>
                     סביבת העבודה שלך, במקום אחד
                 </div>
-
+<button
+    type="button"
+    className="login-back-home"
+    onClick={() => navigate("/")}
+>
+    <span>→</span>
+    חזרה לדף הבית
+</button>
             </div>
         </div>
     )

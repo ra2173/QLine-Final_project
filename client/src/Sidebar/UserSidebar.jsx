@@ -1,13 +1,16 @@
-import { Navigate, NavLink } from "react-router-dom"
+import { useNavigate, NavLink } from "react-router-dom"
 import "../css/Sidebar.css"
 
 const UserSidebar = () => {
+    const navigate = useNavigate()
+
     const userId = localStorage.getItem("userId")
 
     const logout = () => {
-        localStorage.removeItem("token")
-        Navigate("/user/login")
-    }
+    localStorage.removeItem("token")
+    localStorage.removeItem("userId")
+    navigate("/user/login", { replace: true })
+}
     return (
         <aside className="sidebar">
             <div className="sidebar-logo">QLINE</div>
@@ -29,8 +32,9 @@ const UserSidebar = () => {
                     הפרופיל שלי
                 </NavLink>
             </nav>
-            <button onClick={logout}> התנתקות</button>
-
+<button className="sidebar-logout" onClick={logout}>
+    התנתקות
+</button>
         </aside>
     )
 }

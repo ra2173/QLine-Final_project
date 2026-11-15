@@ -60,22 +60,26 @@ const UserAppointments = () => {
             )
 
         } catch (error) {
-            setCancelError(
-                error.response?.data?.message ||
-                "לא ניתן לבטל את השיבוץ"
-            )
-        }
+    if (error.response?.status === 400) {
+        alert("לא ניתן לבטל את השיעור, מועד הביטול כבר עבר.")
+    } else {
+        alert(
+            error.response?.data?.message ||
+            "לא ניתן לבטל את השיבוץ"
+        )
     }
+}
+}
 
-    const now = new Date()
+const now = new Date()
 
-    const upcomingAppointments = appointments.filter(
-        appointment => new Date(appointment.startTime) > now
-    )
+const upcomingAppointments = appointments.filter(
+    appointment => new Date(appointment.startTime) > now
+)
 
-    const pastAppointments = appointments.filter(
-        appointment => new Date(appointment.startTime) <= now
-    )
+const pastAppointments = appointments.filter(
+    appointment => new Date(appointment.startTime) <= now
+)
 if (loading) {
     return (
         <div className="appointments-page">
@@ -206,6 +210,11 @@ return (
                                         >
                                             ביטול שיבוץ
                                         </Button>
+{cancelError && (
+    <p className="appointment-error">
+        {cancelError}
+    </p>
+)}
 
                                     </div>
 
@@ -278,13 +287,7 @@ return (
 
             </section>
 
-            {/* הודעת שגיאה בביטול */}
-            {cancelError && (
-                <p className="appointment-error">
-                    {cancelError}
-                </p>
-            )}
-
+        
             {/* חזרה */}
             <Button
                 className="appointments-back"

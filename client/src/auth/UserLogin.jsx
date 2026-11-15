@@ -58,7 +58,7 @@ const Login = () => {
             <div className="user-login-card">
 
                 <div className="user-login-brand">
-                    <img className="user-login-logo" src="/logo.jpg" alt="Qline" />
+                    <img className="user-login-logo" src="../public/qline-icon.svg" alt="Qline" />
                     <h1>Qline</h1>
                     <p>הדרך שלך להתחיל לזוז</p>
                 </div>
@@ -117,6 +117,14 @@ const Login = () => {
                     המקום שלך להתקדם, להתחזק ולהתמיד
                 </div>
 
+<button
+    type="button"
+    className="login-back-home"
+    onClick={() => navigate("/")}
+>
+    <span>→</span>
+    חזרה לדף הבית
+</button>
             </div>
         </div>
     )

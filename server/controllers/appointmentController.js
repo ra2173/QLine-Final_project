@@ -52,9 +52,8 @@ const createNewAppointment = async (req, res) => {
 const getAllAppointments = async (req, res) => {
   try {
     const appointments = await Appointment.find()
-      .populate('providerId', 'name lastName')
-      .populate('serviceId')
-      .sort({ startTime: 1 })
+.populate('providerId', 'name lastName')
+.populate('serviceId', 'name color')      .sort({ startTime: 1 })
       .lean()
 
     const result = appointments.map(appointment => ({
@@ -80,7 +79,11 @@ const getAppointmentById = async (req, res) => {
       { $match: { _id: appointment._id } },
       {
         $project: {
-          participantsCount: { $size: '$participants' }
+          participantsCount: {
+            $size: {
+              $ifNull: ['$participants', []]
+            }
+          }
         }
       }
     ])
@@ -168,23 +171,28 @@ const updateAppointment = async (req, res) => {
       if (maxParticipants !== undefined) {
         if (!Number.isInteger(maxParticipants) || maxParticipants < 1)
           return res.status(400).json({ message: 'Invalid maxParticipants' })
-      }
-      if (maxParticipants < appointment.participants.length)
-        return res.status(400).json({ message: 'maxParticipants cannot be less than current participants' })
 
-      appointment.maxParticipants = maxParticipants
+        if (maxParticipants < appointment.participants.length)
+          return res.status(400).json({
+            message: 'maxParticipants cannot be less than current participants'
+          })
+
+        appointment.maxParticipants = maxParticipants
+      }
     }
 
-    appointment.status = appointment.participants.length >= appointment.maxParticipants ? 'booked' : 'empty'
-
+    // עדכון סטטוס לפי מספר המשתתפים
     appointment.status =
       appointment.participants.length >= appointment.maxParticipants
         ? 'booked'
         : 'empty'
 
+    // שמירת השינויים
+    await appointment.save()
+
     return res.json({
       message: 'Appointment updated',
-      appointment: updatedAppointment
+      appointment: appointment
     })
 
   } catch (error) {
@@ -400,6 +408,47 @@ const getMyAppointments = async (req, res) => {
   }
 }
 
+const getProviderAppointments = async (req, res) => {
+  try {
+    const currentUser = req.user
+
+    if (
+      currentUser.type !== "Provider" ||
+      currentUser.role?.includes("Admin")
+    ) {
+      return res.status(403).json({
+        message: "Forbidden"
+      })
+    }
+
+    const appointments = await Appointment.find({
+      providerId: currentUser._id
+    })
+      .populate("serviceId", "name")
+      .sort({ startTime: 1 })
+      .lean()
+
+    const result = appointments.map(appointment => {
+      const { participants, ...appointmentData } = appointment
+
+      return {
+        ...appointmentData,
+        participantsCount: participants?.length || 0
+      }
+    })
+
+    return res.json(result)
+
+  } catch (error) {
+    console.error(error)
+
+    return res.status(500).json({
+      message: "Server error"
+    })
+  }
+}
+
+
 module.exports = {
   getAllAppointments,
   createNewAppointment,
@@ -410,5 +459,7 @@ module.exports = {
   getAvailableAppointments,
   bookAppointment,
   cancelAppointment,
-  getMyAppointments
+  getMyAppointments,
+  getProviderAppointments
+
 }
