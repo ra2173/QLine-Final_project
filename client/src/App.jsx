@@ -1,5 +1,12 @@
 
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Navigate,
+    useLocation
+} from "react-router-dom"
+
 
 import Homepage from "./auth/Homepage"
 import UserLogin from "./auth/UserLogin"
@@ -39,65 +46,93 @@ import AdminCalendar from "./admin/AdminCalendar"
 
 import AppLayout from "./Sidebar/AppLayout"
 
+
+function AppRoutes() {
+    const location = useLocation()
+
+    const backgroundLocation =
+        location.state?.backgroundLocation
+
+    return (
+        <>
+            <Routes location={backgroundLocation || location}>
+
+                <Route path="/" element={<Homepage />} />
+
+                {/* התחברות והרשמה */}
+                <Route path="/user/login" element={<UserLogin />} />
+                <Route path="/user/register" element={<UserRegister />} />
+                <Route path="/provider/login" element={<ProviderLogin />} />
+
+                {/* אזור הלקוחה */}
+                <Route element={<AppLayout />}>
+                    <Route path="/user/calendar" element={<CalendarPage />} />
+                    <Route path="/user/home" element={<UserHome />} />
+                    <Route path="/user/appointments" element={<UserAppointments />} />
+                    <Route path="/user/book" element={<UserBookAppointment />} />
+                    <Route path="/user/profile/:id" element={<SingleUser />} />
+                    <Route path="/appointment/:id" element={<AppointmentDetails />} />
+                    <Route path="/user/waitlist" element={<WaitlistPage />} />
+                </Route>
+
+                {/* אזור המדריכה */}
+                <Route element={<AppLayout />}>
+                    <Route path="/provider/home" element={<ProviderHome />} />
+                    <Route path="/provider/calendar" element={<ProviderCalendar />} />
+
+                    <Route
+                        path="/provider/appointment/:id"
+                        element={<ProviderAppointmentDetails />}
+                    />
+
+                    <Route path="/provider/services/new" element={<ProviderNewService />} />
+                    <Route path="/provider/services/edit/:id" element={<ProviderEditService />} />
+                    <Route path="/provider/services" element={<ProviderServices />} />
+                    <Route path="/provider/clients" element={<ProviderClients />} />
+                    <Route path="/provider/profile" element={<ProviderProfile />} />
+                    <Route path="/provider/appointments" element={<ProviderAppointments />} />
+                </Route>
+
+                {/* אזור המנהלת */}
+                <Route element={<AppLayout />}>
+                    <Route path="/admin" element={<AdminHome />} />
+                    <Route path="/admin/providers" element={<AdminProviders />} />
+                    <Route path="/admin/providers/new" element={<AdminNewProvider />} />
+                    <Route path="/admin/providers/edit/:id" element={<AdminEditProvider />} />
+                    <Route path="/admin/clients" element={<AdminClients />} />
+                    <Route path="/admin/appointments" element={<AdminAppointments />} />
+                    <Route path="/admin/appointments/new" element={<AdminNewAppointment />} />
+                    <Route path="/admin/appointments/edit/:id" element={<AdminEditAppointment />} />
+                    <Route path="/admin/services" element={<AdminServices />} />
+                    <Route path="/admin/services/new" element={<AdminNewService />} />
+                    <Route path="/admin/services/edit/:id" element={<AdminEditService />} />
+                    <Route path="/admin/calendar" element={<AdminCalendar />} />
+                </Route>
+
+                <Route path="*" element={<Navigate to="/" replace />} />
+
+            </Routes>
+
+            {/* חלונית צפה מעל דף הרקע */}
+            {backgroundLocation &&
+                location.pathname.startsWith("/provider/appointment/") && (
+                    <Routes>
+                        <Route
+                            path="/provider/appointment/:id"
+                            element={<ProviderAppointmentDetails />}
+                        />
+                    </Routes>
+                )}
+        </>
+    )
+}
+
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-
-        <Route path="/" element={<Homepage />} />
-
-        {/* עמודי התחברות והרשמה - ללא תפריט */}
-        <Route path="/user/login" element={<UserLogin />} />
-        <Route path="/user/register" element={<UserRegister />} />
-        <Route path="/provider/login" element={<ProviderLogin />} />
-
-        {/* אזור הלקוחה */}
-        <Route element={<AppLayout />}>
-          <Route path="/user/calendar" element={<CalendarPage />} />
-          <Route path="/user/home" element={<UserHome />} />
-          <Route path="/user/appointments" element={<UserAppointments />} />
-          <Route path="/user/book" element={<UserBookAppointment />} />
-          <Route path="/user/profile/:id" element={<SingleUser />} />
-          <Route path="/appointment/:id" element={<AppointmentDetails />} />
-          <Route path="/user/waitlist" element={<WaitlistPage />} />
-        </Route>
-
-        {/* אזור המדריכה */}
-        <Route element={<AppLayout />}>
-          <Route path="/provider/home" element={<ProviderHome />} />
-          <Route path="/provider/calendar" element={<ProviderCalendar />} />
-          <Route path="/provider/appointment/:id" element={<ProviderAppointmentDetails />} />
-          <Route path="/provider/services/new" element={<ProviderNewService />} />
-          <Route path="/provider/services/edit/:id" element={<ProviderEditService />} />
-          <Route path="/provider/services" element={<ProviderServices />} />
-          <Route path="/provider/clients" element={<ProviderClients />} />
-          <Route path="/provider/profile" element={<ProviderProfile />} />
-          <Route path="/provider/appointments" element={<ProviderAppointments />} />
-          <Route path="/provider/appointments" element={<ProviderAppointments />} />
-
-        </Route>
-
-        {/* אזור המנהלת */}
-        <Route element={<AppLayout />}>
-          <Route path="/admin" element={<AdminHome />} />
-          <Route path="/admin/providers" element={<AdminProviders />} />
-          <Route path="/admin/providers/new" element={<AdminNewProvider />} />
-          <Route path="/admin/providers/edit/:id" element={<AdminEditProvider />} />
-          <Route path="/admin/clients" element={<AdminClients />} />
-          <Route path="/admin/appointments" element={<AdminAppointments />} />
-          <Route path="/admin/appointments/new" element={<AdminNewAppointment />} />
-          <Route path="/admin/appointments/edit/:id" element={<AdminEditAppointment />} />
-          <Route path="/admin/services" element={<AdminServices />} />
-          <Route path="/admin/services/new" element={<AdminNewService />} />
-          <Route path="/admin/services/edit/:id" element={<AdminEditService />} />
-          <Route path="/admin/calendar" element={<AdminCalendar />}/>        </Route>
-
-        {/* נתיב לא מוכר */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-
-      </Routes>
-    </BrowserRouter>
-  )
+    return (
+        <BrowserRouter>
+            <AppRoutes />
+        </BrowserRouter>
+    )
 }
 
 export default App

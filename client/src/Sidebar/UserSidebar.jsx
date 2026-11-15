@@ -16,6 +16,10 @@ const UserSidebar = () => {
             <div className="sidebar-logo">QLINE</div>
 
             <nav className="sidebar-nav">
+                <NavLink to="/user/home">
+                    דף הבית
+                </NavLink>
+
                 <NavLink to="/user/calendar">
                     לוח שיעורים
                 </NavLink>

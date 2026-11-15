@@ -190,9 +190,8 @@ const ProviderCalendar = () => {
                     </p>
                 ) : (
                     <div
-                        className={`providerCalendarGrid ${
-                            view === "daily" ? "daily" : ""
-                        }`}
+                        className={`providerCalendarGrid ${view === "daily" ? "daily" : ""
+                            }`}
                     >
                         {displayedDays.map(day => {
                             const dayAppointments = getDayAppointments(day)
@@ -231,11 +230,20 @@ const ProviderCalendar = () => {
 
                                             const capacity =
                                                 appointment.maxParticipants || 10
+                                            const startTime = new Date(appointment.startTime)
 
+                                            const endTime = new Date(
+                                                startTime.getTime() + Number(appointment.lengthTime) * 60000
+                                            )
+
+                                            const isPast = endTime <= new Date()
                                             return (
                                                 <div
-                                                    className="providerCalendarLesson"
+                                                    className={`providerCalendarLesson ${isPast ? "past-lesson" : ""}`}
                                                     key={appointment._id}
+                                                    style={{
+                                                        "--lesson-color": appointment.serviceId?.color || "#7088e8"
+                                                    }}
                                                 >
                                                     <div className="providerCalendarLessonTime">
                                                         {format(

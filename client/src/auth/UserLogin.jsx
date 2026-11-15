@@ -38,7 +38,7 @@ const Login = () => {
             setUsername("")
 
             // מעבר לדף הבית עם מזהה הלקוחה
-            navigate("/user/calendar")
+            navigate("/user/home")
         } catch (error) {
             console.log("שגיאת התחברות:", error.response?.data)
 

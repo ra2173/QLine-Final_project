@@ -1,63 +1,20 @@
 
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import {
-    addDays,
-    addWeeks,
-    format,
-    startOfWeek,
-    isSameDay
-} from "date-fns"
-import { he } from "date-fns/locale"
-import "../css/provider/ProviderCalendar.css"
+import { useNavigate, useLocation } from "react-router-dom"
+import "../css/provider/ProviderAppointments.css"
 
-const hebrewDate = (date) => {
-    const parts = new Intl.DateTimeFormat("he-u-ca-hebrew", {
-        day: "numeric",
-        month: "long"
-    }).formatToParts(date)
-
-    const day = Number(parts.find(part => part.type === "day").value)
-    const month = parts.find(part => part.type === "month").value
-
-    const hebrewNumbers = [
-        "",
-        "א׳", "ב׳", "ג׳", "ד׳", "ה׳", "ו׳", "ז׳", "ח׳", "ט׳",
-        "י׳", "י״א", "י״ב", "י״ג", "י״ד", "ט״ו", "ט״ז",
-        "י״ז", "י״ח", "י״ט", "כ׳", "כ״א", "כ״ב", "כ״ג",
-        "כ״ד", "כ״ה", "כ״ו", "כ״ז", "כ״ח", "כ״ט", "ל׳"
-    ]
-
-    return `${hebrewNumbers[day]} ב${month}`
-}
-
-const ProviderCalendar = () => {
+const ProviderAppointments = () => {
     const navigate = useNavigate()
+    const location = useLocation()
 
-    const [selectedDate, setSelectedDate] = useState(new Date())
-    const [view, setView] = useState("weekly")
     const [appointments, setAppointments] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
+    const [search, setSearch] = useState("")
+    const [filter, setFilter] = useState("all")
+    const [deletingId, setDeletingId] = useState(null)
 
-    const firstDay = startOfWeek(selectedDate, {
-        weekStartsOn: 0
-    })
-
-    const lastDay = addDays(firstDay, 6)
-
-    // יצירת מערך של שבעת ימי השבוע
-    const days = []
-
-    for (let i = 0; i < 7; i++) {
-        days.push(addDays(firstDay, i))
-    }
-
-    // בחירת הימים שיוצגו לפי סוג התצוגה
-    const displayedDays =
-        view === "weekly" ? days : [selectedDate]
-
-    // טעינת השיעורים של המדריכה מהשרת
+    // טעינת השיעורים של המורה
     const fetchAppointments = async () => {
         try {
             setLoading(true)
@@ -66,12 +23,12 @@ const ProviderCalendar = () => {
             const token = localStorage.getItem("token")
 
             if (!token) {
-                navigate("/provider/login")
+                navigate("/provider/login", { replace: true })
                 return
             }
 
             const response = await fetch(
-                "http://localhost:2173/api/appointments/mine",
+                "http://localhost:2173/api/appointments/provider/mine",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -91,9 +48,9 @@ const ProviderCalendar = () => {
                     : data.appointments || []
             )
 
-        } catch (error) {
-            console.error(error)
-            setError(error.message || "לא הצלחנו לטעון את השיעורים")
+        } catch (err) {
+            console.error(err)
+            setError(err.message)
         } finally {
             setLoading(false)
         }
@@ -103,194 +60,302 @@ const ProviderCalendar = () => {
         fetchAppointments()
     }, [])
 
-    // מעבר בין ימים או שבועות
-    const changeDate = (direction) => {
-        if (view === "weekly") {
-            setSelectedDate(addWeeks(selectedDate, direction))
-        } else {
-            setSelectedDate(addDays(selectedDate, direction))
+    // מחיקת שיעור
+    const deleteAppointment = async (id) => {
+        const confirmed = window.confirm(
+            "האם את בטוחה שברצונך למחוק את השיעור?"
+        )
+
+        if (!confirmed) return
+
+        try {
+            setDeletingId(id)
+
+            const token = localStorage.getItem("token")
+
+            const response = await fetch(
+                "http://localhost:2173/api/appointments",
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ _id: id })
+                }
+            )
+
+            if (!response.ok) {
+                const data = await response.json().catch(() => ({}))
+
+                throw new Error(
+                    data.message || "מחיקת השיעור נכשלה"
+                )
+            }
+
+            setAppointments(prev =>
+                prev.filter(appointment =>
+                    appointment._id !== id
+                )
+            )
+
+        } catch (err) {
+            alert(err.message)
+        } finally {
+            setDeletingId(null)
         }
     }
 
-    // סינון שיעורים לפי יום
-    const getDayAppointments = (day) => {
-        return appointments
-            .filter(appointment =>
-                isSameDay(
-                    new Date(appointment.startTime),
-                    day
+    const now = new Date()
+
+    // חיפוש וסינון
+    const filteredAppointments = appointments
+        .filter(appointment => {
+            const serviceName =
+                appointment.serviceId?.name || ""
+
+            const branch = appointment.branch || ""
+
+            const matchesSearch =
+                serviceName.toLowerCase().includes(
+                    search.toLowerCase()
+                ) ||
+                branch.toLowerCase().includes(
+                    search.toLowerCase()
                 )
+
+            const start = new Date(appointment.startTime)
+
+            const end = new Date(
+                start.getTime() +
+                Number(appointment.lengthTime || 0) * 60000
             )
-            .sort((a, b) =>
-                new Date(a.startTime) - new Date(b.startTime)
-            )
-    }
+
+            const matchesFilter =
+                filter === "all" ||
+                (filter === "upcoming" && end > now) ||
+                (filter === "past" && end <= now)
+
+            return matchesSearch && matchesFilter
+        })
+        .sort((a, b) =>
+            new Date(a.startTime) - new Date(b.startTime)
+        )
 
     return (
-        <div className="providerCalendarPage" dir="rtl">
-            <div className="providerCalendarContainer">
+        <div className="providerAppointmentsPage" dir="rtl">
 
-                {/* כותרת */}
-                <div className="providerCalendarHeader">
-                    <h1>לוח השיעורים שלי</h1>
-                    <p>צפייה בשיעורים שלי לפי יום או שבוע</p>
+            {/* כותרת */}
+            <div className="providerAppointmentsHeader">
+                <div>
+                    <h1>ניהול השיעורים שלי</h1>
+                    <p>
+                        צפייה, עריכה ומחיקה של השיעורים שלך
+                    </p>
                 </div>
 
-                {/* ניווט ותצוגה */}
-                <div className="providerCalendarToolbar">
+                <button
+                    className="providerAppointmentsCalendar"
+                    onClick={() => navigate("/provider/calendar")}
+                >
+                    מעבר ללוח השיעורים
+                </button>
+            </div>
 
-                    {/* בחירת תצוגה */}
-                    <div className="providerCalendarViewSwitch">
-                        <button
-                            className={view === "weekly" ? "active" : ""}
-                            onClick={() => setView("weekly")}
-                        >
-                            שבועי
-                        </button>
+            {/* חיפוש וסינון */}
+            <div className="providerAppointmentsToolbar">
 
-                        <button
-                            className={view === "daily" ? "active" : ""}
-                            onClick={() => setView("daily")}
-                        >
-                            יומי
-                        </button>
-                    </div>
+                <input
+                    type="text"
+                    placeholder="חיפוש שיעור או סניף..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
 
-                    {/* מעבר בין תאריכים */}
-                    <div className="providerCalendarDateNavigation">
-                        <button onClick={() => changeDate(-1)}>
-                            ‹
-                        </button>
-
-                        <strong>
-                            {view === "weekly"
-                                ? `${format(firstDay, "dd/MM/yyyy")} - ${format(lastDay, "dd/MM/yyyy")}`
-                                : format(selectedDate, "dd/MM/yyyy")}
-                        </strong>
-
-                        <button onClick={() => changeDate(1)}>
-                            ›
-                        </button>
-                    </div>
-
-                    {/* חזרה להיום */}
+                <div className="providerAppointmentsFilters">
                     <button
-                        className="providerCalendarToday"
-                        onClick={() => setSelectedDate(new Date())}
+                        className={filter === "all" ? "active" : ""}
+                        onClick={() => setFilter("all")}
                     >
-                        היום
+                        כל השיעורים
                     </button>
 
-                </div>
-
-                <div className="providerCalendarDivider"></div>
-
-                {/* הודעת שגיאה */}
-                {error && (
-                    <p className="providerCalendarError">
-                        {error}
-                    </p>
-                )}
-
-                {/* טעינה */}
-                {loading ? (
-                    <p className="providerCalendarLoading">
-                        טוען שיעורים...
-                    </p>
-                ) : (
-
-                    /* לוח השנה */
-                    <div
-                        className={`providerCalendarGrid ${
-                            view === "daily" ? "daily" : ""
-                        }`}
+                    <button
+                        className={filter === "upcoming" ? "active" : ""}
+                        onClick={() => setFilter("upcoming")}
                     >
-                        {displayedDays.map(day => {
-                            const dayAppointments = getDayAppointments(day)
+                        שיעורים קרובים
+                    </button>
 
-                            return (
-                                <div
-                                    className="providerCalendarDay"
-                                    key={day.toISOString()}
-                                >
-
-                                    {/* כותרת יום */}
-                                    <div className="providerCalendarDayHeader">
-                                        <h3>
-                                            {format(day, "EEEE", { locale: he })}
-                                        </h3>
-
-                                        <span>
-                                            {format(day, "dd/MM")}
-                                        </span>
-
-                                        <span>
-                                            {hebrewDate(day)}
-                                        </span>
-                                    </div>
-
-                                    {/* השיעורים באותו יום */}
-                                    <div className="providerCalendarDayBody">
-
-                                        {dayAppointments.length === 0 && (
-                                            <p className="providerCalendarEmpty">
-                                                אין שיעורים
-                                            </p>
-                                        )}
-
-                                        {dayAppointments.map(appointment => {
-                                            const participants =
-                                                appointment.participantsCount ??
-                                                0
-
-                                            const capacity =
-                                                appointment.maxParticipants || 10
-
-                                            return (
-                                                <div
-                                                    className="providerCalendarLesson"
-                                                    key={appointment._id}
-                                                >
-
-                                                    <div className="providerCalendarLessonTime">
-                                                        {format(
-                                                            new Date(appointment.startTime),
-                                                            "HH:mm"
-                                                        )}
-                                                    </div>
-
-                                                    <div className="providerCalendarLessonName">
-                                                        {appointment.serviceId?.name || "שיעור"}
-                                                    </div>
-
-                                                    <div className="providerCalendarLessonCount">
-                                                        משתתפות: {participants}/{capacity}
-                                                    </div>
-
-                                                    <button
-                                                        onClick={() =>
-                                                            navigate(
-                                                                `/provider/appointment/${appointment._id}`
-                                                            )
-                                                        }
-                                                    >
-                                                        פרטים נוספים
-                                                    </button>
-
-                                                </div>
-                                            )
-                                        })}
-
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </div>
-                )}
-
+                    <button
+                        className={filter === "past" ? "active" : ""}
+                        onClick={() => setFilter("past")}
+                    >
+                        שיעורים שהסתיימו
+                    </button>
+                </div>
             </div>
+
+            {/* מספר שיעורים */}
+            <p className="providerAppointmentsCount">
+                נמצאו {filteredAppointments.length} שיעורים
+            </p>
+
+            {error && (
+                <p className="providerAppointmentsError">
+                    {error}
+                </p>
+            )}
+
+            {loading ? (
+                <p className="providerAppointmentsMessage">
+                    טוען שיעורים...
+                </p>
+            ) : filteredAppointments.length === 0 ? (
+                <p className="providerAppointmentsMessage">
+                    לא נמצאו שיעורים
+                </p>
+            ) : (
+
+                <div className="providerAppointmentsGrid">
+
+                    {filteredAppointments.map(appointment => {
+
+                        const start = new Date(
+                            appointment.startTime
+                        )
+
+                        const end = new Date(
+                            start.getTime() +
+                            Number(appointment.lengthTime || 0) * 60000
+                        )
+
+                        const isPast = end <= now
+
+                        const participants =
+                            appointment.participantsCount ??
+                            appointment.participants?.length ??
+                            0
+
+                        const capacity =
+                            appointment.maxParticipants || 10
+
+                        const serviceColor =
+                            appointment.serviceId?.color ||
+                            "#7088e8"
+
+                        return (
+                            <div
+                                key={appointment._id}
+                                className={`providerAppointmentCard ${isPast ? "past" : ""
+                                    }`}
+                                style={{
+                                    "--lesson-color": serviceColor
+                                }}
+                            >
+
+                                {/* שם השיעור */}
+                                <div className="providerAppointmentCardHeader">
+                                    <div>
+                                        <h2>
+                                            {appointment.serviceId?.name ||
+                                                "שיעור"}
+                                        </h2>
+
+                                        <span>
+                                            {appointment.branch}
+                                        </span>
+                                    </div>
+
+                                    <span className="providerAppointmentStatus">
+                                        {isPast ? "הסתיים" : "מתוכנן"}
+                                    </span>
+                                </div>
+
+                                {/* פרטי השיעור */}
+                                <div className="providerAppointmentDetails">
+
+                                    <div>
+                                        <span>תאריך</span>
+                                        <strong>
+                                            {start.toLocaleDateString("he-IL")}
+                                        </strong>
+                                    </div>
+
+                                    <div>
+                                        <span>שעה</span>
+                                        <strong>
+                                            {start.toLocaleTimeString(
+                                                "he-IL",
+                                                {
+                                                    hour: "2-digit",
+                                                    minute: "2-digit"
+                                                }
+                                            )}
+                                        </strong>
+                                    </div>
+
+                                    <div>
+                                        <span>משך השיעור</span>
+                                        <strong>
+                                            {appointment.lengthTime} דקות
+                                        </strong>
+                                    </div>
+
+                                    <div>
+                                        <span>משתתפות</span>
+                                        <strong>
+                                            {participants}/{capacity}
+                                        </strong>
+                                    </div>
+
+                                </div>
+
+                                {/* כפתורי ניהול */}
+                                <div className="providerAppointmentActions">
+
+                                    <button
+    className="providerAppointmentEdit"
+    onClick={() =>
+        navigate(
+            `/provider/appointment/${appointment._id}`,
+            {
+                state: {
+                    backgroundLocation: location
+                }
+            }
+        )
+    }
+>
+    פרטים ועריכה
+</button>
+
+                                    <button
+                                        className="providerAppointmentDelete"
+                                        disabled={
+                                            deletingId === appointment._id
+                                        }
+                                        onClick={() =>
+                                            deleteAppointment(
+                                                appointment._id
+                                            )
+                                        }
+                                    >
+                                        {deletingId === appointment._id
+                                            ? "מוחק..."
+                                            : "מחיקה"}
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        )
+                    })}
+
+                </div>
+            )}
         </div>
     )
 }
 
-export default ProviderCalendar
+export default ProviderAppointments
