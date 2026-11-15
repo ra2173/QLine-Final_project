@@ -384,3 +384,52 @@
         grid-template-columns: minmax(0, 1fr);
     }
 }
+
+/* כרטיס שיעור */
+.providerCalendarLesson {
+    background: #ffffff;
+    border: 1px solid #e9e9ef;
+    border-right: 5px solid var(--lesson-color);
+    border-radius: 15px;
+    padding: 14px 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+    transition: all 0.25s ease;
+}
+
+/* שעת השיעור */
+.providerCalendarLessonTime {
+    color: var(--lesson-color);
+    font-weight: 700;
+}
+
+/* שם השיעור */
+.providerCalendarLessonName {
+    color: var(--lesson-color);
+    font-weight: 700;
+}
+
+/* כפתור עריכה */
+.providerCalendarLesson button {
+    background: var(--lesson-color);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: filter 0.2s ease;
+}
+
+.providerCalendarLesson button:hover {
+    filter: brightness(0.9);
+}
+
+/* שיעור שהסתיים */
+.providerCalendarLesson.past-lesson {
+    --lesson-color: #a6a9b3 !important;
+    background: #f3f4f6;
+    border-color: #d5d8df;
+    opacity: 0.75;
+}
+
+.providerCalendarLesson.past-lesson button {
+    background: #a6a9b3;
+}

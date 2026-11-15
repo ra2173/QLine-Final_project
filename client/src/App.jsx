@@ -35,6 +35,7 @@ import AdminEditAppointment from "./admin/AdminEditAppointment"
 import AdminServices from "./admin/AdminServices"
 import AdminNewService from "./admin/AdminNewService"
 import AdminEditService from "./admin/AdminEditService"
+import AdminCalendar from "./admin/AdminCalendar"
 
 import AppLayout from "./Sidebar/AppLayout"
 
@@ -71,9 +72,9 @@ function App() {
           <Route path="/provider/services" element={<ProviderServices />} />
           <Route path="/provider/clients" element={<ProviderClients />} />
           <Route path="/provider/profile" element={<ProviderProfile />} />
-          <Route path="/provider/appointments" element={<ProviderAppointments />}/>
-          <Route path="/provider/appointments" element={<ProviderAppointments />}/>
-          
+          <Route path="/provider/appointments" element={<ProviderAppointments />} />
+          <Route path="/provider/appointments" element={<ProviderAppointments />} />
+
         </Route>
 
         {/* אזור המנהלת */}
@@ -89,10 +90,10 @@ function App() {
           <Route path="/admin/services" element={<AdminServices />} />
           <Route path="/admin/services/new" element={<AdminNewService />} />
           <Route path="/admin/services/edit/:id" element={<AdminEditService />} />
-        </Route>
+          <Route path="/admin/calendar" element={<AdminCalendar />}/>        </Route>
 
         {/* נתיב לא מוכר */}
-        <Route path="*" element={<Navigate to="/user/login" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
 
       </Routes>
     </BrowserRouter>
